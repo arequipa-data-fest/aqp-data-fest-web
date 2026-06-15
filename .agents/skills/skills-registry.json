@@ -1,0 +1,26 @@
+{
+  "project": "Arequipa Data Fest 2026 Website",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "id": "arch-manager",
+      "path": ".agents/skills/01-arch-manager.md",
+      "triggers": ["arquitectura", "módulo", "alcance", "estructura"]
+    },
+    {
+      "id": "frontend-expert",
+      "path": ".agents/skills/02-frontend-expert.md",
+      "triggers": ["componente", "css", "ui", "ux", "desarrollo", "astro"]
+    },
+    {
+      "id": "content-seo",
+      "path": ".agents/skills/03-content-seo-specialist.md",
+      "triggers": ["seo", "cloudinary", "metadatos", "imagen", "copy"]
+    },
+    {
+      "id": "qa-perf",
+      "path": ".agents/skills/04-qa-perf-engineer.md",
+      "triggers": ["rendimiento", "test", "calidad", "lighthouse", "performance"]
+    }
+  ]
+}
