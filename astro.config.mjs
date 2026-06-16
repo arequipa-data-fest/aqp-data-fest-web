@@ -7,5 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
+  },
+
+  image: {
+    domains: ['res.cloudinary.com'],
+  },
+
+  server: {
+    port: 3000,
+    host: true,
   }
 });
