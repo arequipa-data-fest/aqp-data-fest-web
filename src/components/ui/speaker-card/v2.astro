@@ -1,0 +1,56 @@
+---
+interface Tag {
+	label: string;
+}
+
+interface Props {
+	name: string;
+	role: string;
+	imageUrl: string;
+	imageAlt: string;
+	imageWidth: number;
+	imageHeight: number;
+	tags: Tag[];
+	accent: 'primary' | 'accent';
+}
+
+const { name, role, imageUrl, imageAlt, imageWidth, imageHeight, tags, accent } = Astro.props;
+---
+
+<article class:list={['speaker-card-v2', `speaker-card-v2--${accent}`]}>
+	<div class="speaker-card-v2__image">
+		<img
+			src={imageUrl}
+			alt={imageAlt}
+			width={imageWidth}
+			height={imageHeight}
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
+
+	<div class="speaker-card-v2__body">
+		<h3>{name}</h3>
+		<p>{role}</p>
+
+		{tags.length > 0 && (
+			<ul class="speaker-card-v2__tags">
+				{tags.map((tag) => <li>{tag.label}</li>)}
+			</ul>
+		)}
+	</div>
+</article>
+
+<style>
+	.speaker-card-v2 { overflow: hidden; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.35rem; background: var(--df-card); }
+	.speaker-card-v2--primary { --speaker-card-accent: var(--df-primary); }
+	.speaker-card-v2--accent { --speaker-card-accent: var(--df-accent); }
+	.speaker-card-v2__image { position: relative; aspect-ratio: 1 / 1; overflow: hidden; }
+	.speaker-card-v2__image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--df-page), transparent 45%); pointer-events: none; }
+	.speaker-card-v2__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+	.speaker-card-v2__body { padding: 1.5rem; background: var(--df-page); }
+	.speaker-card-v2__body h3 { margin: 0; color: var(--df-text); font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 800; line-height: 1.25; }
+	.speaker-card-v2__body > p { margin: 1rem 0 0; color: var(--speaker-card-accent); font-size: var(--df-text-body); font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; }
+	.speaker-card-v2__tags { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+	.speaker-card-v2__tags li { border: 1px solid var(--df-line); padding: 0.45rem 0.85rem; color: var(--df-text-muted); font-size: var(--df-text-label); font-weight: 700; }
+</style>

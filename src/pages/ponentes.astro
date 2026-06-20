@@ -1,11 +1,67 @@
 ---
 import MainLayout from '../layouts/main-layout.astro';
+import SpeakerCardV2 from '../components/ui/speaker-card/v2.astro';
+import SpeakerCardV3 from '../components/ui/speaker-card/v3.astro';
+import { speakersPage } from '../data/speakers';
+
+const { header, speakers } = speakersPage;
 ---
 
-<MainLayout title="Ponentes | Arequipa Data Fest 2026" description="Conoce a los ponentes del Arequipa Data Fest 2026.">
-	<section class="page-intro" aria-labelledby="speakers-title">
-		<p>Líderes de la industria</p>
-		<h1 id="speakers-title">Nuestros ponentes</h1>
-		<p>Conoce a los líderes que darán forma al futuro de la tecnología en Arequipa.</p>
+<MainLayout title="Ponentes | Arequipa Data Fest 2026" description={header.description}>
+	<section class="speakers-hero" aria-labelledby="speakers-title">
+		<p>{header.kicker}</p>
+		<h1 id="speakers-title">{header.title}</h1>
+		<span>{header.description}</span>
+	</section>
+
+	<section class="speakers-showcase" aria-label="Lista de ponentes">
+		<ul class="speakers-showcase__grid">
+			{speakers.map((speaker, index) => {
+				const accent = index % 2 === 0 ? 'primary' : 'accent';
+
+				return (
+				<li class:list={['speakers-showcase__item', { 'speakers-showcase__item--wide': speaker.variant === 'v3' }]}>
+					{speaker.variant === 'v3' ? (
+						<SpeakerCardV3
+							name={speaker.name}
+							role={speaker.role}
+							description={speaker.description}
+							imageUrl={speaker.imageUrl}
+							imageAlt={speaker.imageAlt}
+							imageWidth={speaker.imageWidth}
+							imageHeight={speaker.imageHeight}
+							badge={speaker.badge}
+							tags={speaker.tags}
+							accent={accent}
+						/>
+					) : (
+						<SpeakerCardV2
+							name={speaker.name}
+							role={speaker.role}
+							imageUrl={speaker.imageUrl}
+							imageAlt={speaker.imageAlt}
+							imageWidth={speaker.imageWidth}
+							imageHeight={speaker.imageHeight}
+							tags={speaker.tags}
+							accent={accent}
+						/>
+					)}
+				</li>
+				);
+			})}
+		</ul>
 	</section>
 </MainLayout>
+
+<style>
+	.speakers-hero { background: var(--df-page); padding: 4rem 1.25rem 2rem; text-align: center; }
+	.speakers-hero p { margin: 0; color: var(--df-text); font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 900; line-height: 1; text-transform: uppercase; }
+	.speakers-hero h1 { margin: 0; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(4rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.9; letter-spacing: 0.02em; text-transform: uppercase; }
+	.speakers-hero span { display: block; max-width: 44rem; margin: 1rem auto 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.5; }
+	.speakers-showcase { background: var(--df-page); padding: 2rem 3.5rem 5rem; }
+	.speakers-showcase__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; max-width: 88rem; margin: 0 auto; padding: 0; list-style: none; }
+	.speakers-showcase__item { display: flex; min-width: 0; }
+	.speakers-showcase__item--wide { grid-column: span 2; }
+	@media (max-width: 900px) { .speakers-showcase { padding-inline: 1.25rem; } .speakers-showcase__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+	@media (max-width: 560px) { .speakers-showcase__grid { grid-template-columns: 1fr; } .speakers-showcase__item--wide { grid-column: span 1; } }
+</style>
