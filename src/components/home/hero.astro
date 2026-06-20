@@ -1,6 +1,7 @@
 ---
 import { landingData } from '../../data/landing';
 import { siteConfig } from '../../data/site';
+import { ArrowRight, CalendarDays, MapPin, MessageCircle } from '@lucide/astro';
 
 const { hero } = landingData;
 
@@ -26,9 +27,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		<dl class="hero__details">
 			<div class="hero__detail">
 				<div class="hero__icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-					</svg>
+					<CalendarDays />
 				</div>
 				<div>
 					<dt>{hero.date.label}</dt>
@@ -38,10 +37,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 
 			<div class="hero__detail hero__detail--accent">
 				<div class="hero__icon hero__icon--accent" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
-						<circle cx="12" cy="10" r="3" />
-					</svg>
+					<MapPin />
 				</div>
 				<div>
 					<dt>{hero.location.label}</dt>
@@ -62,7 +58,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 				rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
 			>
 				{hero.primaryCta.label}
-				<span aria-hidden="true">→</span>
+				<ArrowRight class="hero__action-icon" aria-hidden="true" />
 			</a>
 
 			<a
@@ -72,7 +68,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 				rel={isExternalGroup ? 'noopener noreferrer' : undefined}
 			>
 				{hero.secondaryCta.label}
-				<span aria-hidden="true">▣</span>
+				<MessageCircle class="hero__action-icon" aria-hidden="true" />
 			</a>
 		</div>
 
@@ -242,6 +238,12 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 	.hero__action--secondary {
 		border: 1px solid var(--df-accent);
 		color: var(--df-accent);
+	}
+
+	.hero__action-icon {
+		width: 1.4rem;
+		height: 1.4rem;
+		flex: 0 0 auto;
 	}
 
 	.hero__action:focus-visible {

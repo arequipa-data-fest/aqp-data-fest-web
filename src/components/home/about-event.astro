@@ -2,39 +2,42 @@
 import { landingData } from '../../data/landing';
 
 const { aboutEvent } = landingData;
+const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 ---
 
 <section class="about-event" aria-labelledby="about-event-title">
-	<h2 id="about-event-title">{aboutEvent.title}</h2>
+	<h2 id="about-event-title" class="about-event__title">{aboutEvent.title}</h2>
 
 	<div class="about-event__content">
-		<div class="about-event__media" aria-hidden="true"></div>
+		<div class="about-event__media">
+			<img
+				src={aboutEvent.media.imageUrl}
+				alt={aboutEvent.media.alt}
+				width={aboutEvent.media.width}
+				height={aboutEvent.media.height}
+				loading="lazy"
+				decoding="async"
+			/>
+		</div>
 
 		<div class="about-event__info">
 			<div class="about-event__text">
-				{aboutEvent.description.map((line) => (
-					<p>{line}</p>
-				))}
+				{aboutEvent.description.map((paragraph) => <p>{paragraph}</p>)}
 			</div>
 
-			<div class="about-event__logos">
-				<div>
+			<div class="about-event__partners">
+				<div class="about-event__partner-headings">
 					<h3>{aboutEvent.organizersLabel}</h3>
-					<div class="about-event__logo-row">
-						{aboutEvent.organizers.map((item) => (
-							<img src={item.logoUrl} alt={item.alt} loading="lazy" />
-						))}
-					</div>
+					<h3>{aboutEvent.collaboratorLabel}</h3>
 				</div>
 
-				<div>
-					<h3>{aboutEvent.collaboratorLabel}</h3>
-					<div class="about-event__logo-row about-event__logo-row--single">
-						{aboutEvent.collaborators.map((item) => (
-							<img src={item.logoUrl} alt={item.alt} loading="lazy" />
-						))}
-					</div>
-				</div>
+				<ul class="about-event__logo-list">
+					{partnerLogos.map((item) => (
+						<li class="about-event__logo-frame">
+							<img src={item.logoUrl} alt={item.alt} loading="lazy" decoding="async" />
+						</li>
+					))}
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -43,32 +46,45 @@ const { aboutEvent } = landingData;
 <style>
 	.about-event {
 		background: var(--df-page);
-		padding: 3rem 3.5rem 4rem;
+		padding: 4rem 3.5rem;
 	}
 
-	.about-event h2 {
+	.about-event__title {
 		margin: 0 0 3rem;
-		color: var(--df-accent-soft);
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent));
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
 		font-size: clamp(2rem, 4vw, 3.5rem);
 		font-weight: 800;
-		letter-spacing: 0.35em;
+		letter-spacing: 0.2em;
 		text-align: center;
 		text-transform: uppercase;
 	}
 
 	.about-event__content {
 		display: grid;
-		grid-template-columns: 0.9fr 1.25fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		align-items: center;
 		gap: 3rem;
-		max-width: 66rem;
+		max-width: 72rem;
 		margin-inline: auto;
 	}
 
 	.about-event__media {
-		min-height: 26rem;
-		border: 2px solid var(--df-text);
-		border-radius: 0.3rem;
+		position: relative;
+		aspect-ratio: 812 / 437;
+		overflow: hidden;
+		border: 1px solid var(--df-line);
+		border-radius: 0.4rem;
+		background: var(--df-card);
+	}
+
+	.about-event__media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.about-event__info {
@@ -87,39 +103,51 @@ const { aboutEvent } = landingData;
 		margin: 0;
 		color: var(--df-text);
 		font-size: var(--df-text-body);
-		line-height: 1.35;
+		line-height: 1.5;
 	}
 
-	.about-event__logos {
+	.about-event__partners {
 		display: grid;
-		grid-template-columns: 1.3fr 0.7fr;
+		gap: 1rem;
+	}
+
+	.about-event__partner-headings {
+		display: grid;
+		grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
 		align-items: start;
 		gap: 2rem;
 	}
 
-	.about-event h3 {
+	.about-event__partner-headings h3 {
 		margin: 0 0 1rem;
-		color: var(--df-text-muted);
+		color: var(--df-accent);
 		font-size: clamp(1.2rem, 2vw, 1.6rem);
 		font-weight: 800;
 	}
 
-	.about-event__logo-row {
-		display: flex;
+	.about-event__logo-list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		align-items: center;
+		justify-items: center;
 		gap: 1.2rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.about-event__logo-row img {
-		max-height: 5.5rem;
-		max-width: 15rem;
-		width: auto;
-		height: auto;
+	.about-event__logo-frame {
+		display: grid;
+		width: 100%;
+		height: 7.15rem;
+		place-items: center;
+	}
+
+	.about-event__logo-frame img {
+		display: block;
+		width: 100%;
+		height: 5.5rem;
 		object-fit: contain;
-	}
-
-	.about-event__logo-row--single {
-		justify-content: center;
 	}
 
 	@media (max-width: 900px) {
@@ -131,8 +159,5 @@ const { aboutEvent } = landingData;
 			grid-template-columns: 1fr;
 		}
 
-		.about-event__logos {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

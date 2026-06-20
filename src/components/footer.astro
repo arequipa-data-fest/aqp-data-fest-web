@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../data/site";
+import { ArrowRight, MessageCircle } from "@lucide/astro";
 
 const registrationHref = siteConfig.registrationUrl || "#registro";
 const informativeGroupHref =
@@ -21,7 +22,8 @@ const { footer, logo } = siteConfig;
           target={isExternalRegistration ? "_blank" : undefined}
           rel={isExternalRegistration ? "noopener noreferrer" : undefined}
         >
-          {footer.registrationLabel}<span aria-hidden="true">→</span>
+          {footer.registrationLabel}
+          <ArrowRight class="footer-button__icon" aria-hidden="true" />
         </a>
         <a
           class="footer-button footer-button--outline"
@@ -29,7 +31,8 @@ const { footer, logo } = siteConfig;
           target={isExternalGroup ? "_blank" : undefined}
           rel={isExternalGroup ? "noopener noreferrer" : undefined}
         >
-          {footer.groupLabel}<span aria-hidden="true">▣</span>
+          {footer.groupLabel}
+          <MessageCircle class="footer-button__icon" aria-hidden="true" />
         </a>
       </div>
 
@@ -106,6 +109,11 @@ const { footer, logo } = siteConfig;
   .footer-button--outline {
     border: 1px solid var(--df-accent);
     color: var(--df-accent);
+  }
+  .footer-button__icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: 0 0 auto;
   }
   .footer-logo {
     display: block;

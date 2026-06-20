@@ -21,27 +21,33 @@ export const landingData = {
 		],
 	},
 	aboutEvent: {
-	title: 'Conoce mas del evento',
-	description: [
-		'Sumérgete en la frontera de la Inteligencia Artificial y la Ciencia de Datos. Un evento diseñado para conectar, aprender e innovar a través de masterclass y paneles con referentes de alto nivel, desafiamos ideas, ampliamos perspectivas y transformamos la formación académica en visión, acción e impacto real.',
-	],
-	organizersLabel: 'Organizadores',
-	collaboratorLabel: 'Colaborador',
-	organizers: [
-		{
-			logoUrl: '/logos/acm-ia.png',
-			alt: 'ACM Comité de IA',
+		title: 'Conoce más del evento',
+		description: [
+			'Sumérgete en la frontera de la Inteligencia Artificial y la Ciencia de Datos. Un evento diseñado para conectar, aprender e innovar a través de masterclass y paneles con referentes de alto nivel, desafiamos ideas, ampliamos perspectivas y transformamos la formación académica en visión, acción e impacto real.',
+		],
+		media: {
+			imageUrl: '/logos/ACM-FOTO.png',
+			alt: 'Integrantes del ACM Comité de IA de la UNSA',
+			width: 812,
+			height: 437,
 		},
-		{
-			logoUrl: '/logos/unsa.png',
-			alt: 'Universidad Nacional de San Agustín de Arequipa',
-		},
-	],
-	collaborators: [
-		{
-			logoUrl: '/logos/data-wizard.png',
-			alt: 'Data Wizard',
-		},
-	],
-}
+		organizersLabel: 'Organizadores',
+		collaboratorLabel: 'Colaborador',
+		organizers: [
+			{
+				logoUrl: '/logos/ACM-IA-LOGO.png',
+				alt: 'ACM Comité de IA',
+			},
+			{
+				logoUrl: '/logos/UNSA-LOGO.png',
+				alt: 'Universidad Nacional de San Agustín de Arequipa',
+			},
+		],
+		collaborators: [
+			{
+				logoUrl: '/logos/DATA-WIZZARDS-LOGO.png',
+				alt: 'Data Wizard',
+			},
+		],
+	},
 } as const;

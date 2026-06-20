@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/main-layout.astro';
+import AboutEvent from '../components/home/about-event.astro';
 import Hero from '../components/home/hero.astro';
 import Countdown from '../components/home/countdown.astro';
 import { siteConfig } from '../data/site';
@@ -8,4 +9,5 @@ import { siteConfig } from '../data/site';
 <MainLayout title={siteConfig.name} description={siteConfig.description}>
 	<Hero />
 	<Countdown />
+	<AboutEvent />
 </MainLayout>

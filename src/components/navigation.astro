@@ -1,5 +1,6 @@
 ---
 import { navigationLinks, siteConfig } from '../data/site';
+import { ArrowRight } from '@lucide/astro';
 
 const registrationHref = siteConfig.registrationUrl || '#registro';
 const isExternalRegistration = siteConfig.registrationUrl.startsWith('http');
@@ -46,6 +47,7 @@ const { logo, navigation } = siteConfig;
       rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
     >
       {navigation.registrationLabel}
+      <ArrowRight class="nav-cta__icon" aria-hidden="true" />
     </a>
 
     <details class="nav-mobile lg:hidden">
@@ -87,6 +89,7 @@ const { logo, navigation } = siteConfig;
           rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
         >
           {navigation.registrationLabel}
+          <ArrowRight class="nav-cta__icon" aria-hidden="true" />
         </a>
       </nav>
     </details>
@@ -163,6 +166,12 @@ const { logo, navigation } = siteConfig;
 
   .nav-cta--desktop {
     padding: 1rem 1.75rem;
+  }
+
+  .nav-cta__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0 0 auto;
   }
 
   .nav-mobile {
