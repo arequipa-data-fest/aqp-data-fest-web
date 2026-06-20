@@ -22,7 +22,7 @@ const { logo, navigation } = siteConfig;
       />
     </a>
 
-    <nav class="nav-links hidden lg:flex" aria-label={navigation.mainAriaLabel}>
+    <nav class="nav-links hidden xl:flex" aria-label={navigation.mainAriaLabel}>
       {
         navigationLinks.map((link) => {
           const isActive = currentPath === link.href;
@@ -41,7 +41,7 @@ const { logo, navigation } = siteConfig;
     </nav>
 
     <a
-      class="nav-cta nav-cta--desktop hidden lg:inline-flex"
+      class="nav-cta nav-cta--desktop hidden xl:inline-flex"
       href={registrationHref}
       target={isExternalRegistration ? '_blank' : undefined}
       rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
@@ -50,7 +50,7 @@ const { logo, navigation } = siteConfig;
       <ArrowRight class="nav-cta__icon" aria-hidden="true" />
     </a>
 
-    <details class="nav-mobile lg:hidden">
+    <details class="nav-mobile xl:hidden">
       <summary class="nav-menu-toggle">
         <span class="sr-only">{navigation.mobileMenuLabel}</span>
 
@@ -111,6 +111,7 @@ const { logo, navigation } = siteConfig;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
+		min-width: 0;
     padding: 0.75rem 1.25rem;
   }
 
@@ -127,6 +128,7 @@ const { logo, navigation } = siteConfig;
   .nav-links {
     align-items: center;
     gap: 1.5rem;
+		min-width: 0;
   }
 
   .nav-link {
@@ -156,6 +158,8 @@ const { logo, navigation } = siteConfig;
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.025em;
+		max-inline-size: 100%;
+		text-align: center;
     text-decoration: none;
     transition: background 150ms ease;
   }
@@ -203,7 +207,7 @@ const { logo, navigation } = siteConfig;
     position: absolute;
     right: 0;
     top: calc(100% + 0.75rem);
-    width: 18rem;
+		width: min(18rem, calc(100vw - 2.5rem));
     padding: 1rem;
     border: 1px solid rgb(255 255 255 / 10%);
     background: var(--df-navigation);
@@ -255,14 +259,15 @@ const { logo, navigation } = siteConfig;
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .nav-container {
-      min-height: 8rem;
-      padding: 1rem 3.5rem;
+      min-height: 6rem;
+      gap: 1rem;
+      padding: 1rem 2.5rem;
     }
 
     .nav-logo img {
-      width: 23rem;
+      width: 18rem;
     }
   }
 </style>

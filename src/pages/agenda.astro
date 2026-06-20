@@ -1,11 +1,27 @@
 ---
+import AgendaTimeline from '../components/agenda/agenda-timeline.astro';
+import { agendaPage } from '../data/agenda';
 import MainLayout from '../layouts/main-layout.astro';
+
+const { meta, header, items } = agendaPage;
 ---
 
-<MainLayout title="Agenda | Arequipa Data Fest 2026" description="Agenda oficial del Arequipa Data Fest 2026.">
-	<section class="page-intro" aria-labelledby="agenda-title">
-		<p>Programación del evento</p>
-		<h1 id="agenda-title">Agenda oficial</h1>
-		<p>Descubre las ponencias y horarios del Arequipa Data Fest 2026.</p>
+<MainLayout title={meta.title} description={meta.description}>
+	<section class="agenda-hero" aria-labelledby="agenda-title">
+		<h1 id="agenda-title">
+			<span>{header.kicker}</span>
+			<strong>{header.title}</strong>
+		</h1>
+		<p>{header.description}</p>
 	</section>
+
+	<AgendaTimeline items={items} />
 </MainLayout>
+
+<style>
+	.agenda-hero { background: var(--df-page); padding: 4rem 1.25rem 1.5rem; text-align: center; }
+	.agenda-hero h1 { margin: 0; text-transform: uppercase; }
+	.agenda-hero h1 span { display: block; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(4rem, 10vw, 7rem); font-weight: 900; line-height: 0.9; }
+	.agenda-hero h1 strong { display: block; color: var(--df-text); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1; }
+	.agenda-hero p { max-width: 72rem; margin: 1.5rem auto 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.45; }
+</style>

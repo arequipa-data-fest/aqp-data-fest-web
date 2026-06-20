@@ -58,7 +58,7 @@ const { header, speakers } = speakersPage;
 	.speakers-hero p { margin: 0; color: var(--df-text); font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 900; line-height: 1; text-transform: uppercase; }
 	.speakers-hero h1 { margin: 0; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(4rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.9; letter-spacing: 0.02em; text-transform: uppercase; }
 	.speakers-hero span { display: block; max-width: 44rem; margin: 1rem auto 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.5; }
-	.speakers-showcase { background: var(--df-page); padding: 2rem 3.5rem 5rem; }
+	.speakers-showcase { background: var(--df-page); padding: 2rem clamp(1.25rem, 5vw, 3.5rem) 5rem; }
 	.speakers-showcase__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; max-width: 88rem; margin: 0 auto; padding: 0; list-style: none; }
 	.speakers-showcase__item { display: flex; min-width: 0; }
 	.speakers-showcase__item--wide { grid-column: span 2; }

@@ -1,0 +1,29 @@
+---
+import AgendaItem from './agenda-item.astro';
+
+interface AgendaItemData {
+	time: string;
+	title: string;
+	role?: string;
+	speaker?: string;
+	type?: 'session' | 'break';
+	icon?: 'coffee' | 'lunch';
+}
+
+interface Props {
+	items: readonly AgendaItemData[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="agenda-timeline" aria-label="Cronograma del evento">
+	<div class="agenda-timeline__content">
+		{items.map((item) => <AgendaItem time={item.time} title={item.title} role={item.role} speaker={item.speaker} type={item.type} icon={item.icon} />)}
+	</div>
+</section>
+
+<style>
+	.agenda-timeline { background: var(--df-page); padding: 1.5rem 1.25rem 5rem; }
+	.agenda-timeline__content { display: grid; gap: 0.5rem; max-width: 72rem; margin-inline: auto; }
+</style>

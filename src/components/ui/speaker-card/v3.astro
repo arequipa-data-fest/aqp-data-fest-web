@@ -47,12 +47,12 @@ const { name, role, description, imageUrl, imageAlt, imageWidth, imageHeight, ba
 </article>
 
 <style>
-	.speaker-card-v3 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
+	.speaker-card-v3 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
 	.speaker-card-v3--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-v3--accent { --speaker-card-accent: var(--df-accent); }
-	.speaker-card-v3__image { min-height: 28rem; background: var(--df-card); }
+	.speaker-card-v3__image { min-height: 28rem; overflow: hidden; background: var(--df-card); }
 	.speaker-card-v3__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
-	.speaker-card-v3__content { display: flex; flex-direction: column; justify-content: center; padding: 3rem; }
+	.speaker-card-v3__content { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 3rem; }
 	.speaker-card-v3__badge { width: fit-content; margin-bottom: 1.5rem; border: 1px solid var(--speaker-card-accent); border-radius: 999px; background: color-mix(in srgb, var(--speaker-card-accent) 18%, transparent); color: var(--speaker-card-accent); padding: 0.4rem 1rem; font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.12em; }
 	.speaker-card-v3 h3 { margin: 0; color: var(--df-text); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.15; }
 	.speaker-card-v3__role { margin: 1.25rem 0 0; color: var(--speaker-card-accent); font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 700; }

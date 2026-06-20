@@ -85,7 +85,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		min-height: calc(100vh - 8rem);
 		overflow: hidden;
 		background: var(--df-page);
-		padding: 2.5rem 3.5rem;
+		padding: 2.5rem clamp(1.25rem, 5vw, 3.5rem);
 	}
 
 	.hero::before {
@@ -112,6 +112,7 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		z-index: 2;
 		width: 100%;
 		max-width: 43rem;
+		min-width: 0;
 		text-align: center;
 	}
 
@@ -163,10 +164,15 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		border-radius: 0.45rem;
 		background: var(--df-card);
 		text-align: left;
+		min-width: 0;
 	}
 
 	.hero__detail--accent {
 		border-color: color-mix(in srgb, var(--df-primary) 50%, var(--df-line));
+	}
+
+	.hero__detail > div:last-child {
+		min-width: 0;
 	}
 
 	.hero__icon {
@@ -227,6 +233,8 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		font-weight: 700;
 		text-decoration: none;
 		letter-spacing: 0.03em;
+		max-inline-size: 100%;
+		text-align: center;
 	}
 
 	.hero__action--primary {
