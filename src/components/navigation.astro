@@ -4,80 +4,256 @@ import { navigationLinks, siteConfig } from '../data/site';
 const registrationHref = siteConfig.registrationUrl || '#registro';
 const isExternalRegistration = siteConfig.registrationUrl.startsWith('http');
 const currentPath = Astro.url.pathname;
+const { logo, navigation } = siteConfig;
 ---
 
-<header class="relative z-50 bg-navigation/95 shadow-[0_8px_24px_rgb(0_0_0_/_20%)] backdrop-blur-md">
-	<a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+<header class="nav-shell">
+  <a class="skip-link" href="#main-content">{navigation.skipLinkLabel}</a>
 
-	<div class="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-5 py-3 sm:px-8 lg:min-h-32 lg:px-14 lg:py-4">
-		<a class="shrink-0" href="/" aria-label="Ir al inicio de Arequipa Data Fest 2026">
-			<img
-				src={siteConfig.logoUrl}
-				alt="Arequipa Data Fest 2026"
-				width="449"
-				height="129"
-				class="h-auto w-40 sm:w-52 lg:w-[23rem]"
-				fetchpriority="high"
-			/>
-		</a>
+  <div class="nav-container">
+    <a class="nav-logo" href="/" aria-label={logo.alt}>
+      <img
+        src={siteConfig.logoUrl}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        fetchpriority="high"
+      />
+    </a>
 
-		<nav class="hidden items-center gap-6 lg:flex" aria-label="Navegación principal">
-			{navigationLinks.map((link) => {
-				const isActive = currentPath === link.href;
+    <nav class="nav-links hidden lg:flex" aria-label={navigation.mainAriaLabel}>
+      {
+        navigationLinks.map((link) => {
+          const isActive = currentPath === link.href;
 
-				return (
-				<a
-					href={link.href}
-					aria-current={isActive ? 'page' : undefined}
-					class:list={[
-						'border-b-2 pb-1 text-xl font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent',
-						isActive
-							? 'border-accent-soft text-accent-soft'
-							: 'border-transparent text-text hover:border-accent hover:text-accent',
-					]}
-				>
-					{link.label}
-				</a>
-				);
-			})}
-		</nav>
+          return (
+            <a
+              href={link.href}
+              aria-current={isActive ? 'page' : undefined}
+              class:list={['nav-link', { 'nav-link--active': isActive }]}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+    </nav>
 
-		<a
-			href={registrationHref}
-			target={isExternalRegistration ? '_blank' : undefined}
-			rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
-			class="hidden bg-primary px-7 py-4 text-xl font-semibold tracking-wide text-white shadow-glow transition hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:inline-flex"
-		>
-			Inscríbete
-		</a>
+    <a
+      class="nav-cta nav-cta--desktop hidden lg:inline-flex"
+      href={registrationHref}
+      target={isExternalRegistration ? '_blank' : undefined}
+      rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+    >
+      {navigation.registrationLabel}
+    </a>
 
-		<details class="group relative lg:hidden">
-			<summary class="flex size-11 cursor-pointer list-none items-center justify-center border border-accent/50 text-accent marker:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
-				<span class="sr-only">Abrir menú de navegación</span>
-				<svg aria-hidden="true" viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M4 7h16M4 12h16M4 17h16" />
-				</svg>
-			</summary>
+    <details class="nav-mobile lg:hidden">
+      <summary class="nav-menu-toggle">
+        <span class="sr-only">{navigation.mobileMenuLabel}</span>
 
-			<nav class="absolute right-0 top-[calc(100%+0.75rem)] w-72 border border-white/10 bg-navigation p-4 shadow-2xl" aria-label="Navegación móvil">
-				<ul class="space-y-1">
-					{navigationLinks.map((link) => (
-						<li>
-							<a aria-current={currentPath === link.href ? 'page' : undefined} class="block px-3 py-3 font-semibold text-text transition hover:bg-white/5 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" href={link.href}>
-								{link.label}
-							</a>
-						</li>
-					))}
-				</ul>
-				<a
-					href={registrationHref}
-					target={isExternalRegistration ? '_blank' : undefined}
-					rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
-					class="mt-4 flex justify-center bg-primary px-5 py-3 font-semibold text-white shadow-glow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-				>
-					Inscríbete
-				</a>
-			</nav>
-		</details>
-	</div>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </summary>
+
+      <nav class="nav-mobile-panel" aria-label={navigation.mobileAriaLabel}>
+        <ul>
+          {
+            navigationLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={currentPath === link.href ? 'page' : undefined}
+                  class="nav-mobile-link"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a
+          class="nav-cta nav-cta--mobile"
+          href={registrationHref}
+          target={isExternalRegistration ? '_blank' : undefined}
+          rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+        >
+          {navigation.registrationLabel}
+        </a>
+      </nav>
+    </details>
+  </div>
 </header>
+
+<style>
+  .nav-shell {
+    position: relative;
+    z-index: 50;
+    background: var(--df-navigation);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+    backdrop-filter: blur(0.75rem);
+  }
+
+  .nav-container {
+    display: flex;
+    min-height: 5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .nav-logo {
+    flex-shrink: 0;
+  }
+
+  .nav-logo img {
+    display: block;
+    width: 10rem;
+    height: auto;
+  }
+
+  .nav-links {
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 0.25rem;
+    color: var(--df-text);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .nav-link:hover,
+  .nav-link--active {
+    border-color: var(--df-accent-soft);
+    color: var(--df-accent-soft);
+  }
+
+  .nav-cta {
+    align-items: center;
+    justify-content: center;
+    background: var(--df-primary);
+    color: var(--df-on-primary);
+    box-shadow: 0 0 10px var(--df-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    text-decoration: none;
+    transition: background 150ms ease;
+  }
+
+  .nav-cta:hover {
+    background: var(--df-primary-hover);
+  }
+
+  .nav-cta--desktop {
+    padding: 1rem 1.75rem;
+  }
+
+  .nav-mobile {
+    position: relative;
+  }
+
+  .nav-menu-toggle {
+    display: flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--df-accent);
+    color: var(--df-accent);
+  }
+
+  .nav-menu-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-menu-toggle svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .nav-mobile-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.75rem);
+    width: 18rem;
+    padding: 1rem;
+    border: 1px solid rgb(255 255 255 / 10%);
+    background: var(--df-navigation);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+  }
+
+  .nav-mobile-panel ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-mobile-link {
+    display: block;
+    padding: 0.75rem;
+    color: var(--df-text);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .nav-mobile-link:hover,
+  .nav-mobile-link[aria-current='page'] {
+    background: rgb(255 255 255 / 5%);
+    color: var(--df-accent);
+  }
+
+  .nav-cta--mobile {
+    display: flex;
+    margin-top: 1rem;
+    padding: 0.75rem;
+  }
+
+  .nav-link:focus-visible,
+  .nav-cta:focus-visible,
+  .nav-menu-toggle:focus-visible,
+  .nav-mobile-link:focus-visible {
+    outline: 2px solid var(--df-accent);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 640px) {
+    .nav-container {
+      padding-inline: 2rem;
+    }
+
+    .nav-logo img {
+      width: 13rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .nav-container {
+      min-height: 8rem;
+      padding: 1rem 3.5rem;
+    }
+
+    .nav-logo img {
+      width: 23rem;
+    }
+  }
+</style>

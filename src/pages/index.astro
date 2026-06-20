@@ -1,36 +1,9 @@
 ---
 import MainLayout from '../layouts/main-layout.astro';
+import Hero from '../components/home/hero.astro';
 import { siteConfig } from '../data/site';
 ---
 
 <MainLayout title={siteConfig.name} description={siteConfig.description}>
-	<section class="home-hero" aria-labelledby="landing-title">
-		<svg class="home-visual" viewBox="0 0 600 430" role="presentation" aria-hidden="true">
-			<defs>
-				<linearGradient id="hero-network-gradient" x1="0" x2="1" y1="1" y2="0">
-					<stop stop-color="var(--df-primary)" />
-					<stop offset="1" stop-color="var(--df-accent)" />
-				</linearGradient>
-			</defs>
-			<path class="home-network-path" d="M28 352 154 226l90 86 92-179 82 142 80-195 78 272" />
-			<path class="home-network-path home-network-line" d="M28 352c111-80 182-33 272-119S465 265 574 112" />
-			<path class="home-network-path home-network-line" d="M24 379c144-46 185-114 293-85s137 63 250-8" />
-			{[[28, 352], [154, 226], [244, 312], [336, 133], [418, 275], [498, 80], [574, 352]].map(([cx, cy]) => <circle class="home-network-node" cx={cx} cy={cy} r="10" />)}
-		</svg>
-
-		<div class="home-copy">
-			<p class="home-kicker">Arequipa Data Fest 2026</p>
-			<h1 id="landing-title" class="home-title">El futuro se construye con <strong>datos</strong></h1>
-			<p class="home-description">{siteConfig.description}</p>
-			<div class="home-details">
-				<div class="home-detail"><b>FECHA</b><span>10 de julio</span></div>
-				<div class="home-detail"><b>LUGAR</b><span>Auditorio UNSA<br />Escuela</span></div>
-			</div>
-			<div class="home-actions">
-				<a class="home-action home-action-primary" href="#registro">Quiero ser parte →</a>
-				<a class="home-action home-action-secondary" href="#grupo-informativo">Grupo informativo</a>
-			</div>
-			<p class="home-stat">+4,600 <span>inscritos</span></p>
-		</div>
-	</section>
+	<Hero />
 </MainLayout>
