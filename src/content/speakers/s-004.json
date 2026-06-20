@@ -1,0 +1,15 @@
+{
+  "name": "Luis Coronel",
+  "company": "",
+  "role": "Data Eng",
+  "imageFilename": "SPEAKER.png",
+  "imageAlt": "Luis Coronel",
+  "imageWidth": 268,
+  "imageHeight": 268,
+  "tags": [
+    {
+      "label": "Data Eng"
+    }
+  ],
+  "variant": "v1"
+}

@@ -1,12 +1,15 @@
 ---
+import { getImagePath } from '@config/assets';
+
 interface Speaker {
 	name: string;
-	company: string;
-	tag: string;
-	imageUrl: string;
+	company?: string;
+	role: string;
+	imageFilename: string;
 	imageAlt: string;
 	imageWidth: number;
 	imageHeight: number;
+	tags: { label: string }[];
 }
 
 interface Props {
@@ -19,7 +22,7 @@ const { speaker, accent } = Astro.props;
 
 <article class:list={['speaker-card-v1', `speaker-card-v1--${accent}`]}>
 	<img
-		src={speaker.imageUrl}
+		src={getImagePath(speaker.imageFilename)}
 		alt={speaker.imageAlt}
 		width={speaker.imageWidth}
 		height={speaker.imageHeight}
@@ -28,7 +31,7 @@ const { speaker, accent } = Astro.props;
 	/>
 
 	<div class="speaker-card-v1__details">
-		<span>{speaker.tag}</span>
+		{speaker.tags[0] && <span>{speaker.tags[0].label}</span>}
 		<h3>{speaker.name}</h3>
 		{speaker.company && <p>{speaker.company}</p>}
 	</div>

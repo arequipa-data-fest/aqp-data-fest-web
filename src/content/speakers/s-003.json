@@ -1,0 +1,15 @@
+{
+  "name": "Yury",
+  "company": "Google",
+  "role": "Cloud Arch",
+  "imageFilename": "SPEAKER.png",
+  "imageAlt": "Yury",
+  "imageWidth": 268,
+  "imageHeight": 268,
+  "tags": [
+    {
+      "label": "Cloud Arch"
+    }
+  ],
+  "variant": "v1"
+}

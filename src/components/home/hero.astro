@@ -1,20 +1,30 @@
 ---
-import { landingData } from '../../data/landing';
-import { siteConfig } from '../../data/site';
-import { ArrowRight, CalendarDays, MapPin, MessageCircle } from '@lucide/astro';
+import { getImagePath } from "@config/assets";
+import { siteConfig } from "@data/site";
+import { ArrowRight, CalendarDays, MapPin, MessageCircle } from "@lucide/astro";
+import type { CollectionEntry } from "astro:content";
 
-const { hero } = landingData;
+interface Props {
+	hero: CollectionEntry<"landing">["data"]["hero"];
+}
+
+const { hero } = Astro.props;
 
 const registrationHref = siteConfig.registrationUrl || hero.primaryCta.href;
 const informativeGroupHref =
 	siteConfig.informativeGroupUrl || hero.secondaryCta.href;
 
-const isExternalRegistration = registrationHref.startsWith('http');
-const isExternalGroup = informativeGroupHref.startsWith('http');
+const isExternalRegistration = registrationHref.startsWith("http");
+const isExternalGroup = informativeGroupHref.startsWith("http");
 ---
 
 <section class="hero" aria-labelledby="landing-title">
-	<img class="hero__logo-bg" src="/logos/LOGO-LIMPIO.png" alt="" loading="eager" />
+	<img
+		class="hero__logo-bg"
+		src={getImagePath("LOGO-LIMPIO.png")}
+		alt=""
+		loading="eager"
+	/>
 
 	<div class="hero__copy">
 		<h1 id="landing-title" class="hero__title">
@@ -42,9 +52,14 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 				<div>
 					<dt>{hero.location.label}</dt>
 					<dd>
-						{hero.location.value.map((line) => (
-							<Fragment>{line}<br /></Fragment>
-						))}
+						{
+							hero.location.value.map((line) => (
+								<Fragment>
+									{line}
+									<br />
+								</Fragment>
+							))
+						}
 					</dd>
 				</div>
 			</div>
@@ -54,8 +69,8 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 			<a
 				class="hero__action hero__action--primary"
 				href={registrationHref}
-				target={isExternalRegistration ? '_blank' : undefined}
-				rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+				target={isExternalRegistration ? "_blank" : undefined}
+				rel={isExternalRegistration ? "noopener noreferrer" : undefined}
 			>
 				{hero.primaryCta.label}
 				<ArrowRight class="hero__action-icon" aria-hidden="true" />
@@ -64,14 +79,13 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 			<a
 				class="hero__action hero__action--secondary"
 				href={informativeGroupHref}
-				target={isExternalGroup ? '_blank' : undefined}
-				rel={isExternalGroup ? 'noopener noreferrer' : undefined}
+				target={isExternalGroup ? "_blank" : undefined}
+				rel={isExternalGroup ? "noopener noreferrer" : undefined}
 			>
 				{hero.secondaryCta.label}
 				<MessageCircle class="hero__action-icon" aria-hidden="true" />
 			</a>
 		</div>
-
 	</div>
 </section>
 
@@ -89,10 +103,14 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 	}
 
 	.hero::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(circle at 72% 22%, var(--df-primary-soft), transparent 28rem);
+		background: radial-gradient(
+			circle at 72% 22%,
+			var(--df-primary-soft),
+			transparent 28rem
+		);
 		pointer-events: none;
 	}
 
@@ -207,7 +225,6 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 		line-height: 1.45;
 	}
 
-
 	.hero__actions {
 		display: flex;
 		flex-wrap: wrap;
@@ -232,7 +249,8 @@ const isExternalGroup = informativeGroupHref.startsWith('http');
 	.hero__action--primary {
 		background: var(--df-primary);
 		color: var(--df-on-primary);
-		box-shadow: 0 0 18px color-mix(in srgb, var(--df-primary) 45%, transparent);
+		box-shadow: 0 0 18px
+			color-mix(in srgb, var(--df-primary) 45%, transparent);
 	}
 
 	.hero__action--secondary {

@@ -1,8 +1,12 @@
 ---
 import { BrainCircuit, ChartColumnBig, Cloud, Database } from '@lucide/astro';
-import { landingData } from '../../data/landing';
+import type { CollectionEntry } from 'astro:content';
 
-const { mainTopics } = landingData;
+interface Props {
+	mainTopics: CollectionEntry<'landing'>['data']['mainTopics'];
+}
+
+const { mainTopics } = Astro.props;
 const iconMap = { ai: BrainCircuit, database: Database, analytics: ChartColumnBig, cloud: Cloud };
 ---
 

@@ -1,9 +1,9 @@
 ---
-import { navigationLinks, siteConfig } from '../data/site';
-import { ArrowRight } from '@lucide/astro';
+import { navigationLinks, siteConfig } from "@data/site";
+import { ArrowRight } from "@lucide/astro";
 
-const registrationHref = siteConfig.registrationUrl || '#registro';
-const isExternalRegistration = siteConfig.registrationUrl.startsWith('http');
+const registrationHref = siteConfig.registrationUrl || "#registro";
+const isExternalRegistration = siteConfig.registrationUrl.startsWith("http");
 const currentPath = Astro.url.pathname;
 const { logo, navigation } = siteConfig;
 ---
@@ -30,8 +30,8 @@ const { logo, navigation } = siteConfig;
           return (
             <a
               href={link.href}
-              aria-current={isActive ? 'page' : undefined}
-              class:list={['nav-link', { 'nav-link--active': isActive }]}
+              aria-current={isActive ? "page" : undefined}
+              class:list={["nav-link", { "nav-link--active": isActive }]}
             >
               {link.label}
             </a>
@@ -43,8 +43,8 @@ const { logo, navigation } = siteConfig;
     <a
       class="nav-cta nav-cta--desktop hidden lg:inline-flex"
       href={registrationHref}
-      target={isExternalRegistration ? '_blank' : undefined}
-      rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+      target={isExternalRegistration ? "_blank" : undefined}
+      rel={isExternalRegistration ? "noopener noreferrer" : undefined}
     >
       {navigation.registrationLabel}
       <ArrowRight class="nav-cta__icon" aria-hidden="true" />
@@ -61,7 +61,7 @@ const { logo, navigation } = siteConfig;
           stroke="currentColor"
           stroke-width="2"
         >
-          <path d="M4 7h16M4 12h16M4 17h16" />
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
         </svg>
       </summary>
 
@@ -72,7 +72,7 @@ const { logo, navigation } = siteConfig;
               <li>
                 <a
                   href={link.href}
-                  aria-current={currentPath === link.href ? 'page' : undefined}
+                  aria-current={currentPath === link.href ? "page" : undefined}
                   class="nav-mobile-link"
                 >
                   {link.label}
@@ -85,8 +85,8 @@ const { logo, navigation } = siteConfig;
         <a
           class="nav-cta nav-cta--mobile"
           href={registrationHref}
-          target={isExternalRegistration ? '_blank' : undefined}
-          rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+          target={isExternalRegistration ? "_blank" : undefined}
+          rel={isExternalRegistration ? "noopener noreferrer" : undefined}
         >
           {navigation.registrationLabel}
           <ArrowRight class="nav-cta__icon" aria-hidden="true" />
@@ -226,7 +226,7 @@ const { logo, navigation } = siteConfig;
   }
 
   .nav-mobile-link:hover,
-  .nav-mobile-link[aria-current='page'] {
+  .nav-mobile-link[aria-current="page"] {
     background: rgb(255 255 255 / 5%);
     color: var(--df-accent);
   }

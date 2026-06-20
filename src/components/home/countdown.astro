@@ -1,8 +1,12 @@
 ---
-import { landingData } from '../../data/landing';
 import DataNetworkDivider from '../ui/data-network-divider.astro';
+import type { CollectionEntry } from 'astro:content';
 
-const { countdown } = landingData;
+interface Props {
+	countdown: CollectionEntry<'landing'>['data']['countdown'];
+}
+
+const { countdown } = Astro.props;
 ---
 
 <section class="countdown" aria-label={countdown.ariaLabel} data-countdown data-target-date={countdown.targetDate}>
