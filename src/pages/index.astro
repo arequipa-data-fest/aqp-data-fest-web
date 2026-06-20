@@ -1,7 +1,10 @@
 ---
 import MainLayout from '../layouts/main-layout.astro';
 import AboutEvent from '../components/home/about-event.astro';
+import Experience from '../components/home/experience.astro';
+import FeaturedSpeakers from '../components/home/featured-speakers.astro';
 import Hero from '../components/home/hero.astro';
+import MainTopics from '../components/home/main-topics.astro';
 import Countdown from '../components/home/countdown.astro';
 import { siteConfig } from '../data/site';
 ---
@@ -10,4 +13,7 @@ import { siteConfig } from '../data/site';
 	<Hero />
 	<Countdown />
 	<AboutEvent />
+	<Experience />
+	<MainTopics />
+	<FeaturedSpeakers />
 </MainLayout>

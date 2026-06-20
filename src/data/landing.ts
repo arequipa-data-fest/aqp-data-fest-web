@@ -50,4 +50,84 @@ export const landingData = {
 			},
 		],
 	},
+	experience: {
+		title: 'Experiencia Integral',
+		items: [
+			{
+				title: 'Almuerzo Incluido',
+				description: 'Disfruta de un almuerzo de networking diseñado para conectar con otros profesionales y ponentes en un ambiente relajado.',
+				icon: 'lunch',
+			},
+			{
+				title: 'Coffee Break',
+				description: 'Mantén la energía alta durante todo el día con nuestras estaciones de café y snacks premium, perfectas para pausas creativas.',
+				icon: 'coffee',
+			},
+		],
+	},
+	mainTopics: {
+		title: 'Temas principales',
+		items: [
+			{
+				title: 'Inteligencia Artificial y Machine Learning',
+				icon: 'ai',
+			},
+			{
+				title: 'Ingeniería de Datos',
+				icon: 'database',
+			},
+			{
+				title: 'Analítica Avanzada',
+				icon: 'analytics',
+			},
+			{
+				title: 'Big Data & Cloud',
+				icon: 'cloud',
+			},
+		],
+	},
+	featuredSpeakers: {
+		eyebrow: 'Líderes de la industria',
+		title: 'Nuestro speakers',
+		viewAllLabel: 'Ver todos los ponentes',
+		viewAllHref: '/ponentes',
+		speakers: [
+			{
+				name: 'Renato Amapanqui',
+				company: '',
+				tag: 'Data Science',
+				imageUrl: '/logos/SPEAKER.png',
+				imageAlt: 'Renato Amapanqui',
+				imageWidth: 268,
+				imageHeight: 268,
+			},
+			{
+				name: 'Gustavo Crehanna',
+				company: '',
+				tag: 'AI & ML',
+				imageUrl: '/logos/SPEAKER.png',
+				imageAlt: 'Gustavo Crehanna',
+				imageWidth: 268,
+				imageHeight: 268,
+			},
+			{
+				name: 'Yury',
+				company: 'Google',
+				tag: 'Cloud Arch',
+				imageUrl: '/logos/SPEAKER.png',
+				imageAlt: 'Yury',
+				imageWidth: 268,
+				imageHeight: 268,
+			},
+			{
+				name: 'Luis Coronel',
+				company: '',
+				tag: 'Data Eng',
+				imageUrl: '/logos/SPEAKER.png',
+				imageAlt: 'Luis Coronel',
+				imageWidth: 268,
+				imageHeight: 268,
+			},
+		],
+	},
 } as const;
