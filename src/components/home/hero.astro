@@ -1,53 +1,286 @@
 ---
 import { landingData } from '../../data/landing';
+import { siteConfig } from '../../data/site';
 
 const { hero } = landingData;
+
+const registrationHref = siteConfig.registrationUrl || hero.primaryCta.href;
+const informativeGroupHref =
+	siteConfig.informativeGroupUrl || hero.secondaryCta.href;
+
+const isExternalRegistration = registrationHref.startsWith('http');
+const isExternalGroup = informativeGroupHref.startsWith('http');
 ---
 
 <section class="hero" aria-labelledby="landing-title">
-	<svg class="hero__network" viewBox="0 0 600 430" role="presentation" aria-hidden="true">
-		<defs><linearGradient id="hero-network-gradient" x1="0" x2="1" y1="1" y2="0"><stop stop-color="var(--df-primary)" /><stop offset="1" stop-color="var(--df-accent)" /></linearGradient></defs>
-		<path class="hero__network-path" d="M28 352 154 226l90 86 92-179 82 142 80-195 78 272" />
-		<path class="hero__network-path hero__network-line" d="M28 352c111-80 182-33 272-119S465 265 574 112" />
-		<path class="hero__network-path hero__network-line" d="M24 379c144-46 185-114 293-85s137 63 250-8" />
-		{[[28, 352], [154, 226], [244, 312], [336, 133], [418, 275], [498, 80], [574, 352]].map(([cx, cy]) => <circle class="hero__network-node" cx={cx} cy={cy} r="10" />)}
-	</svg>
+	<img class="hero__logo-bg" src="/logos/LOGO-LIMPIO.png" alt="" loading="eager" />
+
 	<div class="hero__copy">
-		<p class="hero__eyebrow">{hero.eyebrow}</p>
-		<h1 id="landing-title" class="hero__title">{hero.titlePrefix} <strong>{hero.titleHighlight}</strong></h1>
+		<h1 id="landing-title" class="hero__title">
+			<span>{hero.titlePrefix}</span>
+			<strong>{hero.titleHighlight}</strong>
+		</h1>
+
 		<p class="hero__description">{hero.description}</p>
-		<div class="hero__details">
-			<div class="hero__detail"><b>{hero.date.label}</b><span>{hero.date.value}</span></div>
-			<div class="hero__detail"><b>{hero.location.label}</b><span>{hero.location.value.map((line) => <Fragment>{line}<br /></Fragment>)}</span></div>
+
+		<dl class="hero__details">
+			<div class="hero__detail">
+				<div class="hero__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+					</svg>
+				</div>
+				<div>
+					<dt>{hero.date.label}</dt>
+					<dd>{hero.date.value}</dd>
+				</div>
+			</div>
+
+			<div class="hero__detail hero__detail--accent">
+				<div class="hero__icon hero__icon--accent" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z" />
+						<circle cx="12" cy="10" r="3" />
+					</svg>
+				</div>
+				<div>
+					<dt>{hero.location.label}</dt>
+					<dd>
+						{hero.location.value.map((line) => (
+							<Fragment>{line}<br /></Fragment>
+						))}
+					</dd>
+				</div>
+			</div>
+		</dl>
+
+		<div class="hero__actions">
+			<a
+				class="hero__action hero__action--primary"
+				href={registrationHref}
+				target={isExternalRegistration ? '_blank' : undefined}
+				rel={isExternalRegistration ? 'noopener noreferrer' : undefined}
+			>
+				{hero.primaryCta.label}
+				<span aria-hidden="true">→</span>
+			</a>
+
+			<a
+				class="hero__action hero__action--secondary"
+				href={informativeGroupHref}
+				target={isExternalGroup ? '_blank' : undefined}
+				rel={isExternalGroup ? 'noopener noreferrer' : undefined}
+			>
+				{hero.secondaryCta.label}
+				<span aria-hidden="true">▣</span>
+			</a>
 		</div>
-		<div class="hero__actions"><a class="hero__action hero__action--primary" href={hero.primaryCta.href}>{hero.primaryCta.label} →</a><a class="hero__action hero__action--secondary" href={hero.secondaryCta.href}>{hero.secondaryCta.label}</a></div>
-		<p class="hero__attendees">{hero.attendees}<span>{hero.attendeesLabel}</span></p>
+
 	</div>
 </section>
 
 <style>
-	.hero { position: relative; display: grid; min-height: calc(100vh - 8rem); grid-template-columns: minmax(18rem, .85fr) minmax(24rem, 1.15fr); align-items: center; gap: clamp(1.5rem, 5vw, 6rem); padding: clamp(3rem, 7vw, 8rem) clamp(1.25rem, 7vw, 7rem); overflow: hidden; }
-	.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 45%, var(--df-primary-soft), transparent 32rem); pointer-events: none; }
-	.hero__network, .hero__copy { position: relative; z-index: 1; }
-	.hero__network { width: min(100%, 38rem); justify-self: center; }
-	.hero__copy { text-align: right; }
-	.hero__eyebrow { margin: 0; color: var(--df-accent); font-size: var(--df-text-label); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
-	.hero__title { margin: 1.25rem 0; color: var(--df-text); font-size: var(--df-text-hero-prefix); font-weight: 800; line-height: .98; letter-spacing: -.05em; }
-	.hero__title strong { display: block; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; color: transparent; font-size: var(--df-text-hero); }
-	.hero__description { margin: 0 0 2rem auto; max-width: 39rem; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.45; }
-	.hero__details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-	.hero__detail { display: flex; gap: .8rem; align-items: center; min-height: 6.75rem; padding: 1rem; border: 1px solid var(--df-line); border-radius: .5rem; background: var(--df-card); text-align: left; }
-	.hero__detail b { color: var(--df-accent-soft); font-size: var(--df-text-label); letter-spacing: .12em; text-transform: uppercase; }
-	.hero__detail span { color: var(--df-text); font-size: var(--df-text-body); font-weight: 600; }
-	.hero__actions { display: flex; justify-content: end; gap: 1rem; margin-top: 1.5rem; }
-	.hero__action { padding: 1rem 1.5rem; font-size: var(--df-text-body); font-weight: 600; text-decoration: none; }
-	.hero__action--primary { background: var(--df-primary); color: var(--df-on-primary); box-shadow: 0 0 10px var(--df-primary); }
-	.hero__action--secondary { border: 1px solid var(--df-accent); color: var(--df-accent); }
-	.hero__attendees { margin-top: 2.5rem; color: var(--df-accent); font-size: clamp(3rem, 5vw, 5rem); font-weight: 800; line-height: 1; }
-	.hero__attendees span { display: block; color: var(--df-text); font-size: var(--df-text-body); }
-	.hero__network-path { fill: none; stroke: url(#hero-network-gradient); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
-	.hero__network-line { opacity: .75; stroke-width: 3; }
-	.hero__network-node { fill: var(--df-page); stroke: var(--df-accent-soft); stroke-width: 5; }
-	@media (max-width: 800px) { .hero { grid-template-columns: 1fr; min-height: auto; padding-block: 4rem; } .hero__copy { text-align: center; } .hero__description { margin-inline: auto; } .hero__actions { justify-content: center; flex-wrap: wrap; } .hero__details { max-width: 38rem; margin-inline: auto; } }
-	@media (max-width: 480px) { .hero__details { grid-template-columns: 1fr; } }
+	.hero {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 43rem);
+		align-items: center;
+		gap: 2rem;
+		min-height: calc(100vh - 8rem);
+		overflow: hidden;
+		background: var(--df-page);
+		padding: 2.5rem 3.5rem;
+	}
+
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 72% 22%, var(--df-primary-soft), transparent 28rem);
+		pointer-events: none;
+	}
+
+	.hero__logo-bg {
+		position: relative;
+		z-index: 1;
+		justify-self: center;
+		align-self: center;
+		width: min(48rem, 48vw);
+		height: auto;
+		opacity: 0.95;
+		pointer-events: none;
+	}
+
+	.hero__copy {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 43rem;
+		text-align: center;
+	}
+
+	.hero__title {
+		margin: 0;
+		color: var(--df-text);
+		font-size: var(--df-text-hero-prefix);
+		font-weight: 800;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+	}
+
+	.hero__title span {
+		display: block;
+	}
+
+	.hero__title strong {
+		display: block;
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent));
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
+		font-size: var(--df-text-hero);
+		line-height: 0.9;
+	}
+
+	.hero__description {
+		max-width: 39rem;
+		margin: 2rem auto 1.25rem;
+		color: var(--df-text-muted);
+		font-size: var(--df-text-body);
+		line-height: 1.25;
+	}
+
+	.hero__details {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.hero__detail {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 1.4rem;
+		min-height: 7.5rem;
+		padding: 0.9rem 1.2rem;
+		border: 1px solid var(--df-line);
+		border-radius: 0.45rem;
+		background: var(--df-card);
+		text-align: left;
+	}
+
+	.hero__detail--accent {
+		border-color: color-mix(in srgb, var(--df-primary) 50%, var(--df-line));
+	}
+
+	.hero__icon {
+		display: grid;
+		place-items: center;
+		width: 6rem;
+		height: 6rem;
+		border: 1px solid var(--df-accent-soft);
+		border-radius: 0.6rem;
+		color: var(--df-accent-soft);
+	}
+
+	.hero__icon--accent {
+		border-color: var(--df-primary);
+		color: var(--df-text-muted);
+	}
+
+	.hero__icon svg {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	.hero__detail dt {
+		display: block;
+		color: var(--df-text-muted);
+		font-size: var(--df-text-label);
+		font-weight: 800;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.hero__detail dd {
+		margin: 0.4rem 0 0;
+		display: block;
+		color: var(--df-text);
+		font-size: var(--df-text-body);
+		font-weight: 700;
+		line-height: 1.45;
+	}
+
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+		margin-top: 1.75rem;
+	}
+
+	.hero__action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: 3.6rem;
+		padding: 0.9rem 2rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+		text-decoration: none;
+		letter-spacing: 0.03em;
+	}
+
+	.hero__action--primary {
+		background: var(--df-primary);
+		color: var(--df-on-primary);
+		box-shadow: 0 0 18px color-mix(in srgb, var(--df-primary) 45%, transparent);
+	}
+
+	.hero__action--secondary {
+		border: 1px solid var(--df-accent);
+		color: var(--df-accent);
+	}
+
+	.hero__action:focus-visible {
+		outline: 2px solid var(--df-accent);
+		outline-offset: 4px;
+	}
+
+	@media (max-width: 900px) {
+		.hero {
+			grid-template-columns: 1fr;
+			min-height: auto;
+			padding: 4rem 1.25rem;
+		}
+
+		.hero__logo-bg {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 42rem;
+			opacity: 0.35;
+		}
+
+		.hero__copy {
+			margin-inline: auto;
+		}
+
+		.hero__details {
+			grid-template-columns: 1fr;
+		}
+
+		.hero__actions {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.hero__action {
+			width: 100%;
+			min-width: 0;
+		}
+	}
 </style>
