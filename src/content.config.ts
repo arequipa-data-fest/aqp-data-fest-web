@@ -1,9 +1,10 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'zod';
 
 const speakers = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/speakers',
   }),
 
@@ -28,7 +29,7 @@ const speakers = defineCollection({
 
 const agenda = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/agenda',
   }),
 
@@ -49,7 +50,7 @@ const agenda = defineCollection({
 
 const landing = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/landing',
   }),
 
