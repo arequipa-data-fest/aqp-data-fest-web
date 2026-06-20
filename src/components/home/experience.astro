@@ -1,8 +1,12 @@
 ---
 import { Coffee, Utensils } from '@lucide/astro';
-import { landingData } from '../../data/landing';
+import type { CollectionEntry } from 'astro:content';
 
-const { experience } = landingData;
+interface Props {
+	experience: CollectionEntry<'landing'>['data']['experience'];
+}
+
+const { experience } = Astro.props;
 const iconMap = { lunch: Utensils, coffee: Coffee };
 ---
 

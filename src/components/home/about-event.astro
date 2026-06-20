@@ -1,7 +1,12 @@
 ---
-import { landingData } from '../../data/landing';
+import { getImagePath } from '@config/assets';
+import type { CollectionEntry } from 'astro:content';
 
-const { aboutEvent } = landingData;
+interface Props {
+	aboutEvent: CollectionEntry<'landing'>['data']['aboutEvent'];
+}
+
+const { aboutEvent } = Astro.props;
 const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 ---
 
@@ -11,7 +16,7 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 	<div class="about-event__content">
 		<div class="about-event__media">
 			<img
-				src={aboutEvent.media.imageUrl}
+				src={getImagePath(aboutEvent.media.imageFilename)}
 				alt={aboutEvent.media.alt}
 				width={aboutEvent.media.width}
 				height={aboutEvent.media.height}
@@ -34,7 +39,7 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 				<ul class="about-event__logo-list">
 					{partnerLogos.map((item) => (
 						<li class="about-event__logo-frame">
-							<img src={item.logoUrl} alt={item.alt} loading="lazy" decoding="async" />
+							<img src={getImagePath(item.logoFilename)} alt={item.alt} loading="lazy" decoding="async" />
 						</li>
 					))}
 				</ul>

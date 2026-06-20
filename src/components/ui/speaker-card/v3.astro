@@ -1,4 +1,6 @@
 ---
+import { getImagePath } from '@config/assets';
+
 interface SpeakerTag {
 	label: string;
 }
@@ -6,8 +8,8 @@ interface SpeakerTag {
 interface Props {
 	name: string;
 	role: string;
-	description: string;
-	imageUrl: string;
+	description?: string;
+	imageFilename: string;
 	imageAlt: string;
 	imageWidth: number;
 	imageHeight: number;
@@ -16,13 +18,13 @@ interface Props {
 	accent: 'primary' | 'accent';
 }
 
-const { name, role, description, imageUrl, imageAlt, imageWidth, imageHeight, badge, tags = [], accent } = Astro.props;
+const { name, role, description, imageFilename, imageAlt, imageWidth, imageHeight, badge, tags = [], accent } = Astro.props;
 ---
 
 <article class:list={['speaker-card-v3', `speaker-card-v3--${accent}`]}>
 	<div class="speaker-card-v3__image">
 		<img
-			src={imageUrl}
+			src={getImagePath(imageFilename)}
 			alt={imageAlt}
 			width={imageWidth}
 			height={imageHeight}

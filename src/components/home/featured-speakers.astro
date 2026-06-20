@@ -1,9 +1,18 @@
 ---
 import { ArrowRight } from '@lucide/astro';
-import { landingData } from '../../data/landing';
+import { getEntries } from 'astro:content';
 import SpeakerCardV1 from '../ui/speaker-card/v1.astro';
+import type { CollectionEntry } from 'astro:content';
 
-const { featuredSpeakers } = landingData;
+interface Props {
+	featuredSpeakers: CollectionEntry<'landing'>['data']['featuredSpeakers'];
+}
+
+const { featuredSpeakers } = Astro.props;
+
+// Fetch speakers from Content Collections by mapping IDs
+const speakersRefs = featuredSpeakers.speakerIds.map(id => ({ collection: 'speakers' as const, id }));
+const speakers = await getEntries(speakersRefs);
 ---
 
 <section class="featured-speakers" aria-labelledby="featured-speakers-title">
@@ -20,9 +29,9 @@ const { featuredSpeakers } = landingData;
 		</div>
 
 		<ul class="featured-speakers__list">
-			{featuredSpeakers.speakers.map((speaker, index) => (
+			{speakers.map((speaker, index) => (
 				<li>
-					<SpeakerCardV1 speaker={speaker} accent={index % 2 === 0 ? 'primary' : 'accent'} />
+					<SpeakerCardV1 speaker={speaker.data} accent={index % 2 === 0 ? 'primary' : 'accent'} />
 				</li>
 			))}
 		</ul>

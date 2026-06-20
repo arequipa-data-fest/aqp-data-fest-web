@@ -1,19 +1,26 @@
 ---
-import MainLayout from '../layouts/main-layout.astro';
-import AboutEvent from '../components/home/about-event.astro';
-import Experience from '../components/home/experience.astro';
-import FeaturedSpeakers from '../components/home/featured-speakers.astro';
-import Hero from '../components/home/hero.astro';
-import MainTopics from '../components/home/main-topics.astro';
-import Countdown from '../components/home/countdown.astro';
-import { siteConfig } from '../data/site';
+import { getEntry } from "astro:content";
+import MainLayout from "@layouts/main-layout.astro";
+import AboutEvent from "@components/home/about-event.astro";
+import Experience from "@components/home/experience.astro";
+import FeaturedSpeakers from "@components/home/featured-speakers.astro";
+import Hero from "@components/home/hero.astro";
+import MainTopics from "@components/home/main-topics.astro";
+import Countdown from "@components/home/countdown.astro";
+import { siteConfig } from "@data/site";
+
+const landingEntry = await getEntry("landing", "home");
+if (!landingEntry) {
+	throw new Error("Landing data not found");
+}
+const landingData = landingEntry.data;
 ---
 
 <MainLayout title={siteConfig.name} description={siteConfig.description}>
-	<Hero />
-	<Countdown />
-	<AboutEvent />
-	<Experience />
-	<MainTopics />
-	<FeaturedSpeakers />
+	<Hero hero={landingData.hero} />
+	<Countdown countdown={landingData.countdown} />
+	<AboutEvent aboutEvent={landingData.aboutEvent} />
+	<Experience experience={landingData.experience} />
+	<MainTopics mainTopics={landingData.mainTopics} />
+	<FeaturedSpeakers featuredSpeakers={landingData.featuredSpeakers} />
 </MainLayout>

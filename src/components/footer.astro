@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from "../data/site";
+import { siteConfig } from "@data/site";
 import { ArrowRight, MessageCircle } from "@lucide/astro";
 
 const registrationHref = siteConfig.registrationUrl || "#registro";
@@ -124,16 +124,16 @@ const { footer, logo } = siteConfig;
     height: auto;
     margin-top: 2rem;
   }
-	.footer-network {
-	position: absolute;
-	right: -4rem;
-	top: 1rem;
-	z-index: 1;
-	width: min(54rem, 60vw);
-	height: auto;
-	pointer-events: none;
-	object-fit: contain;
-	}
+  .footer-network {
+    position: absolute;
+    right: -4rem;
+    top: 1rem;
+    z-index: 1;
+    width: min(54rem, 60vw);
+    height: auto;
+    pointer-events: none;
+    object-fit: contain;
+  }
   .footer-copy {
     position: relative;
     z-index: 2;
