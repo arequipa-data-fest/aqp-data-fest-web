@@ -75,8 +75,15 @@
 	img,
 	video,
 	canvas {
-		max-inline-size: 100%;
-		block-size: auto;
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.astro-cloudinary-cldimage {
+		max-width: 100% !important;
+		max-height: none !important;
+		aspect-ratio: auto !important;
 	}
 
 	h1,

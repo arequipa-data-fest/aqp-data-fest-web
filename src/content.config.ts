@@ -14,8 +14,6 @@ const speakers = defineCollection({
     company: z.string().optional(),
     imageFilename: z.string(),
     imageAlt: z.string(),
-    imageWidth: z.number(),
-    imageHeight: z.number(),
     tags: z.array(z.object({ label: z.string() })).default([]),
     variant: z.enum(['v1', 'v2', 'v3']).default('v2'),
     description: z.string().optional(),
@@ -73,8 +71,6 @@ const certificate = defineCollection({
     preview: z.object({
       imageFilename: z.string(),
       imageAlt: z.string(),
-      imageWidth: z.number(),
-      imageHeight: z.number(),
       validationLabel: z.string(),
       idLabel: z.string(),
       idValue: z.string(),
@@ -135,8 +131,6 @@ const landing = defineCollection({
       media: z.object({
         imageFilename: z.string(),
         alt: z.string(),
-        width: z.number(),
-        height: z.number(),
       }),
       organizersLabel: z.string(),
       collaboratorLabel: z.string(),

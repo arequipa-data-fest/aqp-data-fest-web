@@ -19,13 +19,6 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 ---
 
 <section class="hero" aria-labelledby="landing-title">
-	<img
-		class="hero__logo-bg"
-		src={getImagePath("LOGO-LIMPIO.png")}
-		alt=""
-		loading="eager"
-	/>
-
 	<div class="hero__copy">
 		<h1 id="landing-title" class="hero__title">
 			<span>{hero.titlePrefix}</span>
@@ -87,6 +80,19 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 			</a>
 		</div>
 	</div>
+
+	<img
+		class="hero__logo-bg"
+		src={getImagePath("branding/logo-hero", {
+			width: 600,
+			height: 600,
+			crop: "fit",
+		})}
+		alt=""
+		width={600}
+		height={600}
+		loading="eager"
+	/>
 </section>
 
 <style>
@@ -122,6 +128,10 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		width: min(26rem, 78vw);
 		height: auto;
 		opacity: 0.28;
+		max-width: none !important;
+		max-height: none !important;
+		aspect-ratio: auto !important;
+		object-fit: contain !important;
 		pointer-events: none;
 	}
 
@@ -129,7 +139,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		position: relative;
 		z-index: 2;
 		width: 100%;
-		max-width: 43rem;
+		max-width: 48rem;
 		min-width: 0;
 		text-align: center;
 	}
@@ -137,10 +147,10 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 	.hero__title {
 		margin: 0;
 		color: var(--df-text);
-		font-size: var(--df-text-hero-prefix);
+		font-size: 2.4rem;
 		font-weight: 800;
 		line-height: 1.05;
-		letter-spacing: -0.03em;
+		letter-spacing: 0;
 	}
 
 	.hero__title span {
@@ -153,7 +163,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		background-clip: text;
 		-webkit-background-clip: text;
 		color: transparent;
-		font-size: var(--df-text-hero);
+		font-size: 3.4rem;
 		line-height: 0.9;
 	}
 
@@ -226,7 +236,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		margin: 0.4rem 0 0;
 		display: block;
 		color: var(--df-text);
-		font-size: var(--df-text-body);
+		font-size: 1.05rem;
 		font-weight: 700;
 		line-height: 1.45;
 	}
@@ -236,7 +246,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 1rem;
-		margin-top: 1.75rem;
+		margin-top: clamp(1.5rem, 2.5vw, 2rem);
 	}
 
 	.hero__action {
@@ -249,7 +259,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
 		font-weight: 700;
 		text-decoration: none;
-		letter-spacing: 0.03em;
+		letter-spacing: 0;
 		max-inline-size: 100%;
 		white-space: nowrap;
 		text-align: center;
@@ -318,6 +328,50 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 
 		.hero__copy {
 			margin-inline: auto;
+		}
+	}
+
+	@media (min-width: 901px) {
+		.hero__title {
+			font-size: 4.25rem;
+		}
+
+		.hero__title strong {
+			font-size: 6.6rem;
+		}
+
+		.hero__description {
+			font-size: 1.25rem;
+		}
+
+		.hero__detail dd {
+			font-size: 1.15rem;
+		}
+
+		.hero__action {
+			font-size: 1.3rem;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.hero__title {
+			font-size: 5.25rem;
+		}
+
+		.hero__title strong {
+			font-size: 8.25rem;
+		}
+
+		.hero__description {
+			font-size: 1.35rem;
+		}
+
+		.hero__detail dd {
+			font-size: 1.25rem;
+		}
+
+		.hero__action {
+			font-size: 1.45rem;
 		}
 	}
 </style>

@@ -15,4 +15,10 @@ const { data } = Astro.props;
 	.certificate-hero h1 { margin: 0; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(2.7rem, 10vw, 7rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; }
 	.certificate-hero__description { max-width: 66rem; margin: 2rem auto 0; color: var(--df-text-muted); font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1.55; }
 	@media (min-width: 640px) { .certificate-hero__eyebrow { padding-inline: 1.5rem; font-size: var(--df-text-body); } }
+
+	@media (max-width: 900px) {
+		.certificate-hero {
+			padding-top: 7.25rem;
+		}
+	}
 </style>

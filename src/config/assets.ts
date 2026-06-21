@@ -1,18 +1,39 @@
-export const ASSETS_BASE_PATH = '/logos';
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME || 'name';
 
-/**
- * Returns the full path for an image asset.
- * To switch to Cloudinary or another CDN, update the ASSETS_BASE_PATH.
- * @param filename - The filename of the image (e.g., 'SPEAKER.png')
- * @returns The full path to the image
- */
-export const getImagePath = (filename: string): string => {
-  // Ensure we don't double slash if filename already starts with one
-  const cleanFilename = filename.startsWith('/') ? filename.slice(1) : filename;
-  // Ensure base path doesn't end with a slash for clean joining
-  const cleanBasePath = ASSETS_BASE_PATH.endsWith('/') 
-    ? ASSETS_BASE_PATH.slice(0, -1) 
-    : ASSETS_BASE_PATH;
-    
-  return `${cleanBasePath}/${cleanFilename}`;
+type CloudinaryOptions = {
+	width?: number;
+	height?: number;
+	crop?: string;
+	gravity?: string;
+	quality?: string;
+	format?: string;
 };
+
+export function getImagePath(publicId: string, options: CloudinaryOptions = {}) {
+	const {
+		width,
+		height,
+		crop = 'fill',
+		gravity,
+		quality = 'auto',
+		format = 'auto',
+	} = options;
+
+	const transformations = [
+		format ? `f_${format}` : '',
+		quality ? `q_${quality}` : '',
+		width ? `w_${width}` : '',
+		height ? `h_${height}` : '',
+		crop ? `c_${crop}` : '',
+		gravity ? `g_${gravity}` : '',
+	]
+		.filter(Boolean)
+		.join(',');
+
+	const encodedPublicId = publicId
+		.split('/')
+		.map((segment) => encodeURIComponent(segment))
+		.join('/');
+
+	return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations}/${encodedPublicId}`;
+}

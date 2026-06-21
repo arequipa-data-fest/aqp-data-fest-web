@@ -7,10 +7,8 @@ hero:
   title: "Obtén tu Certificación"
   description: "Valida las habilidades adquiridas durante el Arequipa Data Fest 2026. Tu compromiso con la innovación de datos merece un reconocimiento oficial con respaldo institucional."
 preview:
-  imageFilename: "CERTIFICADO-EJEMPLO.png"
+  imageFilename: "sections/cert-preview"
   imageAlt: "Vista previa del certificado de asistencia Arequipa Data Fest 2026"
-  imageWidth: 1600
-  imageHeight: 1000
   validationLabel: "Validación Blockchain"
   idLabel: "ID:"
   idValue: "ADF-2026-XXXX-XXXX"

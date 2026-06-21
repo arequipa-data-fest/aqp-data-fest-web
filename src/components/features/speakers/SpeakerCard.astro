@@ -13,8 +13,6 @@ interface Props {
 	description?: string;
 	imageFilename: string;
 	imageAlt: string;
-	imageWidth: number;
-	imageHeight: number;
 	badge?: string;
 	tags?: Tag[];
 	accent: 'primary' | 'accent';
@@ -28,24 +26,34 @@ const {
 	description,
 	imageFilename,
 	imageAlt,
-	imageWidth,
-	imageHeight,
 	badge,
 	tags = [],
 	accent,
 } = Astro.props;
+
+const dimensions = {
+	compact: { width: 400, height: 400 },
+	expanded: { width: 600, height: 600 },
+	featured: { width: 1000, height: 800 },
+};
+
+const width = dimensions[variant].width;
+const height = dimensions[variant].height;
 ---
 
-<!-- Compact (v1) -->
 {variant === 'compact' && (
 	<article class:list={['speaker-card-compact', `speaker-card-compact--${accent}`]}>
 		<img
-			src={getImagePath(imageFilename)}
+			src={getImagePath(imageFilename, {
+				width,
+				height,
+				crop: 'fill',
+				gravity: 'auto',
+			})}
 			alt={imageAlt}
-			width={imageWidth}
-			height={imageHeight}
+			width={width}
+			height={height}
 			loading="lazy"
-			decoding="async"
 		/>
 		<div class="speaker-card-compact__details">
 			{tags[0] && <span>{tags[0].label}</span>}
@@ -55,17 +63,20 @@ const {
 	</article>
 )}
 
-<!-- Expanded (v2) -->
 {variant === 'expanded' && (
 	<article class:list={['speaker-card-expanded', `speaker-card-expanded--${accent}`]}>
 		<div class="speaker-card-expanded__image">
 			<img
-				src={getImagePath(imageFilename)}
+				src={getImagePath(imageFilename, {
+					width,
+					height,
+					crop: 'fill',
+					gravity: 'face',
+				})}
 				alt={imageAlt}
-				width={imageWidth}
-				height={imageHeight}
+				width={width}
+				height={height}
 				loading="lazy"
-				decoding="async"
 			/>
 		</div>
 		<div class="speaker-card-expanded__body">
@@ -80,17 +91,20 @@ const {
 	</article>
 )}
 
-<!-- Featured (v3) -->
 {variant === 'featured' && (
 	<article class:list={['speaker-card-featured', `speaker-card-featured--${accent}`]}>
 		<div class="speaker-card-featured__image">
 			<img
-				src={getImagePath(imageFilename)}
+				src={getImagePath(imageFilename, {
+					width,
+					height,
+					crop: 'fill',
+					gravity: 'face',
+				})}
 				alt={imageAlt}
-				width={imageWidth}
-				height={imageHeight}
+				width={width}
+				height={height}
 				loading="lazy"
-				decoding="async"
 			/>
 		</div>
 		<div class="speaker-card-featured__content">
