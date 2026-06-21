@@ -178,20 +178,19 @@
 
 	::view-transition-old(root),
 	::view-transition-new(root) {
-		animation-duration: 520ms;
-		animation-timing-function: var(--df-ease-smooth);
+		animation: none;
+	}
+
+	::view-transition-group(page-shell) {
+		animation: none;
 	}
 
 	::view-transition-old(page-shell) {
-		animation:
-			pageExit 420ms var(--df-ease-smooth) both,
-			pageFadeOut 320ms ease both;
+		animation: pageHide 90ms ease both;
 	}
 
 	::view-transition-new(page-shell) {
-		animation:
-			pageEnter 620ms var(--df-ease-smooth) both,
-			pageFadeIn 420ms ease both;
+		animation: pageReveal 520ms var(--df-ease-smooth) 80ms both;
 	}
 
 	.site-glow {
@@ -345,41 +344,49 @@
 	}
 }
 
-@keyframes pageEnter {
+@keyframes pageReveal {
 	0% {
-		transform: translate3d(0, 2.5rem, 0) scale(0.985);
-		filter: blur(10px) saturate(0.82);
-	}
-
-	100% {
-		transform: translate3d(0, 0, 0) scale(1);
-		filter: blur(0) saturate(1);
-	}
-}
-
-@keyframes pageExit {
-	0% {
-		transform: translate3d(0, 0, 0) scale(1);
-		filter: blur(0) saturate(1);
-	}
-
-	100% {
-		transform: translate3d(0, -1.5rem, 0) scale(1.01);
-		filter: blur(8px) saturate(0.85);
-	}
-}
-
-@keyframes pageFadeIn {
-	from {
+		transform: translate3d(0, 1rem, 0);
 		opacity: 0;
 	}
 
-	to {
+	55% {
+		opacity: 0.72;
+	}
+
+	100% {
+		transform: translate3d(0, 0, 0);
 		opacity: 1;
 	}
 }
 
-@keyframes pageFadeOut {
+@keyframes pageHide {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes pageSlideInMobile {
+	from {
+		transform: translate3d(0, 0.5rem, 0);
+		opacity: 0;
+	}
+
+	60% {
+		opacity: 0.78;
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+}
+
+@keyframes pageSlideOutMobile {
 	from {
 		opacity: 1;
 	}
@@ -393,6 +400,27 @@
 	:root {
 		--df-section-x: clamp(1rem, 5vw, 1.25rem);
 		--df-section-y: clamp(2.75rem, 10vw, 4rem);
+	}
+
+	::view-transition-old(page-shell) {
+		animation: pageSlideOutMobile 70ms ease both;
+	}
+
+	::view-transition-new(page-shell) {
+		animation: pageSlideInMobile 260ms var(--df-ease-smooth) 45ms both;
+	}
+
+	[data-reveal] {
+		transform: translate3d(0, 0.75rem, 0) scale(0.994);
+		transition:
+			opacity 260ms var(--df-ease-smooth) var(--reveal-delay, 0ms),
+			transform 260ms var(--df-ease-smooth) var(--reveal-delay, 0ms),
+			filter 220ms ease var(--reveal-delay, 0ms);
+		filter: saturate(0.96);
+	}
+
+	[data-reveal][data-reveal-mode="mobile"] {
+		transform: translate3d(0, 0.55rem, 0) scale(0.997);
 	}
 
 	.site-glow {

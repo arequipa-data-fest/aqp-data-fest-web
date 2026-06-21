@@ -16,6 +16,7 @@ interface Props {
 	badge?: string;
 	tags?: Tag[];
 	accent: 'primary' | 'accent';
+	priority?: boolean;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
 	badge,
 	tags = [],
 	accent,
+	priority = false,
 } = Astro.props;
 
 const dimensions = {
@@ -53,7 +55,9 @@ const height = dimensions[variant].height;
 			alt={imageAlt}
 			width={width}
 			height={height}
-			loading="lazy"
+			loading={priority ? 'eager' : 'lazy'}
+			fetchpriority={priority ? 'high' : 'auto'}
+			decoding="async"
 		/>
 		<div class="speaker-card-compact__details">
 			{tags[0] && <span>{tags[0].label}</span>}
@@ -76,7 +80,9 @@ const height = dimensions[variant].height;
 				alt={imageAlt}
 				width={width}
 				height={height}
-				loading="lazy"
+				loading={priority ? 'eager' : 'lazy'}
+				fetchpriority={priority ? 'high' : 'auto'}
+				decoding="async"
 			/>
 		</div>
 		<div class="speaker-card-expanded__body">
@@ -104,7 +110,9 @@ const height = dimensions[variant].height;
 				alt={imageAlt}
 				width={width}
 				height={height}
-				loading="lazy"
+				loading={priority ? 'eager' : 'lazy'}
+				fetchpriority={priority ? 'high' : 'auto'}
+				decoding="async"
 			/>
 		</div>
 		<div class="speaker-card-featured__content">
@@ -123,7 +131,7 @@ const height = dimensions[variant].height;
 
 <style>
 	/* Compact Styles (v1) */
-	.speaker-card-compact { position: relative; display: grid; min-width: 0; min-height: 14rem; aspect-ratio: 1 / 1; overflow: hidden; align-items: end; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.3rem; background: var(--df-card); }
+	.speaker-card-compact { position: relative; display: grid; width: 100%; min-width: 0; min-height: 14rem; aspect-ratio: 1 / 1; overflow: hidden; align-items: end; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.3rem; background: var(--df-card); }
 	.speaker-card-compact--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-compact--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-compact::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, var(--df-page), transparent 65%); pointer-events: none; }
@@ -134,7 +142,7 @@ const height = dimensions[variant].height;
 	.speaker-card-compact__details p { margin: 0.35rem 0 0; color: var(--df-text-muted); font-size: var(--df-text-body); }
 
 	/* Expanded Styles (v2) */
-	.speaker-card-expanded { min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.35rem; background: var(--df-card); }
+	.speaker-card-expanded { width: 100%; min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.35rem; background: var(--df-card); }
 	.speaker-card-expanded--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-expanded--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-expanded__image { position: relative; aspect-ratio: 1 / 1; overflow: hidden; }
@@ -147,7 +155,7 @@ const height = dimensions[variant].height;
 	.speaker-card-expanded__tags li { border: 1px solid var(--df-line); padding: 0.45rem 0.85rem; color: var(--df-text-muted); font-size: var(--df-text-label); font-weight: 700; }
 
 	/* Featured Styles (v3) */
-	.speaker-card-featured { display: grid; grid-template-columns: 1fr; min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
+	.speaker-card-featured { display: grid; grid-template-columns: 1fr; width: 100%; min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
 	.speaker-card-featured--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-featured--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-featured__image { min-height: clamp(18rem, 55vw, 28rem); overflow: hidden; background: var(--df-card); }

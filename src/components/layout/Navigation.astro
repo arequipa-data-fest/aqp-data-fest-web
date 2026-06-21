@@ -103,6 +103,11 @@ const { logo, navigation } = siteConfig;
 </header>
 
 <script>
+  const win = window as Window & {
+    __dfNavBound?: boolean;
+    __dfNavUpdate?: () => void;
+  };
+
   const navigation = document.querySelector<HTMLElement>("[data-navigation]");
 
   if (navigation) {
@@ -110,8 +115,16 @@ const { logo, navigation } = siteConfig;
       navigation.classList.toggle("nav-shell--scrolled", window.scrollY > 8);
     };
 
+    win.__dfNavUpdate = updateNavigation;
     updateNavigation();
-    window.addEventListener("scroll", updateNavigation, { passive: true });
+
+    if (!win.__dfNavBound) {
+      window.addEventListener("scroll", updateNavigation, { passive: true });
+      document.addEventListener("astro:page-load", () => {
+        win.__dfNavUpdate?.();
+      });
+      win.__dfNavBound = true;
+    }
   }
 </script>
 
