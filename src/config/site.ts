@@ -1,10 +1,8 @@
-import { getImagePath } from '@config/assets';
-
 export const siteConfig = {
 	name: 'Arequipa Data Fest 2026',
 	description:
 		'El encuentro de datos, tecnología e innovación que impulsa ideas, decisiones y el futuro en Arequipa.',
-	logoUrl: getImagePath('ADF-LOGO.png'),
+	logoPublicId: 'branding/logo-main',
 	logo: {
 		width: 449,
 		height: 129,
@@ -23,7 +21,7 @@ export const siteConfig = {
 		registrationLabel: 'Quiero ser parte',
 		groupLabel: 'Grupo informativo',
 		copyright: '© 2026 Arequipa Data Fest. Todos los derechos reservados.',
-		networkImageUrl: getImagePath('LOGO-V2.png'),
+		networkPublicId: 'branding/logo-footer',
 	},
 	registrationUrl: '',
 	informativeGroupUrl: '',

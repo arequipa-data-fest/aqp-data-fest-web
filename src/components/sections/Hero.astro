@@ -1,5 +1,5 @@
 ---
-import { getImagePath } from "@config/assets";
+import { CldImage } from "astro-cloudinary";
 import { siteConfig } from "@config/site";
 import { ArrowRight, CalendarDays, MapPin, MessageCircle } from "@lucide/astro";
 import type { CollectionEntry } from "astro:content";
@@ -19,10 +19,12 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 ---
 
 <section class="hero" aria-labelledby="landing-title">
-	<img
+	<CldImage
 		class="hero__logo-bg"
-		src={getImagePath("LOGO-LIMPIO.png")}
+		src="branding/logo-hero"
 		alt=""
+		width={960}
+		height={960}
 		loading="eager"
 	/>
 

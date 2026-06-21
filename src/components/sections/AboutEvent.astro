@@ -1,5 +1,5 @@
 ---
-import { getImagePath } from '@config/assets';
+import { CldImage } from 'astro-cloudinary';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -15,13 +15,13 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 
 	<div class="about-event__content">
 		<div class="about-event__media">
-			<img
-				src={getImagePath(aboutEvent.media.imageFilename)}
+			<CldImage
+				src={aboutEvent.media.imageFilename}
 				alt={aboutEvent.media.alt}
 				width={aboutEvent.media.width}
 				height={aboutEvent.media.height}
+				crop={{ type: 'fill', gravity: 'center', source: true }}
 				loading="lazy"
-				decoding="async"
 			/>
 		</div>
 
@@ -39,7 +39,7 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 				<ul class="about-event__logo-list">
 					{partnerLogos.map((item) => (
 						<li class="about-event__logo-frame">
-							<img src={getImagePath(item.logoFilename)} alt={item.alt} loading="lazy" decoding="async" />
+							<CldImage src={item.logoFilename} alt={item.alt} width={200} height={88} crop={{ type: 'fit', source: true }} loading="lazy" />
 						</li>
 					))}
 				</ul>

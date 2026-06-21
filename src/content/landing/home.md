@@ -40,7 +40,7 @@ aboutEvent:
   description:
     - "Sumérgete en la frontera de la Inteligencia Artificial y la Ciencia de Datos. Un evento diseñado para conectar, aprender e innovar a través de masterclass y paneles con referentes de alto nivel, desafiamos ideas, ampliamos perspectivas y transformamos la formación académica en visión, acción e impacto real."
   media:
-    imageFilename: "ACM-FOTO.png"
+    imageFilename: "sections/about-event"
     alt: "Integrantes del ACM Comité de IA de la UNSA"
     width: 812
     height: 437
@@ -48,14 +48,14 @@ aboutEvent:
   collaboratorLabel: "Colaborador"
   organizers:
     -
-      logoFilename: "ACM-IA-LOGO.png"
+      logoFilename: "partners/acm-ia"
       alt: "ACM Comité de IA"
     -
-      logoFilename: "UNSA-LOGO.png"
+      logoFilename: "partners/unsa"
       alt: "Universidad Nacional de San Agustín de Arequipa"
   collaborators:
     -
-      logoFilename: "DATA-WIZZARDS-LOGO.png"
+      logoFilename: "partners/data-wizards"
       alt: "Data Wizard"
 experience:
   title: "Experiencia Integral"
