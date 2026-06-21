@@ -18,9 +18,9 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 			<CldImage
 				src={aboutEvent.media.imageFilename}
 				alt={aboutEvent.media.alt}
-				width={aboutEvent.media.width}
-				height={aboutEvent.media.height}
-				crop={{ type: 'fill', gravity: 'center', source: true }}
+				width={800}
+				height={450}
+				crop="fill"
 				loading="lazy"
 			/>
 		</div>
@@ -39,7 +39,7 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 				<ul class="about-event__logo-list">
 					{partnerLogos.map((item) => (
 						<li class="about-event__logo-frame">
-							<CldImage src={item.logoFilename} alt={item.alt} width={200} height={88} crop={{ type: 'fit', source: true }} loading="lazy" />
+							<CldImage class="partner-logo" src={item.logoFilename} alt={item.alt} width={200} height={88} loading="lazy" />
 						</li>
 					))}
 				</ul>
@@ -87,9 +87,12 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 
 	.about-event__media img {
 		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		width: 100% !important;
+		height: 100% !important;
+		max-width: none !important;
+		max-height: none !important;
+		aspect-ratio: auto !important;
+		object-fit: cover !important;
 	}
 
 	.about-event__info {
@@ -152,11 +155,14 @@ const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
 		place-items: center;
 	}
 
-	.about-event__logo-frame img {
+	.about-event__logo-frame .partner-logo {
 		display: block;
-		width: 100%;
-		height: 5.5rem;
-		object-fit: contain;
+		width: 100% !important;
+		height: auto !important;
+		max-width: none !important;
+		max-height: none !important;
+		aspect-ratio: 3 / 2 !important;
+		object-fit: contain !important;
 	}
 
 	@media (max-width: 900px) {

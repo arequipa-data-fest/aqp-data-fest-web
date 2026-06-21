@@ -20,7 +20,7 @@ hero:
 countdown:
   ariaLabel: "Cuenta regresiva hasta el evento"
   targetDate: "2026-07-10T09:00:00-05:00"
-  inscritos: "+4,600"
+  inscritos: "+150"
   inscritosLabel: "inscritos"
   items:
     -
@@ -42,8 +42,6 @@ aboutEvent:
   media:
     imageFilename: "sections/about-event"
     alt: "Integrantes del ACM Comité de IA de la UNSA"
-    width: 812
-    height: 437
   organizersLabel: "Organizadores"
   collaboratorLabel: "Colaborador"
   organizers:

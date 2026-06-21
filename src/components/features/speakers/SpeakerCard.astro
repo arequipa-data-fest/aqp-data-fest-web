@@ -13,8 +13,6 @@ interface Props {
 	description?: string;
 	imageFilename: string;
 	imageAlt: string;
-	imageWidth: number;
-	imageHeight: number;
 	badge?: string;
 	tags?: Tag[];
 	accent: 'primary' | 'accent';
@@ -28,12 +26,19 @@ const {
 	description,
 	imageFilename,
 	imageAlt,
-	imageWidth,
-	imageHeight,
 	badge,
 	tags = [],
 	accent,
 } = Astro.props;
+
+const dimensions = {
+	compact: { width: 400, height: 400 },
+	expanded: { width: 600, height: 600 },
+	featured: { width: 1000, height: 800 },
+};
+
+const width = dimensions[variant].width;
+const height = dimensions[variant].height;
 ---
 
 {variant === 'compact' && (
@@ -41,8 +46,10 @@ const {
 		<CldImage
 			src={imageFilename}
 			alt={imageAlt}
-			width={imageWidth}
-			height={imageHeight}
+			width={width}
+			height={height}
+			crop="fill"
+			gravity="auto"
 			loading="lazy"
 		/>
 		<div class="speaker-card-compact__details">
@@ -59,8 +66,9 @@ const {
 			<CldImage
 				src={imageFilename}
 				alt={imageAlt}
-				width={imageWidth}
-				height={imageHeight}
+				width={width}
+				height={height}
+				crop={{ type: 'fill', gravity: 'face', source: true }}
 				loading="lazy"
 			/>
 		</div>
@@ -82,8 +90,9 @@ const {
 			<CldImage
 				src={imageFilename}
 				alt={imageAlt}
-				width={imageWidth}
-				height={imageHeight}
+				width={width}
+				height={height}
+				crop={{ type: 'fill', gravity: 'face', source: true }}
 				loading="lazy"
 			/>
 		</div>

@@ -12,7 +12,7 @@ const { data } = Astro.props;
 
 <section class="certificate-preview" aria-label={data.validationLabel} data-certificate-preview data-share-title={data.shareTitle} data-share-text={data.shareText}>
 	<div class="certificate-preview__content">
-		<CldImage class="certificate-preview__image" src={data.imageFilename} alt={data.imageAlt} width={data.imageWidth} height={data.imageHeight} loading="lazy" />
+		<CldImage class="certificate-preview__image" src={data.imageFilename} alt={data.imageAlt} width={1080} height={1080} crop="fit" loading="lazy" />
 		<div class="certificate-preview__footer">
 			<div class="certificate-preview__info"><div class="certificate-preview__icon" aria-hidden="true"><BadgeCheck /></div><div><p>{data.validationLabel}</p><span>{data.idLabel} {data.idValue}</span></div></div>
 			<button class="certificate-preview__share" type="button" data-share-button aria-label={`${data.shareLabel}: ${data.shareTitle}`}><Share2 aria-hidden="true" />{data.shareLabel}</button>

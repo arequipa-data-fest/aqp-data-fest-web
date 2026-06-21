@@ -4,8 +4,6 @@ export const siteConfig = {
 		'El encuentro de datos, tecnología e innovación que impulsa ideas, decisiones y el futuro en Arequipa.',
 	logoPublicId: 'branding/logo-main',
 	logo: {
-		width: 449,
-		height: 129,
 		alt: 'Arequipa Data Fest 2026',
 	},
 	navigation: {
@@ -23,8 +21,8 @@ export const siteConfig = {
 		copyright: '© 2026 Arequipa Data Fest. Todos los derechos reservados.',
 		networkPublicId: 'branding/logo-footer',
 	},
-	registrationUrl: '',
-	informativeGroupUrl: '',
+	registrationUrl: 'https://luma.com/7a2wz8cs',
+	informativeGroupUrl: 'https://chat.whatsapp.com/D3AlPpGFWdNH6JscEz9iH5',
 } as const;
 
 export const navigationLinks = [

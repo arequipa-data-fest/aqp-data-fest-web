@@ -8,7 +8,7 @@ const informativeGroupHref =
   siteConfig.informativeGroupUrl || "#grupo-informativo";
 const isExternalRegistration = siteConfig.registrationUrl.startsWith("http");
 const isExternalGroup = siteConfig.informativeGroupUrl.startsWith("http");
-const { footer, logo } = siteConfig;
+const { footer } = siteConfig;
 ---
 
 <footer class="footer-shell" aria-label={footer.ariaLabel}>
@@ -36,15 +36,6 @@ const { footer, logo } = siteConfig;
           <MessageCircle class="footer-button__icon" aria-hidden="true" />
         </a>
       </div>
-
-      <CldImage
-        class="footer-logo"
-        src={siteConfig.logoPublicId}
-        alt={logo.alt}
-        width={logo.width}
-        height={logo.height}
-        loading="lazy"
-      />
     </section>
 
     <CldImage
@@ -53,7 +44,6 @@ const { footer, logo } = siteConfig;
       alt=""
       width={860}
       height={860}
-      crop={{ type: 'fit', source: true }}
       loading="lazy"
     />
   </div>
@@ -65,46 +55,52 @@ const { footer, logo } = siteConfig;
   .footer-shell {
     position: relative;
     overflow: hidden;
-    background: var(--df-footer);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--df-page) 94%, transparent),
+        color-mix(in srgb, var(--df-surface) 64%, transparent)
+      );
   }
   .footer-content {
     position: relative;
-    min-height: 28rem;
-    padding: 4rem clamp(1.25rem, 5vw, 4rem) 2rem;
+    min-height: clamp(18rem, 28vw, 22rem);
+    padding: clamp(2.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 4rem)
+      clamp(1.25rem, 3vw, 1.75rem);
   }
   .footer-info {
     position: relative;
     z-index: 2;
     max-width: none;
-    width: min(60%, 48rem);
+    width: min(58%, 42rem);
     min-width: 0;
   }
   .footer-info h2 {
     margin: 0;
     color: var(--df-on-primary);
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: 1.55rem;
     font-weight: 800;
     line-height: 1.15;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .footer-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.75rem;
+    gap: 0.85rem;
+    margin-top: 1.35rem;
   }
   .footer-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 3.6rem;
-    padding: 0.9rem 2rem;
-    font-size: 1.5rem;
+    min-height: 3.15rem;
+    padding: 0.75rem 1.45rem;
+    font-size: 1rem;
     font-weight: 700;
     text-decoration: none;
-    letter-spacing: 0.03em;
+    letter-spacing: 0;
 		max-inline-size: 100%;
 		text-align: center;
   }
@@ -118,35 +114,43 @@ const { footer, logo } = siteConfig;
     color: var(--df-accent);
   }
   .footer-button__icon {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 1.2rem;
+    height: 1.2rem;
     flex: 0 0 auto;
   }
   .footer-logo {
     display: block;
-    width: min(28rem, 90vw);
-    height: auto;
+    width: min(28rem, 90vw) !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
     margin-top: 2rem;
   }
   .footer-network {
     position: absolute;
-    right: -4rem;
-    top: 1rem;
+    right: clamp(-8rem, -8vw, -2rem);
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1;
-    width: min(54rem, 60vw);
-    height: auto;
+    width: min(42rem, 48vw) !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
     pointer-events: none;
-    object-fit: contain;
   }
   .footer-copy {
     position: relative;
     z-index: 2;
     margin: 0;
-    padding: 0 2rem 2rem;
+    padding: 0 2rem 1.4rem;
     color: var(--df-accent);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-align: center;
   }
   .footer-button:focus-visible {
@@ -156,7 +160,7 @@ const { footer, logo } = siteConfig;
   @media (max-width: 768px) {
     .footer-content {
       min-height: auto;
-      padding: 3rem 1.25rem 12rem;
+      padding: 2.5rem 1.25rem 8.5rem;
     }
     .footer-actions {
       flex-direction: column;
@@ -169,13 +173,35 @@ const { footer, logo } = siteConfig;
       width: 100%;
     }
     .footer-network {
-      right: -8rem;
-      bottom: 4rem;
-      width: 42rem;
-      opacity: 0.7;
+      right: 0;
+      bottom: 1.25rem;
+      top: auto;
+      transform: none;
+      width: min(34rem, 118vw) !important;
+      opacity: 0.52;
     }
     .footer-copy {
       padding-inline: 1.25rem;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .footer-info h2 {
+      font-size: 2.35rem;
+    }
+
+    .footer-button {
+      font-size: 1.15rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .footer-info h2 {
+      font-size: 2.75rem;
+    }
+
+    .footer-button {
+      font-size: 1.2rem;
     }
   }
 </style>
