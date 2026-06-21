@@ -1,13 +1,13 @@
 ---
 import { getEntry } from "astro:content";
-import MainLayout from "@layouts/main-layout.astro";
-import AboutEvent from "@components/home/about-event.astro";
-import Experience from "@components/home/experience.astro";
-import FeaturedSpeakers from "@components/home/featured-speakers.astro";
-import Hero from "@components/home/hero.astro";
-import MainTopics from "@components/home/main-topics.astro";
-import Countdown from "@components/home/countdown.astro";
-import { siteConfig } from "@data/site";
+import MainLayout from "@layouts/MainLayout.astro";
+import AboutEvent from "@components/sections/AboutEvent.astro";
+import Experience from "@components/sections/Experience.astro";
+import FeaturedSpeakers from "@components/features/speakers/FeaturedSpeakers.astro";
+import Hero from "@components/sections/Hero.astro";
+import MainTopics from "@components/sections/MainTopics.astro";
+import Countdown from "@components/sections/Countdown.astro";
+import { siteConfig } from "@config/site";
 
 const landingEntry = await getEntry("landing", "home");
 if (!landingEntry) {

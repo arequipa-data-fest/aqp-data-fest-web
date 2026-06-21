@@ -1,9 +1,10 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'zod';
 
 const speakers = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/speakers',
   }),
 
@@ -28,28 +29,86 @@ const speakers = defineCollection({
 
 const agenda = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/agenda',
   }),
 
   schema: z.object({
-    title: z.string(),
-    start_time: z.string(),
-    end_time: z.string(),
-    speaker: z.string().optional(),
+    meta: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+    header: z.object({
+      kicker: z.string(),
+      title: z.string(),
+      description: z.string(),
+    }),
+    items: z.array(z.object({
+      time: z.string(),
+      role: z.string().optional(),
+      speaker: z.string().optional(),
+      title: z.string(),
+      type: z.enum(['session', 'break']),
+      icon: z.enum(['coffee', 'lunch']).optional(),
+    })),
+  }),
+});
 
-    type: z.enum([
-      'keynote',
-      'workshop',
-      'panel',
-      'break'
-    ]),
+const certificate = defineCollection({
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/certificate',
+  }),
+
+  schema: z.object({
+    meta: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+    hero: z.object({
+      eyebrow: z.string(),
+      title: z.string(),
+      description: z.string(),
+    }),
+    preview: z.object({
+      imageFilename: z.string(),
+      imageAlt: z.string(),
+      imageWidth: z.number(),
+      imageHeight: z.number(),
+      validationLabel: z.string(),
+      idLabel: z.string(),
+      idValue: z.string(),
+      shareLabel: z.string(),
+      shareTitle: z.string(),
+      shareText: z.string(),
+    }),
+    download: z.object({
+      title: z.string(),
+      steps: z.array(z.string()),
+      form: z.object({
+        label: z.string(),
+        placeholder: z.string(),
+        buttonLabel: z.string(),
+        supportText: z.string(),
+        supportLabel: z.string(),
+        supportHref: z.string(),
+      }),
+    }),
+    backing: z.object({
+      title: z.string(),
+      description: z.string(),
+      people: z.array(z.object({
+        name: z.string(),
+        role: z.string(),
+        tone: z.enum(['primary', 'accent']),
+      })),
+    }),
   }),
 });
 
 const landing = defineCollection({
   loader: glob({
-    pattern: '**/*.json',
+    pattern: '**/*.md',
     base: './src/content/landing',
   }),
 
@@ -115,4 +174,4 @@ const landing = defineCollection({
   }),
 });
 
-export const collections = { speakers, agenda, landing };
+export const collections = { speakers, agenda, landing, certificate };

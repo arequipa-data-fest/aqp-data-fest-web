@@ -1,0 +1,22 @@
+---
+import { getEntry } from 'astro:content';
+import MainLayout from '@layouts/MainLayout.astro';
+import CertificateHero from '@components/features/certificate/Hero.astro';
+import CertificatePreview from '@components/features/certificate/Preview.astro';
+import CertificateDownload from '@components/features/certificate/Download.astro';
+import InstitutionalBacking from '@components/features/certificate/InstitutionalBacking.astro';
+
+const certificateEntry = await getEntry('certificate', 'home');
+if (!certificateEntry) {
+	throw new Error('Certificate data not found');
+}
+
+const { meta, hero, preview, download, backing } = certificateEntry.data;
+---
+
+<MainLayout title={meta.title} description={meta.description}>
+	<CertificateHero data={hero} />
+	<CertificatePreview data={preview} />
+	<CertificateDownload data={download} />
+	<InstitutionalBacking data={backing} />
+</MainLayout>

@@ -1,9 +1,14 @@
 ---
-import AgendaTimeline from '../components/agenda/timeline.astro';
-import { agendaPage } from '../data/agenda';
-import MainLayout from '../layouts/main-layout.astro';
+import { getEntry } from 'astro:content';
+import AgendaTimeline from '@components/features/agenda/Timeline.astro';
+import MainLayout from '@layouts/MainLayout.astro';
 
-const { meta, header, items } = agendaPage;
+const agendaEntry = await getEntry('agenda', 'home');
+if (!agendaEntry) {
+	throw new Error('Agenda data not found');
+}
+
+const { meta, header, items } = agendaEntry.data;
 ---
 
 <MainLayout title={meta.title} description={meta.description}>

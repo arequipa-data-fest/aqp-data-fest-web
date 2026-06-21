@@ -1,0 +1,177 @@
+---
+import { siteConfig } from "@config/site";
+import { ArrowRight, MessageCircle } from "@lucide/astro";
+
+const registrationHref = siteConfig.registrationUrl || "#registro";
+const informativeGroupHref =
+  siteConfig.informativeGroupUrl || "#grupo-informativo";
+const isExternalRegistration = siteConfig.registrationUrl.startsWith("http");
+const isExternalGroup = siteConfig.informativeGroupUrl.startsWith("http");
+const { footer, logo } = siteConfig;
+---
+
+<footer class="footer-shell" aria-label={footer.ariaLabel}>
+  <div class="footer-content">
+    <section class="footer-info">
+      <h2>{footer.title}</h2>
+
+      <div class="footer-actions">
+        <a
+          class="footer-button footer-button--primary"
+          href={registrationHref}
+          target={isExternalRegistration ? "_blank" : undefined}
+          rel={isExternalRegistration ? "noopener noreferrer" : undefined}
+        >
+          {footer.registrationLabel}
+          <ArrowRight class="footer-button__icon" aria-hidden="true" />
+        </a>
+        <a
+          class="footer-button footer-button--outline"
+          href={informativeGroupHref}
+          target={isExternalGroup ? "_blank" : undefined}
+          rel={isExternalGroup ? "noopener noreferrer" : undefined}
+        >
+          {footer.groupLabel}
+          <MessageCircle class="footer-button__icon" aria-hidden="true" />
+        </a>
+      </div>
+
+      <img
+        class="footer-logo"
+        src={siteConfig.logoUrl}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        loading="lazy"
+      />
+    </section>
+
+    <img
+      class="footer-network"
+      src={footer.networkImageUrl}
+      alt=""
+      loading="lazy"
+    />
+  </div>
+
+  <p class="footer-copy">{footer.copyright}</p>
+</footer>
+
+<style>
+  .footer-shell {
+    position: relative;
+    overflow: hidden;
+    background: var(--df-footer);
+  }
+  .footer-content {
+    position: relative;
+    min-height: 28rem;
+    padding: 4rem clamp(1.25rem, 5vw, 4rem) 2rem;
+  }
+  .footer-info {
+    position: relative;
+    z-index: 2;
+    max-width: none;
+    width: min(60%, 48rem);
+    min-width: 0;
+  }
+  .footer-info h2 {
+    margin: 0;
+    color: var(--df-on-primary);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+  .footer-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.6rem;
+    padding: 0.9rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+		max-inline-size: 100%;
+		text-align: center;
+  }
+  .footer-button--primary {
+    background: var(--df-primary);
+    color: var(--df-on-primary);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--df-primary) 45%, transparent);
+  }
+  .footer-button--outline {
+    border: 1px solid var(--df-accent);
+    color: var(--df-accent);
+  }
+  .footer-button__icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: 0 0 auto;
+  }
+  .footer-logo {
+    display: block;
+    width: min(28rem, 90vw);
+    height: auto;
+    margin-top: 2rem;
+  }
+  .footer-network {
+    position: absolute;
+    right: -4rem;
+    top: 1rem;
+    z-index: 1;
+    width: min(54rem, 60vw);
+    height: auto;
+    pointer-events: none;
+    object-fit: contain;
+  }
+  .footer-copy {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    padding: 0 2rem 2rem;
+    color: var(--df-accent);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+  .footer-button:focus-visible {
+    outline: 2px solid var(--df-accent);
+    outline-offset: 4px;
+  }
+  @media (max-width: 768px) {
+    .footer-content {
+      min-height: auto;
+      padding: 3rem 1.25rem 12rem;
+    }
+    .footer-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-info {
+      width: 100%;
+    }
+    .footer-button {
+      width: 100%;
+    }
+    .footer-network {
+      right: -8rem;
+      bottom: 4rem;
+      width: 42rem;
+      opacity: 0.7;
+    }
+    .footer-copy {
+      padding-inline: 1.25rem;
+    }
+  }
+</style>

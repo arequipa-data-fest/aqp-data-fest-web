@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@layouts/MainLayout.astro";
+import SpeakerGrid from "@components/features/speakers/SpeakerGrid.astro";
+
+// We don't have a specific header collection yet for the speakers page header,
+// so we'll just hardcode the text or we could add it to a collection later.
+const header = {
+	kicker: "Líderes de la industria",
+	title: "Nuestros ponentes",
+	description:
+		"Conoce a los líderes que darán forma al futuro de la tecnología en Arequipa.",
+};
+
+const speakers = await getCollection("speakers");
+---
+
+<MainLayout
+	title="Ponentes | Arequipa Data Fest 2026"
+	description={header.description}
+>
+	<section class="speakers-hero" aria-labelledby="speakers-title">
+		<p>{header.kicker}</p>
+		<h1 id="speakers-title">{header.title}</h1>
+		<span>{header.description}</span>
+	</section>
+
+	<section class="speakers-showcase" aria-label="Lista de ponentes">
+		<SpeakerGrid speakers={speakers} />
+	</section>
+</MainLayout>
+
+<style>
+	.speakers-hero {
+		background: var(--df-page);
+		padding: 4rem 1.25rem 2rem;
+		text-align: center;
+	}
+	.speakers-hero p {
+		margin: 0;
+		color: var(--df-text);
+		font-size: clamp(1.5rem, 3vw, 2.4rem);
+		font-weight: 900;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+	.speakers-hero h1 {
+		margin: 0;
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent));
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
+		font-size: clamp(4rem, 10vw, 7.5rem);
+		font-weight: 900;
+		line-height: 0.9;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+	.speakers-hero span {
+		display: block;
+		max-width: 44rem;
+		margin: 1rem auto 0;
+		color: var(--df-text-muted);
+		font-size: var(--df-text-body);
+		line-height: 1.5;
+	}
+	.speakers-showcase {
+		background: var(--df-page);
+		padding: 2rem 3.5rem 5rem;
+	}
+	@media (max-width: 900px) {
+		.speakers-showcase {
+			padding-inline: 1.25rem;
+		}
+	}
+</style>

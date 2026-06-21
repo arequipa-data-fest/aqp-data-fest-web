@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SpeakerCard from './SpeakerCard.astro';
+
+interface Props {
+	speakers: CollectionEntry<'speakers'>[];
+}
+
+const { speakers } = Astro.props;
+
+function mapVariant(v: string) {
+	if (v === 'v1') return 'compact';
+	if (v === 'v2') return 'expanded';
+	if (v === 'v3') return 'featured';
+	return 'expanded'; // default fallback
+}
+---
+
+<ul class="speaker-grid">
+	{speakers.map((speaker, index) => {
+		const data = speaker.data;
+		const accent = index % 2 === 0 ? 'primary' : 'accent';
+		const mappedVariant = mapVariant(data.variant);
+		
+		return (
+			<li
+				class:list={[
+					'speaker-grid__item',
+					{ 'speaker-grid__item--wide': mappedVariant === 'featured' },
+				]}
+			>
+				<SpeakerCard
+					variant={mappedVariant}
+					name={data.name}
+					role={data.role}
+					company={data.company}
+					description={data.description}
+					imageFilename={data.imageFilename}
+					imageAlt={data.imageAlt}
+					imageWidth={data.imageWidth}
+					imageHeight={data.imageHeight}
+					badge={data.badge}
+					tags={data.tags}
+					accent={accent}
+				/>
+			</li>
+		);
+	})}
+</ul>
+
+<style>
+	.speaker-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1.5rem;
+		max-width: 88rem;
+		margin: 0 auto;
+		padding: 0;
+		list-style: none;
+	}
+	.speaker-grid__item {
+		display: flex;
+		min-width: 0;
+	}
+	.speaker-grid__item--wide {
+		grid-column: span 2;
+	}
+	@media (max-width: 900px) {
+		.speaker-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 560px) {
+		.speaker-grid {
+			grid-template-columns: 1fr;
+		}
+		.speaker-grid__item--wide {
+			grid-column: span 1;
+		}
+	}
+</style>
