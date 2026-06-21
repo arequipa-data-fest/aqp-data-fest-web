@@ -133,6 +133,7 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 		aspect-ratio: auto !important;
 		object-fit: contain !important;
 		pointer-events: none;
+		animation: heroFloat 10s ease-in-out infinite;
 	}
 
 	.hero__copy {
@@ -372,6 +373,17 @@ const isExternalGroup = informativeGroupHref.startsWith("http");
 
 		.hero__action {
 			font-size: 1.45rem;
+		}
+	}
+
+	@keyframes heroFloat {
+		0%,
+		100% {
+			transform: translate3d(0, 0, 0);
+		}
+
+		50% {
+			transform: translate3d(0, -0.85rem, 0);
 		}
 	}
 </style>

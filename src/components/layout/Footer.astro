@@ -147,6 +147,7 @@ const { footer } = siteConfig;
     aspect-ratio: auto !important;
     object-fit: contain !important;
     pointer-events: none;
+    animation: footerDrift 14s ease-in-out infinite alternate;
   }
   .footer-copy {
     position: relative;
@@ -185,6 +186,7 @@ const { footer } = siteConfig;
       width: min(40rem, 125vw);
       opacity: 0.7;
       transform: none;
+      animation: none;
     }
   }
 
@@ -212,6 +214,16 @@ const { footer } = siteConfig;
 
     .footer-button {
       font-size: 1.2rem;
+    }
+  }
+
+  @keyframes footerDrift {
+    0% {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    100% {
+      transform: translateY(calc(-50% - 0.5rem)) translateX(-0.75rem);
     }
   }
 </style>
