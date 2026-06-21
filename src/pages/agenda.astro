@@ -24,9 +24,13 @@ const { meta, header, items } = agendaEntry.data;
 </MainLayout>
 
 <style>
-	.agenda-hero { background: var(--df-page); padding: 4rem 1.25rem 1.5rem; text-align: center; }
+	.agenda-hero { background: var(--df-page); padding: clamp(7rem, 12vh, 9rem) 1.25rem 1.5rem; text-align: center; }
 	.agenda-hero h1 { margin: 0; text-transform: uppercase; }
 	.agenda-hero h1 span { display: block; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(4rem, 10vw, 7rem); font-weight: 900; line-height: 0.9; }
 	.agenda-hero h1 strong { display: block; color: var(--df-text); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1; }
 	.agenda-hero p { max-width: 72rem; margin: 1.5rem auto 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.45; }
+
+	@media (max-width: 900px) {
+		.agenda-hero { padding-top: 7.25rem; }
+	}
 </style>

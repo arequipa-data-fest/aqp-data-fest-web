@@ -9,7 +9,7 @@ const currentPath = Astro.url.pathname;
 const { logo, navigation } = siteConfig;
 ---
 
-<header class="nav-shell">
+<header class="nav-shell" data-navigation>
   <a class="skip-link" href="#main-content">{navigation.skipLinkLabel}</a>
 
   <div class="nav-container">
@@ -98,23 +98,53 @@ const { logo, navigation } = siteConfig;
   </div>
 </header>
 
+<script>
+  const navigation = document.querySelector<HTMLElement>("[data-navigation]");
+
+  if (navigation) {
+    const updateNavigation = () => {
+      navigation.classList.toggle("nav-shell--scrolled", window.scrollY > 8);
+    };
+
+    updateNavigation();
+    window.addEventListener("scroll", updateNavigation, { passive: true });
+  }
+</script>
+
 <style>
   .nav-shell {
-    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     z-index: 50;
-    background: var(--df-navigation);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
-    backdrop-filter: blur(0.75rem);
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      -webkit-backdrop-filter 180ms ease,
+      backdrop-filter 180ms ease;
+  }
+
+  .nav-shell--scrolled,
+  .nav-shell:has(.nav-mobile[open]) {
+    border-color: rgb(255 255 255 / 8%);
+    background: rgb(5 5 6 / 42%);
+    box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 18%);
+    -webkit-backdrop-filter: blur(0.85rem);
+    backdrop-filter: blur(0.85rem);
   }
 
   .nav-container {
     display: flex;
-    min-height: 5rem;
+    min-height: 4.75rem;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
 		min-width: 0;
-    padding: 0.75rem 1.25rem;
+    padding: 0.7rem 1.25rem;
   }
 
   .nav-logo {
@@ -123,7 +153,7 @@ const { logo, navigation } = siteConfig;
 
   .nav-logo-img {
     display: block;
-    width: 12rem !important;
+    width: clamp(10.75rem, 36vw, 13rem) !important;
     max-width: none !important;
     height: auto !important;
     max-height: none !important;
@@ -141,7 +171,7 @@ const { logo, navigation } = siteConfig;
     border-bottom: 2px solid transparent;
     padding-bottom: 0.25rem;
     color: var(--df-on-primary);
-    font-size: 1.5rem;
+    font-size: 1.05rem;
     font-weight: 600;
     text-decoration: none;
     transition:
@@ -161,9 +191,9 @@ const { logo, navigation } = siteConfig;
     background: var(--df-primary);
     color: var(--df-on-primary);
     box-shadow: 0 0 10px var(--df-primary);
-    font-size: 1.5rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    letter-spacing: 0.025em;
+    letter-spacing: 0;
 		max-inline-size: 100%;
 		text-align: center;
     text-decoration: none;
@@ -175,7 +205,7 @@ const { logo, navigation } = siteConfig;
   }
 
   .nav-cta--desktop {
-    padding: 1rem 1.75rem;
+    padding: 0.9rem 1.45rem;
   }
 
   .nav-cta__icon {
@@ -216,8 +246,10 @@ const { logo, navigation } = siteConfig;
 		width: min(18rem, calc(100vw - 2.5rem));
     padding: 1rem;
     border: 1px solid rgb(255 255 255 / 10%);
-    background: var(--df-navigation);
+    background: rgb(5 5 6 / 84%);
     box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+    -webkit-backdrop-filter: blur(0.85rem);
+    backdrop-filter: blur(0.85rem);
   }
 
   .nav-mobile-panel ul {
@@ -230,7 +262,7 @@ const { logo, navigation } = siteConfig;
     display: block;
     padding: 0.75rem;
     color: var(--df-on-primary);
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     font-weight: 600;
     text-decoration: none;
   }
@@ -261,19 +293,24 @@ const { logo, navigation } = siteConfig;
     }
 
     .nav-logo-img {
-      width: 15rem !important;
+      width: clamp(12rem, 24vw, 14rem) !important;
     }
   }
 
   @media (min-width: 1280px) {
     .nav-container {
-      min-height: 6rem;
+      min-height: 5.6rem;
       gap: 1rem;
-      padding: 1rem 2.5rem;
+      padding: 0.85rem 2.5rem;
     }
 
     .nav-logo-img {
-      width: 15rem !important;
+      width: 14rem !important;
+    }
+
+    .nav-link,
+    .nav-cta {
+      font-size: 1.25rem;
     }
   }
 </style>
