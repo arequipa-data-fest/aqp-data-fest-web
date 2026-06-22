@@ -3,6 +3,7 @@ import { ArrowRight } from '@lucide/astro';
 import { getEntries } from 'astro:content';
 import SpeakerCard from './SpeakerCard.astro';
 import type { CollectionEntry } from 'astro:content';
+import { Linkedin, Twitter } from '@lucide/astro';
 
 interface Props {
 	featuredSpeakers: CollectionEntry<'landing'>['data']['featuredSpeakers'];
@@ -40,6 +41,8 @@ const speakers = await getEntries(speakersRefs);
 						imageAlt={speaker.data.imageAlt}
 						tags={speaker.data.tags}
 						accent={index % 2 === 0 ? 'primary' : 'accent'}
+            social={speaker.data.social}
+					  isRevealed={speaker.data.isRevealed} 
 					/>
 				</li>
 			))}

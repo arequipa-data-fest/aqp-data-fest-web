@@ -1,5 +1,6 @@
 ---
 import { CldImage } from 'astro-cloudinary';
+import { Linkedin, Twitter } from '@lucide/astro';
 
 interface Tag {
 	label: string;
@@ -16,6 +17,8 @@ interface Props {
 	badge?: string;
 	tags?: Tag[];
 	accent: 'primary' | 'accent';
+	social?: { linkedin?: string; twitter?: string };
+	isRevealed?: boolean;
 }
 
 const {
@@ -29,16 +32,22 @@ const {
 	badge,
 	tags = [],
 	accent,
+  social,
+  isRevealed = false,
 } = Astro.props;
 
 const dimensions = {
-	compact: { width: 400, height: 400 },
-	expanded: { width: 600, height: 600 },
-	featured: { width: 1000, height: 800 },
+	compact: { width: 424, height: 600 },
+	expanded: { width: 566, height: 800 },
+	featured: { width: 707, height: 1000 },
 };
 
 const width = dimensions[variant].width;
 const height = dimensions[variant].height;
+
+const displayImage = isRevealed ? imageFilename : "speakers/incognito-placeholder";
+const displayName = isRevealed ? name : "Pronto";
+const displayRole = isRevealed ? role : "Speaker Invitado";
 ---
 
 {variant === 'compact' && (
@@ -53,9 +62,8 @@ const height = dimensions[variant].height;
 			loading="lazy"
 		/>
 		<div class="speaker-card-compact__details">
-			{tags[0] && <span>{tags[0].label}</span>}
-			<h3>{name}</h3>
-			{company && <p>{company}</p>}
+			{isRevealed && tags[0] && <span>{tags[0].label}</span>}
+			<h3>{displayName}</h3>
 		</div>
 	</article>
 )}
@@ -73,9 +81,9 @@ const height = dimensions[variant].height;
 			/>
 		</div>
 		<div class="speaker-card-expanded__body">
-			<h3>{name}</h3>
-			<p>{role}</p>
-			{tags.length > 0 && (
+			<h3>{displayName}</h3>
+			<p>{displayRole} {isRevealed && company && ` | ${company}`}</p>
+			{isRevealed && tags.length > 0 && (
 				<ul class="speaker-card-expanded__tags">
 					{tags.map((tag) => <li>{tag.label}</li>)}
 				</ul>
@@ -97,11 +105,11 @@ const height = dimensions[variant].height;
 			/>
 		</div>
 		<div class="speaker-card-featured__content">
-			{badge && <span class="speaker-card-featured__badge">{badge}</span>}
-			<h3>{name}</h3>
-			<p class="speaker-card-featured__role">{role}</p>
-			{description && <p class="speaker-card-featured__description">{description}</p>}
-			{tags.length > 0 && (
+			{isRevealed && badge && <span class="speaker-card-featured__badge">{badge}</span>}
+			<h3>{displayName}</h3>
+			<p class="speaker-card-featured__role">{displayRole} {isRevealed && company && ` en ${company}`}</p>
+			{isRevealed && description && <p class="speaker-card-featured__description">{description}</p>}
+			{isRevealed && tags.length > 0 && (
 				<ul class="speaker-card-featured__tags">
 					{tags.map((tag) => <li>{tag.label}</li>)}
 				</ul>
@@ -112,7 +120,7 @@ const height = dimensions[variant].height;
 
 <style>
 	/* Compact Styles (v1) */
-	.speaker-card-compact { position: relative; display: grid; min-width: 0; min-height: 16rem; aspect-ratio: 1 / 1; overflow: hidden; align-items: end; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.3rem; background: var(--df-card); }
+	.speaker-card-compact { position: relative; display: grid; min-width: 0; min-height: 16rem; aspect-ratio: 1414 / 2000; overflow: hidden; align-items: end; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.3rem; background: var(--df-card); }
 	.speaker-card-compact--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-compact--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-compact::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, var(--df-page), transparent 65%); pointer-events: none; }
@@ -123,30 +131,32 @@ const height = dimensions[variant].height;
 	.speaker-card-compact__details p { margin: 0.35rem 0 0; color: var(--df-text-muted); font-size: var(--df-text-body); }
 
 	/* Expanded Styles (v2) */
-	.speaker-card-expanded { min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.35rem; background: var(--df-card); }
+	.speaker-card-expanded { display: flex; flex-direction: column; min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); border-radius: 0.35rem; background: var(--df-card); }
 	.speaker-card-expanded--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-expanded--accent { --speaker-card-accent: var(--df-accent); }
-	.speaker-card-expanded__image { position: relative; aspect-ratio: 1 / 1; overflow: hidden; }
+	.speaker-card-expanded__image { position: relative; aspect-ratio: 1414 / 2000; overflow: hidden; }
 	.speaker-card-expanded__image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--df-page), transparent 45%); pointer-events: none; }
 	.speaker-card-expanded__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
-	.speaker-card-expanded__body { padding: 1.5rem; background: var(--df-page); }
-	.speaker-card-expanded__body h3 { margin: 0; color: var(--df-text); font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 800; line-height: 1.25; }
+	.speaker-card-expanded__body { display: flex; flex-direction: column; flex-grow: 1; padding: 1.5rem; background: var(--df-page); }
+	.speaker-card-expanded__body h3 { margin: 0; color: var(--df-text); font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 800; line-height: 1.25; word-break: normal; }
 	.speaker-card-expanded__body > p { margin: 1rem 0 0; color: var(--speaker-card-accent); font-size: var(--df-text-body); font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; }
-	.speaker-card-expanded__tags { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+	.speaker-card-expanded__tags { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: auto; padding: 1.5rem 0 0; list-style: none; }
 	.speaker-card-expanded__tags li { border: 1px solid var(--df-line); padding: 0.45rem 0.85rem; color: var(--df-text-muted); font-size: var(--df-text-label); font-weight: 700; }
 
 	/* Featured Styles (v3) */
-	.speaker-card-featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
+	.speaker-card-featured { display: flex; flex-direction: column; min-width: 0; height: 100%; border: 1px solid color-mix(in srgb, var(--speaker-card-accent) 55%, var(--df-line)); background: var(--df-page); }
 	.speaker-card-featured--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-featured--accent { --speaker-card-accent: var(--df-accent); }
-	.speaker-card-featured__image { min-height: 28rem; overflow: hidden; background: var(--df-card); }
+	.speaker-card-featured__image { aspect-ratio: 1414 / 2000; overflow: hidden; background: var(--df-card); }
 	.speaker-card-featured__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
-	.speaker-card-featured__content { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 3rem; }
+	.speaker-card-featured__content { display: flex; min-width: 0; flex-direction: column; justify-content: center; flex-grow: 1; padding: 3rem; }
 	.speaker-card-featured__badge { width: fit-content; margin-bottom: 1.5rem; border: 1px solid var(--speaker-card-accent); border-radius: 999px; background: color-mix(in srgb, var(--speaker-card-accent) 18%, transparent); color: var(--speaker-card-accent); padding: 0.4rem 1rem; font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.12em; }
-	.speaker-card-featured h3 { margin: 0; color: var(--df-text); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.15; }
+	.speaker-card-featured h3 { margin: 0; color: var(--df-text); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.15; word-break: normal; }
 	.speaker-card-featured__role { margin: 1.25rem 0 0; color: var(--speaker-card-accent); font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 700; }
 	.speaker-card-featured__description { max-width: 26rem; margin: 2rem 0 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.5; }
-	.speaker-card-featured__tags { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+	.speaker-card-featured__tags { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; padding: 2rem 0 0; list-style: none; }
 	.speaker-card-featured__tags li { border: 1px solid var(--df-line); background: var(--df-card); color: var(--df-text-muted); padding: 0.45rem 0.85rem; font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.06em; }
+	@media (min-width: 761px) { .speaker-card-featured { display: grid; grid-template-columns: 1fr 1fr; } .speaker-card-featured__image { aspect-ratio: auto; height: 100%; }
+	}
 	@media (max-width: 760px) { .speaker-card-featured { grid-template-columns: 1fr; } .speaker-card-featured__image { min-height: 22rem; } .speaker-card-featured__content { padding: 2rem; } }
 </style>

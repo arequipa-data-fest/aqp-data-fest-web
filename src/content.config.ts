@@ -22,6 +22,7 @@ const speakers = defineCollection({
       linkedin: z.string().url().optional(),
       twitter: z.string().url().optional(),
     }).optional(),
+    isRevealed: z.boolean().default(false), 
   }),
 });
 
