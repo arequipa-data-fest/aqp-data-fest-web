@@ -1,0 +1,80 @@
+---
+import { CldImage } from 'astro-cloudinary';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	aboutEvent: CollectionEntry<'landing'>['data']['aboutEvent'];
+}
+
+const { aboutEvent } = Astro.props;
+const partnerLogos = [...aboutEvent.organizers, ...aboutEvent.collaborators];
+---
+
+<section class="about-event" aria-labelledby="about-event-title">
+	<h2 id="about-event-title" class="about-event__title">{aboutEvent.title}</h2>
+
+	<div class="about-event__content">
+		<div class="about-event__media">
+			<CldImage
+				src={aboutEvent.media.imageFilename}
+				alt={aboutEvent.media.alt}
+				width={800}
+				height={450}
+				crop="fill"
+				loading="lazy"
+			/>
+		</div>
+
+		<div class="about-event__info">
+			<div class="about-event__text">
+				{aboutEvent.description.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+
+			<div class="about-event__partners">
+				<div class="partner-group">
+					<h3>{aboutEvent.organizersLabel}</h3>
+					<ul class="logo-list">
+						{aboutEvent.organizers.map((item) => (
+							<li class="logo-frame">
+								<CldImage class="partner-logo" src={item.logoFilename} alt={item.alt} width={200} height={88} loading="lazy" />
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div class="partner-group">
+					<h3>{aboutEvent.collaboratorLabel}</h3>
+					<ul class="logo-list">
+						{aboutEvent.collaborators.map((item) => (
+							<li class="logo-frame">
+								<CldImage class="partner-logo" src={item.logoFilename} alt={item.alt} width={200} height={88} loading="lazy" />
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about-event { background: var(--df-page); padding: 4rem 3.5rem; }
+	.about-event__title { margin: 0 0 3rem; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: 0.2em; text-align: center; text-transform: uppercase; }
+	.about-event__content { display: grid; grid-template-columns: 1fr; gap: 2.5rem; max-width: 72rem; margin-inline: auto; width: 100%; }
+	.about-event__media { position: relative; width: 100%; max-width: 50rem; margin-inline: auto; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--df-line); border-radius: 0.4rem; background: var(--df-card); }
+	.about-event__media :global(img),
+	.about-event__media img { display: block;  width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: center !important; }
+	.about-event__info { display: grid; gap: 1.5rem; min-width: 0; }
+	.about-event__text { border: 1px solid var(--df-line); border-radius: 0.4rem; background: var(--df-card); padding: 2rem; }
+	.about-event__text p { margin: 0; color: var(--df-text); font-size: var(--df-text-body); line-height: 1.5; }
+	.about-event__partners { display: flex; flex-direction: column; gap: 2.5rem; align-items: center; }
+	.partner-group { display: flex; flex-direction: column; align-items: center; width: 100%; }
+	.partner-group h3 { margin: 0 0 1.25rem; color: var(--df-accent); font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 800; text-align: center; }
+	.logo-list { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 0; padding: 0; list-style: none; justify-content: center; }
+	.logo-frame { display: flex; align-items: center; justify-content: center; width: clamp(9rem, 40vw, 12.5rem); height: 7.5rem; }
+	.logo-frame .partner-logo { display: block; width: 100% !important; height: 100% !important; object-fit: contain !important; }
+
+	@media (max-width: 900px) { .about-event { padding-inline: 1.25rem; padding-bottom: 0; } }
+  @media (min-width: 768px) { .about-event__partners { flex-direction: row; align-items: flex-start; justify-content: center; gap: 4rem; } .partner-group { width: auto; } }
+	@media (min-width: 1024px) { .about-event__content { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; } .about-event__partners { justify-content: center; } }
+</style>

@@ -1,0 +1,18 @@
+---
+interface Props { data: { eyebrow: string; title: string; description: string; }; }
+const { data } = Astro.props;
+---
+
+<section class="certificate-hero" aria-labelledby="certificate-title" aria-describedby="certificate-description">
+	<p class="certificate-hero__eyebrow">{data.eyebrow}</p>
+	<h1 id="certificate-title">{data.title}</h1>
+	<p id="certificate-description" class="certificate-hero__description">{data.description}</p>
+</section>
+
+<style>
+	.certificate-hero { background: radial-gradient(circle at 85% 0%, var(--df-primary-soft), transparent 28rem), var(--df-page); border-bottom: 1px solid var(--df-accent); padding: clamp(7rem, 12vh, 9rem) 3.5rem 4rem; text-align: center; }
+	.certificate-hero__eyebrow { display: inline-flex; margin: 0 0 2rem; border: 1px solid var(--df-line); border-radius: 0.6rem; background: var(--df-card); color: var(--df-accent); padding: 0.9rem 2rem; font-size: var(--df-text-body); font-weight: 800; letter-spacing: 0.28em; text-transform: uppercase; }
+	.certificate-hero h1 { margin: 0; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(2.3rem, 9vw, 7rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; word-break: normal; text-transform: uppercase; }
+	.certificate-hero__description { max-width: 66rem; margin: 2rem auto 0; color: var(--df-text-muted); font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1.55; }
+	@media (max-width: 760px) { .certificate-hero { padding: 7.25rem 1.25rem 3rem; } .certificate-hero__eyebrow { padding-inline: 1rem; letter-spacing: 0.14em; } }
+</style>

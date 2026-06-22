@@ -1,11 +1,26 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getEntry } from "astro:content";
+import MainLayout from "@layouts/MainLayout.astro";
+import AboutEvent from "@components/sections/AboutEvent.astro";
+import Experience from "@components/sections/Experience.astro";
+import FeaturedSpeakers from "@components/features/speakers/FeaturedSpeakers.astro";
+import Hero from "@components/sections/Hero.astro";
+import MainTopics from "@components/sections/MainTopics.astro";
+import Countdown from "@components/sections/Countdown.astro";
+import { siteConfig } from "@config/site";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const landingEntry = await getEntry("landing", "home");
+if (!landingEntry) {
+	throw new Error("Landing data not found");
+}
+const landingData = landingEntry.data;
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title={siteConfig.name} description={siteConfig.description}>
+	<Hero hero={landingData.hero} />
+	<Countdown countdown={landingData.countdown} />
+	<AboutEvent aboutEvent={landingData.aboutEvent} />
+	<Experience experience={landingData.experience} />
+	<MainTopics mainTopics={landingData.mainTopics} />
+	<FeaturedSpeakers featuredSpeakers={landingData.featuredSpeakers} />
+</MainLayout>

@@ -1,0 +1,145 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import { getEntries } from 'astro:content';
+import SpeakerCard from './SpeakerCard.astro';
+import type { CollectionEntry } from 'astro:content';
+import { Linkedin, Twitter } from '@lucide/astro';
+
+interface Props {
+	featuredSpeakers: CollectionEntry<'landing'>['data']['featuredSpeakers'];
+}
+
+const { featuredSpeakers } = Astro.props;
+
+// Fetch speakers from Content Collections by mapping IDs
+const speakersRefs = featuredSpeakers.speakerIds.map(id => ({ collection: 'speakers' as const, id }));
+const speakers = await getEntries(speakersRefs);
+---
+
+<section class="featured-speakers" aria-labelledby="featured-speakers-title">
+	<div class="featured-speakers__content">
+		<p class="featured-speakers__eyebrow">{featuredSpeakers.eyebrow}</p>
+
+		<div class="featured-speakers__heading">
+			<h2 id="featured-speakers-title">{featuredSpeakers.title}</h2>
+
+			<a class="featured-speakers__link" href={featuredSpeakers.viewAllHref}>
+				{featuredSpeakers.viewAllLabel}
+				<ArrowRight aria-hidden="true" />
+			</a>
+		</div>
+
+		<ul class="featured-speakers__list">
+			{speakers.map((speaker, index) => (
+				<li>
+					<SpeakerCard
+						variant="compact"
+						name={speaker.data.name}
+						role={speaker.data.role}
+						company={speaker.data.company}
+						imageFilename={speaker.data.imageFilename}
+						imageAlt={speaker.data.imageAlt}
+						tags={speaker.data.tags}
+						accent={index % 2 === 0 ? 'primary' : 'accent'}
+            social={speaker.data.social}
+					  isRevealed={speaker.data.isRevealed} 
+					/>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.featured-speakers {
+		background: var(--df-page);
+		padding: 4rem 3.5rem;
+	}
+
+	.featured-speakers__content {
+		max-width: 72rem;
+		margin-inline: auto;
+	}
+
+	.featured-speakers__eyebrow {
+		margin: 0;
+		color: var(--df-accent);
+		font-size: var(--df-text-label);
+		font-weight: 800;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.featured-speakers__heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-top: 0.75rem;
+	}
+
+	.featured-speakers__heading h2 {
+		margin: 0;
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent));
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
+		font-size: clamp(2rem, 4vw, 3.5rem);
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.featured-speakers__link {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--df-accent);
+		font-size: var(--df-text-body);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.featured-speakers__link svg {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	.featured-speakers__link:hover {
+		color: var(--df-accent-soft);
+	}
+
+	.featured-speakers__link:focus-visible {
+		outline: 2px solid var(--df-accent);
+		outline-offset: 4px;
+	}
+
+	.featured-speakers__list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+		gap: 1rem;
+		margin: 2rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.featured-speakers__list > li {
+		min-width: 0;
+	}
+
+	@media (max-width: 900px) {
+		.featured-speakers {
+			padding-inline: 1.25rem;
+		}
+
+	}
+
+	@media (max-width: 560px) {
+		.featured-speakers__heading {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+	}
+</style>

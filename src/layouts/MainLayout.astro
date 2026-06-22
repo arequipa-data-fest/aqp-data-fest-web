@@ -1,0 +1,40 @@
+---
+import Footer from '@components/layout/Footer.astro';
+import Navigation from '@components/layout/Navigation.astro';
+import { siteConfig } from '@config/site';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = siteConfig.name, description = siteConfig.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-outer font-sans text-text antialiased">
+		<div class="site-shell">
+			<div class="site-glow site-glow-left" aria-hidden="true"></div>
+			<div class="site-glow site-glow-right" aria-hidden="true"></div>
+			<Navigation />
+			<main id="main-content" tabindex="-1">
+				<slot />
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>

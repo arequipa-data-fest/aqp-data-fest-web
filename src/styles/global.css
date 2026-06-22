@@ -1,1 +1,232 @@
 @import "tailwindcss";
+
+:root {
+	--df-outer: #050506;
+	--df-background: #090d27;
+	--df-page: #0a1030;
+	--df-navigation: #000000;
+	--df-footer: #0c0f10;
+	--df-surface: #111633;
+	--df-primary: #6f04fe;
+	--df-primary-hover: #8125ff;
+	--df-accent: #00eafc;
+	--df-accent-soft: #caf9ff;
+	--df-text: #e2e2e2;
+	--df-text-muted: #ccc3da;
+	--df-on-primary: #ffffff;
+	--df-line: #2a3154;
+	--df-card: #12162b;
+	--df-speaker-overlay: #0c112a;
+	--df-primary-soft: rgb(111 4 254 / 30%);
+	--df-font-sans: 'Montserrat', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	--df-text-body: 1.125rem;
+	--df-text-label: 0.875rem;
+	--df-text-hero: clamp(3rem, 6vw, 6.875rem);
+	--df-text-hero-prefix: clamp(2.25rem, 4vw, 4.5rem);
+}
+
+@theme inline {
+	--color-outer: var(--df-outer);
+	--color-background: var(--df-background);
+	--color-page: var(--df-page);
+	--color-navigation: var(--df-navigation);
+	--color-surface: var(--df-surface);
+	--color-primary: var(--df-primary);
+	--color-primary-hover: var(--df-primary-hover);
+	--color-accent: var(--df-accent);
+	--color-accent-soft: var(--df-accent-soft);
+	--color-text: var(--df-text);
+	--color-text-muted: var(--df-text-muted);
+	--color-on-primary: var(--df-on-primary);
+	--color-line: var(--df-line);
+	--color-card: var(--df-card);
+	--font-sans: var(--df-font-sans);
+	--shadow-glow: 0 0 10px var(--df-primary);
+}
+
+@layer base {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		background: var(--df-background);
+		overflow-x: clip;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		margin: 0;
+		min-width: 0;
+		overflow-x: clip;
+	}
+
+	img,
+	video,
+	canvas {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.astro-cloudinary-cldimage {
+		max-width: 100% !important;
+		max-height: none !important;
+		aspect-ratio: auto !important;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	p,
+	li,
+	a,
+	button,
+	input,
+	textarea,
+	select {
+		overflow-wrap: break-word;
+	}
+
+	button,
+	input,
+	textarea,
+	select {
+		min-inline-size: 0;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--df-accent);
+		outline-offset: 4px;
+	}
+}
+
+@layer components {
+	.skip-link {
+		position: fixed;
+		z-index: 100;
+		left: 1rem;
+		top: -5rem;
+		padding: 0.75rem 1rem;
+		background: var(--color-accent);
+		color: var(--color-background);
+		font-weight: 700;
+		transition: top 150ms ease;
+	}
+
+	.skip-link:focus {
+		top: 1rem;
+	}
+
+	.page-intro {
+		display: grid;
+		min-height: 42rem;
+		place-content: center;
+		padding: 5rem 1.25rem;
+		text-align: center;
+	}
+
+	.page-intro > p:first-child {
+		color: var(--color-accent);
+		font-size: 0.875rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.page-intro h1 {
+		margin: 1rem 0;
+		color: var(--color-text);
+		font-size: clamp(3rem, 7vw, 6rem);
+		font-weight: 800;
+		line-height: 0.9;
+		text-transform: uppercase;
+	}
+
+	.page-intro > p:last-child {
+		max-width: 42rem;
+		color: var(--color-text-muted);
+		font-size: 1.125rem;
+		line-height: 1.75;
+	}
+
+	.site-shell {
+		position: relative;
+		isolation: isolate;
+		min-height: 100vh;
+		width: 100%;
+		overflow-x: clip;
+		overflow-y: visible;
+		background:
+			radial-gradient(circle at 58% 22%, rgb(94 32 199 / 25%), transparent 34rem),
+			var(--df-background);
+	}
+
+	.site-glow {
+		position: absolute;
+		z-index: -1;
+		width: 24rem;
+		height: 54rem;
+		border: 1px solid rgb(200 157 255 / 75%);
+		border-radius: 2rem;
+		background: linear-gradient(180deg, rgb(73 0 255 / 90%), rgb(138 0 255 / 60%));
+		filter: blur(11px);
+		opacity: 0.85;
+	}
+
+	.site-glow-left {
+		left: -20rem;
+		top: 36rem;
+	}
+
+	.site-glow-right {
+		right: -20rem;
+		top: -4rem;
+	}
+
+	.footer-orb {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(100px);
+		opacity: 0.24;
+		pointer-events: none;
+	}
+
+	.footer-orb-left {
+		left: -10rem;
+		top: 5rem;
+		height: 20rem;
+		width: 20rem;
+		background: var(--color-primary);
+	}
+
+	.footer-orb-right {
+		right: -12rem;
+		bottom: -8rem;
+		height: 30rem;
+		width: 30rem;
+		background: var(--color-accent);
+	}
+
+	.footer-network {
+		width: 100%;
+		min-height: 17rem;
+		overflow: visible;
+	}
+
+	.network-mountain,
+	.network-line {
+		fill: none;
+		stroke: url(#network-gradient);
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 5;
+	}
+
+	.network-line { opacity: 0.75; stroke-width: 3; }
+	.network-smoke { fill: none; stroke: #7deaff; stroke-linecap: round; stroke-width: 4; filter: url(#network-glow); }
+	.network-node { fill: var(--color-page); stroke: #c5a9ff; stroke-width: 5; }
+}
