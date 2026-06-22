@@ -24,18 +24,20 @@ const { logo, navigation } = siteConfig;
       />
     </a>
 
-    <nav class="nav-links hidden xl:flex" aria-label={navigation.mainAriaLabel}>
+    <nav class="nav-links" aria-label={navigation.mainAriaLabel}>
       {
         navigationLinks.map((link) => {
           const isActive = currentPath === link.href;
+          const isSoon = link.label === 'Certificado';
 
           return (
             <a
-              href={link.href}
+              href={isSoon ? "#" : link.href}
               aria-current={isActive ? "page" : undefined}
-              class:list={["nav-link", { "nav-link--active": isActive }]}
+              class:list={["nav-link", { "nav-link--active": isActive }, { "nav-link--disabled": isSoon }]}
             >
               {link.label}
+              {isSoon && <span class="nav-badge-soon">Pronto</span>}
             </a>
           );
         })
@@ -43,7 +45,7 @@ const { logo, navigation } = siteConfig;
     </nav>
 
     <a
-      class="nav-cta nav-cta--desktop hidden xl:inline-flex"
+      class="nav-cta nav-cta--desktop"
       href={registrationHref}
       target={isExternalRegistration ? "_blank" : undefined}
       rel={isExternalRegistration ? "noopener noreferrer" : undefined}
@@ -52,17 +54,10 @@ const { logo, navigation } = siteConfig;
       <ArrowRight class="nav-cta__icon" aria-hidden="true" />
     </a>
 
-    <details class="nav-mobile xl:hidden">
+    <details class="nav-mobile">
       <summary class="nav-menu-toggle">
         <span class="sr-only">{navigation.mobileMenuLabel}</span>
-
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 7h16M4 12h16M4 17h16"></path>
         </svg>
       </summary>
@@ -70,17 +65,23 @@ const { logo, navigation } = siteConfig;
       <nav class="nav-mobile-panel" aria-label={navigation.mobileAriaLabel}>
         <ul>
           {
-            navigationLinks.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  aria-current={currentPath === link.href ? "page" : undefined}
-                  class="nav-mobile-link"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
+            navigationLinks.map((link) => {
+              const isActive = currentPath === link.href;
+              const isSoon = link.label === 'Certificado';
+
+              return (
+                <li>
+                  <a
+                    href={isSoon ? "#" : link.href}
+                    aria-current={isActive ? "page" : undefined}
+                    class:list={["nav-mobile-link", { "nav-mobile-link--disabled": isSoon }]}
+                  >
+                    {link.label}
+                    {isSoon && <span class="nav-badge-soon">Pronto</span>}
+                  </a>
+                </li>
+              );
+            })
           }
         </ul>
 
@@ -100,217 +101,58 @@ const { logo, navigation } = siteConfig;
 
 <script>
   const navigation = document.querySelector<HTMLElement>("[data-navigation]");
-
   if (navigation) {
     const updateNavigation = () => {
       navigation.classList.toggle("nav-shell--scrolled", window.scrollY > 8);
     };
-
     updateNavigation();
     window.addEventListener("scroll", updateNavigation, { passive: true });
   }
 </script>
 
 <style>
-  .nav-shell {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 50;
-    border-bottom: 1px solid transparent;
-    background: transparent;
-    transition:
-      background 180ms ease,
-      border-color 180ms ease,
-      box-shadow 180ms ease,
-      -webkit-backdrop-filter 180ms ease,
-      backdrop-filter 180ms ease;
+  .nav-shell { position: fixed; top: 0; right: 0; left: 0; z-index: 50; border-bottom: 1px solid transparent; background: transparent; transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, backdrop-filter 180ms ease; }
+  .nav-shell--scrolled, .nav-shell:has(.nav-mobile[open]) { border-color: rgb(255 255 255 / 8%); background: rgb(5 5 6 / 42%); box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 18%); -webkit-backdrop-filter: blur(0.85rem); backdrop-filter: blur(0.85rem); }
+  .nav-container { display: flex; min-height: 4.75rem; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 0.7rem 1.25rem; }
+  .nav-logo-img { display: block; width: clamp(10.75rem, 36vw, 13rem) !important; object-fit: contain !important; }
+  .nav-links, 
+  .nav-cta--desktop { 
+    display: none !important; 
   }
 
-  .nav-shell--scrolled,
-  .nav-shell:has(.nav-mobile[open]) {
-    border-color: rgb(255 255 255 / 8%);
-    background: rgb(5 5 6 / 42%);
-    box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 18%);
-    -webkit-backdrop-filter: blur(0.85rem);
-    backdrop-filter: blur(0.85rem);
-  }
+  .nav-link { display: inline-flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid transparent; padding-bottom: 0.25rem; color: var(--df-on-primary); font-size: 1.05rem; font-weight: 600; text-decoration: none; transition: color 150ms ease, border-color 150ms ease; }
+  .nav-link:hover, .nav-link--active { border-color: var(--df-accent); color: var(--df-accent); }
+  .nav-link--disabled { cursor: default; opacity: 0.7; }
 
-  .nav-container {
-    display: flex;
-    min-height: 4.75rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-		min-width: 0;
-    padding: 0.7rem 1.25rem;
-  }
+  .nav-badge-soon { display: inline-block; padding: 0.15rem 0.4rem; font-size: 0.65rem; font-weight: 800; line-height: 1; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 99px; background: color-mix(in srgb, var(--df-accent) 15%, transparent); color: var(--df-accent); border: 1px solid color-mix(in srgb, var(--df-accent) 25%, transparent); }
 
-  .nav-logo {
-    flex-shrink: 0;
-  }
+  .nav-cta { display: flex; align-items: center; justify-content: center; background: var(--df-primary); color: var(--df-on-primary); box-shadow: 0 0 10px var(--df-primary); font-size: 1.05rem; font-weight: 700; text-decoration: none; transition: background 150ms ease; }
+  .nav-cta:hover { background: var(--df-primary-hover); }
+  .nav-cta--desktop { padding: 0.9rem 1.45rem; }
+  .nav-cta__icon { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
 
-  .nav-logo-img {
-    display: block;
-    width: clamp(10.75rem, 36vw, 13rem) !important;
-    max-width: none !important;
-    height: auto !important;
-    max-height: none !important;
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-  }
-
-  .nav-links {
-    align-items: center;
-    gap: 1.5rem;
-		min-width: 0;
-  }
-
-  .nav-link {
-    border-bottom: 2px solid transparent;
-    padding-bottom: 0.25rem;
-    color: var(--df-on-primary);
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition:
-      color 150ms ease,
-      border-color 150ms ease;
-  }
-
-  .nav-link:hover,
-  .nav-link--active {
-    border-color: var(--df-accent);
-    color: var(--df-accent);
-  }
-
-  .nav-cta {
-    align-items: center;
-    justify-content: center;
-    background: var(--df-primary);
-    color: var(--df-on-primary);
-    box-shadow: 0 0 10px var(--df-primary);
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 0;
-		max-inline-size: 100%;
-		text-align: center;
-    text-decoration: none;
-    transition: background 150ms ease;
-  }
-
-  .nav-cta:hover {
-    background: var(--df-primary-hover);
-  }
-
-  .nav-cta--desktop {
-    padding: 0.9rem 1.45rem;
-  }
-
-  .nav-cta__icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    flex: 0 0 auto;
-  }
-
-  .nav-mobile {
-    position: relative;
-  }
-
-  .nav-menu-toggle {
-    display: flex;
-    width: 2.75rem;
-    height: 2.75rem;
-    cursor: pointer;
-    list-style: none;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--df-accent);
-    color: var(--df-accent);
-  }
-
-  .nav-menu-toggle::-webkit-details-marker {
-    display: none;
-  }
-
-  .nav-menu-toggle svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .nav-mobile-panel {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 0.75rem);
-		width: min(18rem, calc(100vw - 2.5rem));
-    padding: 1rem;
-    border: 1px solid rgb(255 255 255 / 10%);
-    background: rgb(5 5 6 / 84%);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
-    -webkit-backdrop-filter: blur(0.85rem);
-    backdrop-filter: blur(0.85rem);
-  }
-
-  .nav-mobile-panel ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .nav-mobile-link {
-    display: block;
-    padding: 0.75rem;
-    color: var(--df-on-primary);
-    font-size: 1.15rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .nav-mobile-link:hover,
-  .nav-mobile-link[aria-current="page"] {
-    background: rgb(255 255 255 / 5%);
-    color: var(--df-accent);
-  }
-
-  .nav-cta--mobile {
-    display: flex;
-    margin-top: 1rem;
-    padding: 0.75rem;
-  }
-
-  .nav-link:focus-visible,
-  .nav-cta:focus-visible,
-  .nav-menu-toggle:focus-visible,
-  .nav-mobile-link:focus-visible {
-    outline: 2px solid var(--df-accent);
-    outline-offset: 4px;
-  }
-
-  @media (min-width: 640px) {
-    .nav-container {
-      padding-inline: 2rem;
-    }
-
-    .nav-logo-img {
-      width: clamp(12rem, 24vw, 14rem) !important;
-    }
-  }
+  .nav-mobile { display: block; }
+  .nav-menu-toggle { display: flex; width: 2.75rem; height: 2.75rem; cursor: pointer; list-style: none; align-items: center; justify-content: center; border: 1px solid var(--df-accent); color: var(--df-accent); }
+  .nav-menu-toggle::-webkit-details-marker { display: none; }
+  .nav-menu-toggle svg { width: 1.5rem; height: 1.5rem; }
+  .nav-mobile-panel { position: absolute; right: 0; top: calc(100% + 0.75rem); width: min(18rem, calc(100vw - 2.5rem)); padding: 1rem; border: 1px solid rgb(255 255 255 / 10%); background: rgb(5 5 6 / 94%); box-shadow: 0 8px 24px rgb(0 0 0 / 20%); -webkit-backdrop-filter: blur(1.2rem); backdrop-filter: blur(1.2rem); }
+  .nav-mobile-panel ul { margin: 0; padding: 0; list-style: none; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; color: var(--df-on-primary); font-size: 1.15rem; font-weight: 600; text-decoration: none; }
+  .nav-mobile-link:hover, .nav-mobile-link[aria-current="page"] { background: rgb(255 255 255 / 5%); color: var(--df-accent); }
+  .nav-mobile-link--disabled { opacity: 0.5; pointer-events: none; }
+  .nav-cta--mobile { display: flex; margin-top: 1rem; padding: 0.75rem; }
 
   @media (min-width: 1280px) {
-    .nav-container {
-      min-height: 5.6rem;
-      gap: 1rem;
-      padding: 0.85rem 2.5rem;
-    }
+    .nav-mobile { display: none !important; }
+    .nav-links { display: flex !important; align-items: center; gap: 1.5rem; }
+    .nav-cta--desktop { display: flex !important; }
+    .nav-container { min-height: 5.6rem; padding: 0.85rem 2.5rem; }
+    .nav-logo-img { width: 14rem !important; }
+    .nav-link, .nav-cta { font-size: 1.25rem; }
+  }
 
-    .nav-logo-img {
-      width: 14rem !important;
-    }
-
-    .nav-link,
-    .nav-cta {
-      font-size: 1.25rem;
-    }
+  @media (min-width: 640px) and (max-width: 1279px) {
+    .nav-container { padding-inline: 2rem; }
+    .nav-logo-img { width: clamp(12rem, 24vw, 14rem) !important; }
   }
 </style>
