@@ -8,97 +8,102 @@ header:
   description: "Descubre las ponencias y horarios del Arequipa Data Fest 2026. Prepárate para una jornada intensiva de conocimiento en Data Science, Engineering y AI."
 items:
   -
+    time: "8:00 a.m."
+    title: "Registro"
+    type: "break"
+    icon: "reg" 
+  -
     time: "9:00 a.m."
-    role: "Data Engineer"
+    role: "Sr. Data Engineer"
     speaker: "Daniel Portugal"
     title: "Charla Introductoria de Datos: De los archivos de papel a la inteligencia artificial: la revolución silenciosa de los datos"
-    type: "session"
+    type: "session" # UPDATED: Datos reales cronograma
   -
     time: "9:40 a.m."
-    role: "Business Intelligence Analyst"
-    speaker: "Andrea Salazar"
-    title: "Cuentas por cobrar en PBI. Del libro diario al Análisis Visual"
-    type: "session"
+    role: "Especialista Power BI"
+    speaker: "Deyvit Jeri"
+    title: "Cuentas por cobrar en PBI. Del libro diario a Análisis Visual"
+    type: "session" # UPDATED: Datos reales cronograma
   -
     time: "10:20 a.m."
-    role: "Data Analyst"
-    speaker: "Carlos Medina"
+    role: "Business Analyst"
+    speaker: "Jonatan Espejo Ibañez"
     title: "Business Intelligence en Agroexportaciones"
-    type: "session"
+    type: "session" # UPDATED: Datos reales cronograma
   -
     time: "11:00 a.m."
-    title: "Coffee Break y Networking"
+    title: "BREAK"
     type: "break"
-    icon: "coffee"
+    icon: "coffee" # UPDATED: Alineado a CSV
   -
     time: "11:15 a.m."
-    role: "AI Engineer"
-    speaker: "Lucía Torres"
+    role: "Data Analytics Engineer"
+    speaker: "Adrian Vela"
     title: "Acelerando el ciclo de desarrollo en BI con IA"
-    type: "session"
+    type: "session" # UPDATED: Datos reales cronograma
   -
     time: "11:55 a.m."
-    role: "Cloud Data Engineer"
-    speaker: "Miguel Paredes"
+    role: "Data Engineer"
+    speaker: "Jesús Evangelista"
     title: "Fundamentos ETL Azure"
-    type: "session"
+    type: "session" # UPDATED: Datos reales cronograma
   -
     time: "12:30 p.m."
-    role: "Data Science Lead"
-    speaker: "Paola Cárdenas"
+    role: "Data Engineer"
+    speaker: "Pronto"
     title: "Del dashboard al agente: IA aplicada a decisiones operativas en minería"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "1:00 p.m."
-    title: "Almuerzo"
+    title: "ALMUERZO"
     type: "break"
-    icon: "lunch"
+    icon: "lunch" # UPDATED: Alineado a CSV
   -
     time: "2:00 p.m."
-    role: "Machine Learning Engineer"
-    speaker: "Renato Amapanqui"
-    title: "Agentic Data Pipelines: Construyendo pipelines que razonan y actúan"
-    type: "session"
+    role: "Data Engineer"
+    speaker: "Pronto"
+    title: "Agentic Data pipelines: Construyendo pipelines que razonan y actúan"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "2:40 p.m."
-    role: "Data Platform Architect"
-    speaker: "Gustavo Crehanna"
+    role: "Data Engineer"
+    speaker: "Pronto"
     title: "Databricks"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "3:20 p.m."
-    role: "Data Scientist"
-    speaker: "Valeria Núñez"
+    role: "Data Science"
+    speaker: "Pronto"
     title: "Cómo identificar clientes de alto valor con Machine Learning"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "4:00 p.m."
-    role: "AI Developer Advocate"
-    speaker: "Jorge Ramos"
+    role: "AI Engineer"
+    speaker: "Pronto"
     title: "De cero a agente: construye un asistente de IA con LangGraph, RAG y Claude Code"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "4:40 p.m."
-    role: "Analytics Architect"
-    speaker: "María Fernández"
+    role: "Data Driven Specialist"
+    speaker: "Pronto"
     title: "Gobernanza Inteligente de Datos e IA con Microsoft Fabric"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "5:20 p.m."
-    role: "Cloud Solutions Architect"
-    speaker: "Yury Paredes"
+    role: "Data Architect"
+    speaker: "Pronto"
     title: "Diseñando una plataforma moderna de datos en Azure con Microsoft Fabric"
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "6:00 p.m."
-    role: "Database Specialist"
-    speaker: "Luis Coronel"
+    role: "Sr ESE - CRM Solutions"
+    speaker: "Pronto"
     title: "Cree aplicaciones de IA escalables con Azure SQL Database Hyperscale."
-    type: "session"
+    type: "session" # UPDATED: Ponente incógnito
   -
     time: "6:40 p.m."
-    role: "Panel de Expertos"
+    role: "Cierre"
     speaker: "Equipo Arequipa Data Fest"
-    title: "Ronda de Preguntas"
-    type: "session"
+    title: "RONDA DE PREGUNTAS"
+    type: "session" # UPDATED: Datos finales cronograma
 ---

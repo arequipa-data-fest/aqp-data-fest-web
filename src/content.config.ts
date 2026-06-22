@@ -48,7 +48,7 @@ const agenda = defineCollection({
       speaker: z.string().optional(),
       title: z.string(),
       type: z.enum(['session', 'break']),
-      icon: z.enum(['coffee', 'lunch']).optional(),
+      icon: z.enum(['coffee', 'lunch', 'reg']).optional(),
     })),
   }),
 });

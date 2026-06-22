@@ -1,5 +1,5 @@
 ---
-import { Coffee, Utensils } from '@lucide/astro';
+import { Coffee, Utensils, ClipboardCheck } from '@lucide/astro';
 
 interface Props {
 	time: string;
@@ -7,11 +7,11 @@ interface Props {
 	role?: string;
 	speaker?: string;
 	type?: 'session' | 'break';
-	icon?: 'coffee' | 'lunch';
+	icon?: 'coffee' | 'lunch' | 'reg'; 
 }
 
 const { time, title, role, speaker, type = 'session', icon } = Astro.props;
-const Icon = icon === 'coffee' ? Coffee : icon === 'lunch' ? Utensils : null;
+const Icon = icon === 'coffee' ? Coffee : icon === 'lunch' ? Utensils : icon === 'reg' ? ClipboardCheck : null;
 ---
 
 <article class:list={['agenda-item', `agenda-item--${type}`]}>
