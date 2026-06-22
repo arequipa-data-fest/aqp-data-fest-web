@@ -1,0 +1,61 @@
+<div class="data-network-divider" aria-hidden="true">
+	<svg viewBox="0 0 1440 192" preserveAspectRatio="none" focusable="false">
+		<path class="data-network-divider__connection data-network-divider__connection--primary" d="M-40 46C180 210 280 -22 486 102s266 36 440-34 286 54 554-12" />
+		<path class="data-network-divider__connection data-network-divider__connection--accent" d="M-24 130C168 46 332 220 548 112s258-28 426 32 278-82 500-14" />
+		<path class="data-network-divider__connection data-network-divider__connection--soft" d="M12 78c156 6 240 84 410 42s260-116 424 18 282 52 552-34" />
+		<g class="data-network-divider__nodes">
+			<circle cx="228" cy="111" r="8" />
+			<circle cx="486" cy="102" r="10" />
+			<circle cx="680" cy="72" r="7" />
+			<circle cx="926" cy="68" r="11" />
+			<circle cx="1168" cy="101" r="8" />
+		</g>
+	</svg>
+</div>
+
+<style>
+	.data-network-divider {
+		width: 100%;
+		height: 100%;
+	}
+
+	.data-network-divider svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.data-network-divider__connection {
+		fill: none;
+		stroke-linecap: round;
+	}
+
+	.data-network-divider__connection--primary {
+		stroke: var(--df-primary);
+		stroke-width: 2;
+		opacity: 0.8;
+	}
+
+	.data-network-divider__connection--accent {
+		stroke: var(--df-accent);
+		stroke-width: 2;
+		opacity: 0.75;
+	}
+
+	.data-network-divider__connection--soft {
+		stroke: var(--df-accent-soft);
+		stroke-width: 1;
+		opacity: 0.45;
+	}
+
+	.data-network-divider__nodes circle {
+		fill: var(--df-page);
+		stroke: var(--df-accent);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 0.4rem var(--df-primary-soft));
+	}
+
+	.data-network-divider__nodes circle:nth-child(even) {
+		stroke: var(--df-primary);
+	}
+</style>

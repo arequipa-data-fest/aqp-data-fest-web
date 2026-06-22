@@ -1,0 +1,47 @@
+---
+import { Coffee, Utensils, ClipboardCheck } from '@lucide/astro';
+
+interface Props {
+	time: string;
+	title: string;
+	role?: string;
+	speaker?: string;
+	type?: 'session' | 'break';
+	icon?: 'coffee' | 'lunch' | 'reg'; 
+}
+
+const { time, title, role, speaker, type = 'session', icon } = Astro.props;
+const Icon = icon === 'coffee' ? Coffee : icon === 'lunch' ? Utensils : icon === 'reg' ? ClipboardCheck : null;
+---
+
+<article class:list={['agenda-item', `agenda-item--${type}`]}>
+	<time class="agenda-item__time">{time}</time>
+	<div class="agenda-item__content">
+		{type === 'break' ? (
+			<div class="agenda-item__break">
+				{Icon && <Icon aria-hidden="true" />}
+				<span>{title}</span>
+			</div>
+		) : (
+			<div class="agenda-item__session">
+				{role && <p class="agenda-item__role">{role}</p>}
+				{speaker && <h2 class="agenda-item__speaker">{speaker}</h2>}
+				<p class="agenda-item__title">{title}</p>
+			</div>
+		)}
+	</div>
+</article>
+
+<style>
+	.agenda-item { display: grid; grid-template-columns: minmax(0, 7rem) minmax(0, 1fr); gap: 0.4rem; min-width: 0; }
+	.agenda-item__time { display: flex; align-items: center; justify-content: center; min-width: 0; border: 1px solid color-mix(in srgb, var(--df-primary) 55%, var(--df-line)); border-radius: 0.45rem; background: color-mix(in srgb, var(--df-primary) 25%, var(--df-page)); color: var(--df-text); font-size: var(--df-text-body); font-weight: 800; text-align: center; }
+	.agenda-item__content { min-width: 0; border: 1px solid var(--df-line); border-radius: 0.45rem; background: color-mix(in srgb, var(--df-card) 88%, var(--df-page)); }
+	.agenda-item__session { display: grid; gap: 0.35rem; padding: 0.85rem 1rem; }
+	.agenda-item__role, .agenda-item__speaker, .agenda-item__title { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+	.agenda-item__role { color: var(--df-accent); font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+	.agenda-item__speaker { color: var(--df-text); font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: 900; line-height: 1.2; }
+	.agenda-item__title { color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.4; }
+	.agenda-item__break { display: flex; min-height: 2.35rem; align-items: center; justify-content: center; gap: 0.75rem; min-width: 0; border-radius: 0.45rem; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); color: var(--df-text); font-size: var(--df-text-body); font-weight: 900; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; }
+	.agenda-item__break svg { width: 1.1rem; height: 1.1rem; flex: 0 0 auto; }
+	@media (max-width: 560px) { .agenda-item { grid-template-columns: 1fr; } .agenda-item__time { min-height: 2.25rem; } }
+</style>

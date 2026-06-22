@@ -1,0 +1,29 @@
+---
+import { User } from '@lucide/astro';
+interface Person { name: string; role: string; tone?: 'primary' | 'accent'; }
+interface Props { data: { title: string; description: string; people: readonly Person[]; }; }
+const { data } = Astro.props;
+---
+
+<section class="institutional-backing" aria-labelledby="backing-title">
+	<div class="institutional-backing__header"><h2 id="backing-title">{data.title}</h2><p>{data.description}</p></div>
+	<ul class="institutional-backing__grid">{data.people.map((person) => <li><article class:list={['institutional-backing__card', `institutional-backing__card--${person.tone ?? 'primary'}`]}><div class:list={['institutional-backing__icon', `institutional-backing__icon--${person.tone ?? 'primary'}`]}><User aria-hidden="true" /></div><h3>{person.name}</h3><p>{person.role}</p></article></li>)}</ul>
+</section>
+
+<style>
+	.institutional-backing { background: var(--df-page); padding: 4rem 3.5rem 5rem; }
+	.institutional-backing__header { max-width: 48rem; margin-inline: auto; text-align: center; }
+	.institutional-backing__header h2 { margin: 0; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; }
+	.institutional-backing__header p { margin: 1rem 0 0; color: var(--df-text-muted); font-size: var(--df-text-body); line-height: 1.5; }
+	.institutional-backing__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; max-width: 72rem; margin: 3rem auto 0; padding: 0; list-style: none; }
+	.institutional-backing__card { display: grid; min-width: 0; min-height: 13rem; justify-items: center; border: 1px solid color-mix(in srgb, var(--institutional-card-accent) 55%, var(--df-line)); border-radius: 0.4rem; background: var(--df-card); padding: 2rem; text-align: center; }
+	.institutional-backing__card--primary { --institutional-card-accent: var(--df-primary); }
+	.institutional-backing__card--accent { --institutional-card-accent: var(--df-accent); }
+	.institutional-backing__icon { display: grid; width: 5rem; height: 5rem; place-items: center; border-radius: 0.6rem; margin-bottom: 2rem; }
+	.institutional-backing__icon--primary { background: color-mix(in srgb, var(--df-primary) 25%, var(--df-text)); color: var(--df-text); }
+	.institutional-backing__icon--accent { background: color-mix(in srgb, var(--df-accent) 22%, var(--df-text)); color: var(--df-accent); }
+	.institutional-backing__icon svg { width: 2rem; height: 2rem; }
+	.institutional-backing__card h3 { margin: 0; color: var(--df-text); font-size: var(--df-text-body); font-weight: 700; overflow-wrap: anywhere; }
+	.institutional-backing__card p { margin: 0.7rem 0 0; color: var(--df-text-muted); font-size: var(--df-text-label); font-weight: 700; letter-spacing: 0.12em; line-height: 1.45; overflow-wrap: anywhere; text-transform: uppercase; }
+	@media (max-width: 860px) { .institutional-backing { padding-inline: 1.25rem; } .institutional-backing__grid { grid-template-columns: 1fr; } }
+</style>

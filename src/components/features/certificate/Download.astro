@@ -1,0 +1,29 @@
+---
+import { Download } from '@lucide/astro';
+interface Props { data: { title: string; steps: readonly string[]; form: { label: string; placeholder: string; buttonLabel: string; supportText: string; supportLabel: string; supportHref: string; }; }; }
+const { data } = Astro.props;
+---
+
+<section class="certificate-download" aria-labelledby="download-title">
+	<div class="certificate-download__content"><div class="certificate-download__steps"><h2 id="download-title">{data.title}</h2><ol>{data.steps.map((step, index) => <li><span>{index + 1}</span><p>{step}</p></li>)}</ol></div>
+		<form class="certificate-download__form"><label for="certificate-id">{data.form.label}</label><input id="certificate-id" name="certificate-id" type="text" placeholder={data.form.placeholder} autocomplete="off" aria-describedby="certificate-support" required /><button type="submit"><Download aria-hidden="true" />{data.form.buttonLabel}</button><p id="certificate-support">{data.form.supportText} <a href={data.form.supportHref}>{data.form.supportLabel}</a></p></form>
+	</div>
+</section>
+
+<style>
+	.certificate-download { background: var(--df-page); padding: 3rem 3.5rem 5rem; }
+	.certificate-download__content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr); gap: 4rem; align-items: center; max-width: 72rem; margin-inline: auto; }
+	.certificate-download__steps h2 { margin: 0 0 2rem; background: linear-gradient(90deg, var(--df-primary), var(--df-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.05; }
+	.certificate-download__steps ol { display: grid; gap: 1.4rem; margin: 0; padding: 0; list-style: none; }
+	.certificate-download__steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: start; }
+	.certificate-download__steps li span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 0.6rem; background: var(--df-card); color: var(--df-text-muted); font-size: var(--df-text-label); font-weight: 800; }
+	.certificate-download__steps p { margin: 0; color: var(--df-text); font-size: var(--df-text-body); font-weight: 600; line-height: 1.5; }
+	.certificate-download__form { display: grid; gap: 1rem; min-width: 0; border: 1px solid var(--df-line); border-radius: 0.4rem; background: var(--df-card); padding: 3rem; box-shadow: 0 0 2rem color-mix(in srgb, var(--df-accent) 10%, transparent); }
+	.certificate-download__form label { color: var(--df-text); font-size: var(--df-text-body); }
+	.certificate-download__form input { width: 100%; min-width: 0; border: 1px solid var(--df-line); background: var(--df-page); color: var(--df-text); padding: 1rem 1.25rem; font: inherit; }
+	.certificate-download__form button { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border: 0; background: var(--df-accent); color: var(--df-page); padding: 1rem 1.25rem; font: inherit; font-weight: 700; cursor: pointer; }
+	.certificate-download__form button svg { width: 1.1rem; height: 1.1rem; }
+	.certificate-download__form p { margin: 0; color: var(--df-text-muted); font-size: var(--df-text-label); text-align: center; }
+	.certificate-download__form a { color: var(--df-accent); font-weight: 700; }
+	@media (max-width: 860px) { .certificate-download { padding-inline: 1.25rem; } .certificate-download__content { grid-template-columns: 1fr; gap: 2.5rem; } .certificate-download__form { padding: 2rem; } }
+</style>
