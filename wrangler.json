@@ -1,0 +1,11 @@
+{
+  "name": "aqpdatafest",
+  "compatibility_date": "2026-06-22",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  }
+}

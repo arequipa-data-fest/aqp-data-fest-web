@@ -6,10 +6,10 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "pnpm build && wrangler dev",
     "preview": "pnpm build && wrangler dev",
+    "build": "astro build",
+    "start": "wrangler dev",
     "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
