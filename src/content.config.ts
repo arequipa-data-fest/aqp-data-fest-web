@@ -28,6 +28,10 @@ const speakers = defineCollection({
       twitter: z.url().optional(),
       website: z.url().optional(),
     }).optional(),
+    companies: z.array(z.object({
+      name: z.string(),
+      role: z.string().optional(),
+    })).default([]),
     isRevealed: z.boolean().default(false), 
   }),
 });

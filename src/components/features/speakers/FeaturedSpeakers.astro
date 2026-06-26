@@ -42,8 +42,7 @@ const speakers = await getEntries(speakersRefs);
 						imageAlt={speaker.data.imageAlt}
 						tags={speaker.data.tags}
 						accent={index % 2 === 0 ? 'primary' : 'accent'}
-            social={speaker.data.social}
-					  isRevealed={speaker.data.isRevealed} 
+						isRevealed={speaker.data.isRevealed} 
 					/>
 				</li>
 			))}

@@ -130,6 +130,20 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 				)}
 			</article>
 		</div>
+
+		{isRevealed && data.companies.length > 0 && (
+			<article class="speaker-detail__card speaker-detail__companies">
+				<h2>Experiencia profesional</h2>
+				<ul class="speaker-detail__company-list">
+					{data.companies.map((c) => (
+						<li>
+							<strong>{c.name}</strong>
+							{c.role && <span>{c.role}</span>}
+						</li>
+					))}
+				</ul>
+			</article>
+		)}
 	</div>
 </section>
 
@@ -389,6 +403,41 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 	.speaker-detail__talks p {
 		margin: 0.75rem 0 0;
 		font-size: var(--df-text-label);
+	}
+
+	.speaker-detail__companies {
+		margin-top: 1.5rem;
+	}
+
+	.speaker-detail__company-list {
+		display: grid;
+		gap: 1rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.speaker-detail__company-list li {
+		min-width: 0;
+		border-left: 3px solid var(--df-accent);
+		background: color-mix(in srgb, var(--df-page) 72%, var(--df-card));
+		padding: 1rem;
+	}
+
+	.speaker-detail__company-list strong {
+		display: block;
+		color: var(--df-text);
+		font-size: var(--df-text-body);
+		font-weight: 800;
+		line-height: 1.35;
+	}
+
+	.speaker-detail__company-list span {
+		display: block;
+		margin-top: 0.25rem;
+		color: var(--df-text-muted);
+		font-size: var(--df-text-label);
+		font-weight: 700;
 	}
 
 	@media (max-width: 900px) {

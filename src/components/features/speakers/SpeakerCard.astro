@@ -12,13 +12,11 @@ interface Props {
 	name: string;
 	role: string;
 	company?: string;
-	description?: string;
 	imageFilename: string;
 	imageAlt: string;
 	badge?: string;
 	tags?: Tag[];
 	accent: 'primary' | 'accent';
-	social?: { linkedin?: string; twitter?: string; website?: string };
 	isRevealed?: boolean;
 }
 
@@ -29,14 +27,12 @@ const {
 	name,
 	role,
 	company,
-	description,
 	imageFilename,
 	imageAlt,
 	badge,
 	tags = [],
 	accent,
-  social,
-  isRevealed = false,
+	isRevealed = false,
 } = Astro.props;
 
 const dimensions = {
@@ -118,7 +114,7 @@ const featuredClass = `speaker-card-featured speaker-card-featured--${accent}`;
 			{isRevealed && badge && <span class="speaker-card-featured__badge">{badge}</span>}
 			<h3>{displayName}</h3>
 			<p class="speaker-card-featured__role">{displayRole} {isRevealed && company && ` en ${company}`}</p>
-			{isRevealed && description && <p class="speaker-card-featured__description">{description}</p>}
+
 			{isRevealed && tags.length > 0 && (
 				<ul class="speaker-card-featured__tags">
 					{tags.map((tag) => <li>{tag.label}</li>)}
