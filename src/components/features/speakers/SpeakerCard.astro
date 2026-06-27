@@ -130,7 +130,7 @@ const featuredClass = `speaker-card-featured speaker-card-featured--${accent}`;
 	.speaker-card-compact--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-compact::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, var(--df-page), transparent 65%); pointer-events: none; }
 	.speaker-card-compact__image { position: absolute; inset: 0; }
-	.speaker-card-compact img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+	.speaker-card-compact img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; filter: none; }
 	.speaker-card-compact__details { position: relative; z-index: 2; min-width: 0; padding: 1.2rem; }
 	.speaker-card-compact__details span { display: inline-flex; margin-bottom: 0.6rem; padding: 0.25rem 0.5rem; background: color-mix(in srgb, var(--df-page) 75%, transparent); color: var(--speaker-card-accent); font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 	.speaker-card-compact__details h3 { margin: 0; color: var(--df-text); font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 800; line-height: 1.2; }
@@ -142,7 +142,7 @@ const featuredClass = `speaker-card-featured speaker-card-featured--${accent}`;
 	.speaker-card-expanded--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-expanded__image { position: relative; aspect-ratio: 1414 / 2000; overflow: hidden; }
 	.speaker-card-expanded__image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--df-page), transparent 45%); pointer-events: none; }
-	.speaker-card-expanded__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+	.speaker-card-expanded__image img { display: block; width: 100%; height: 100%; object-fit: cover; filter: none; }
 	.speaker-card-expanded__body { display: flex; flex-direction: column; flex-grow: 1; padding: 1.5rem; background: var(--df-page); }
 	.speaker-card-expanded__body h3 { margin: 0; color: var(--df-text); font-size: clamp(1.6rem, 6vw, 2.7rem); font-weight: 800; line-height: 1.2; word-break: normal; }
 	.speaker-card-expanded__body > p { margin: 1rem 0 0; color: var(--speaker-card-accent); font-size: var(--df-text-body); font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; }
@@ -154,7 +154,7 @@ const featuredClass = `speaker-card-featured speaker-card-featured--${accent}`;
 	.speaker-card-featured--primary { --speaker-card-accent: var(--df-primary); }
 	.speaker-card-featured--accent { --speaker-card-accent: var(--df-accent); }
 	.speaker-card-featured__image { aspect-ratio: 1414 / 2000; overflow: hidden; background: var(--df-card); }
-	.speaker-card-featured__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+	.speaker-card-featured__image img { display: block; width: 100%; height: 100%; object-fit: cover; filter: none; }
 	.speaker-card-featured__content { display: flex; min-width: 0; flex-direction: column; justify-content: center; flex-grow: 1; padding: 3rem; }
 	.speaker-card-featured__badge { width: fit-content; margin-bottom: 1.5rem; border: 1px solid var(--speaker-card-accent); border-radius: 999px; background: color-mix(in srgb, var(--speaker-card-accent) 18%, transparent); color: var(--speaker-card-accent); padding: 0.4rem 1rem; font-size: var(--df-text-label); font-weight: 800; letter-spacing: 0.12em; }
 	.speaker-card-featured h3 { margin: 0; color: var(--df-text); font-size: clamp(1.8rem, 8vw, 4rem); font-weight: 900; line-height: 1.1; word-break: normal; }

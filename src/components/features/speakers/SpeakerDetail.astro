@@ -27,7 +27,55 @@ const companyLabel = isRevealed && data.company ? data.company : undefined;
 const transitionName = `speaker-hero-wrap-${speaker.id}`;
 
 const agendaSessions = agendaItems.filter((item) => item.type === 'session');
-const talks = data.talks;
+const sourceTalks: { title: string; description?: string; time?: string }[] = data.talks.length > 0
+	? data.talks
+	: agendaSessions.map((item) => ({ title: item.title, time: item.time }));
+const scheduleItems = agendaSessions.length > 0
+	? agendaSessions.map((item) => ({ time: item.time }))
+	: data.talks.filter((talk) => talk.time).map((talk) => ({ time: talk.time as string }));
+
+function getTalkTitleParts(title: string) {
+	const normalizedTitle = title.trim().replace(/\s+/g, ' ');
+	const sentenceParts = normalizedTitle
+		.split('.')
+		.map((part) => part.trim())
+		.filter(Boolean);
+
+	if (sentenceParts.length > 1) {
+		return {
+			regular: sentenceParts.slice(0, -1),
+			highlight: sentenceParts.at(-1) ?? normalizedTitle,
+		};
+	}
+
+	const prepositionMatch = normalizedTitle.match(/^(.+?)\s+(en)\s+(.+)$/i);
+
+	if (prepositionMatch) {
+		return {
+			regular: [prepositionMatch[1], prepositionMatch[2]],
+			highlight: prepositionMatch[3],
+		};
+	}
+
+	const words = normalizedTitle.split(' ');
+
+	if (words.length > 2) {
+		return {
+			regular: [words.slice(0, -1).join(' ')],
+			highlight: words.at(-1) ?? normalizedTitle,
+		};
+	}
+
+	return {
+		regular: [] as string[],
+		highlight: normalizedTitle,
+	};
+}
+
+const talks = sourceTalks.map((talk) => ({
+	...talk,
+	titleParts: getTalkTitleParts(talk.title),
+}));
 
 const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || data.social?.website);
 ---
@@ -91,44 +139,51 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 			</div>
 		</div>
 
-		<div class="speaker-detail__grid">
+		<div class="speaker-detail__body">
 			<article class="speaker-detail__card speaker-detail__card--bio">
-				<h2>Biografía</h2>
+				<h2>Sobre el ponente:</h2>
 				<div class="speaker-detail__bio">
 					<slot />
 				</div>
 			</article>
 
-			<article class="speaker-detail__card">
-				<h2>Temas de charla</h2>
-				{isRevealed && talks.length > 0 && (
-					<ul class="speaker-detail__talks">
-						{talks.map((talk) => (
-							<li>
-								{talk.time && <time>{talk.time}</time>}
-								<strong>{talk.title}</strong>
-								{talk.description && <p>{talk.description}</p>}
-							</li>
-						))}
-					</ul>
-				)}
-			</article>
+			<aside class="speaker-detail__session" aria-label="Detalle de la ponencia">
+				<p class="speaker-detail__section-label">Ponencia</p>
 
-			<article class="speaker-detail__card">
-				<h2>Horario en agenda</h2>
-				{isRevealed && agendaSessions.length > 0 ? (
-					<ul class="speaker-detail__schedule">
-						{agendaSessions.map((item) => (
-							<li>
-								<time>{item.time}</time>
-								<span>{item.title}</span>
-							</li>
-						))}
-					</ul>
-				) : (
-					<p class="speaker-detail__empty">El horario se confirmará en la agenda oficial.</p>
-				)}
-			</article>
+				<div class="speaker-detail__session-block speaker-detail__session-block--topic">
+					<h2>Tema de la Ponencia</h2>
+					{isRevealed && talks.length > 0 ? (
+						<ul class="speaker-detail__talks">
+							{talks.map((talk) => (
+								<li>
+									<strong aria-label={talk.title}>
+										{talk.titleParts.regular.map((part) => <span>{part}</span>)}
+										<span class="speaker-detail__talk-highlight">{talk.titleParts.highlight}</span>
+									</strong>
+									{talk.description && <p>{talk.description}</p>}
+								</li>
+							))}
+						</ul>
+					) : (
+						<p class="speaker-detail__empty">El tema se confirmará próximamente.</p>
+					)}
+				</div>
+
+				<div class="speaker-detail__session-block speaker-detail__session-block--schedule">
+					<h2>Horario de Presentación</h2>
+					{isRevealed && scheduleItems.length > 0 ? (
+						<ul class="speaker-detail__schedule">
+							{scheduleItems.map((item) => (
+								<li>
+									<time aria-label={`Horario de presentación: ${item.time}`}>{item.time}</time>
+								</li>
+							))}
+						</ul>
+					) : (
+						<p class="speaker-detail__empty">El horario se confirmará en la agenda oficial.</p>
+					)}
+				</div>
+			</aside>
 		</div>
 
 		{isRevealed && data.companies.length > 0 && (
@@ -217,6 +272,7 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 		display: block;
 		width: 100%;
 		height: 100%;
+		filter: none;
 		object-fit: cover;
 	}
 
@@ -262,9 +318,10 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 	.speaker-detail__role {
 		margin: 1.5rem 0 0;
 		color: var(--df-text);
-		font-size: clamp(1.25rem, 2.5vw, 2rem);
+		font-size: var(--df-text-body);
 		font-weight: 800;
-		line-height: 1.25;
+		letter-spacing: 0.08em;
+		line-height: 1.35;
 	}
 
 	.speaker-detail__role span {
@@ -318,32 +375,102 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 		background: color-mix(in srgb, var(--df-accent) 10%, transparent);
 	}
 
-	.speaker-detail__grid {
+	.speaker-detail__body {
 		display: grid;
-		grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-		gap: 1.5rem;
+		grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.92fr);
+		align-items: stretch;
+		gap: clamp(1.5rem, 4vw, 3rem);
 		margin-top: 4rem;
 	}
 
 	.speaker-detail__card {
+		display: flex;
+		min-height: 100%;
 		min-width: 0;
+		flex-direction: column;
 		border: 1px solid color-mix(in srgb, var(--df-accent) 45%, var(--df-line));
 		border-radius: 0.45rem;
-		background: var(--df-card);
+		background:
+			linear-gradient(180deg, color-mix(in srgb, var(--df-accent) 8%, transparent), transparent 10rem),
+			var(--df-card);
 		padding: clamp(1.5rem, 3vw, 2.5rem);
 	}
 
-	.speaker-detail__card--bio {
-		grid-row: span 2;
+	.speaker-detail__card h2,
+	.speaker-detail__session-block h2 {
+		margin: 0 0 1rem;
+		color: var(--df-accent);
+		font-size: var(--df-text-body);
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		line-height: 1.35;
+		text-transform: uppercase;
 	}
 
-	.speaker-detail__card h2 {
-		margin: 0 0 1.5rem;
-		color: var(--df-accent);
-		font-size: clamp(1.4rem, 3vw, 2rem);
+	.speaker-detail__session {
+		position: relative;
+		display: grid;
+		min-height: 100%;
+		min-width: 0;
+		align-content: start;
+		gap: 1.25rem;
+		overflow: hidden;
+		border: 1px solid color-mix(in srgb, var(--df-accent) 40%, var(--df-primary));
+		border-radius: 0.7rem;
+		background:
+			radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--df-primary) 34%, transparent), transparent 13rem),
+			radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--df-accent) 16%, transparent), transparent 12rem),
+			linear-gradient(180deg, color-mix(in srgb, var(--df-card) 95%, var(--df-page)), var(--df-card));
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		text-align: left;
+		box-shadow:
+			0 0 2rem color-mix(in srgb, var(--df-primary) 18%, transparent),
+			inset 0 0 0 1px color-mix(in srgb, var(--df-accent) 10%, transparent);
+	}
+
+	.speaker-detail__session::before {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 0.35rem;
+		background: linear-gradient(180deg, var(--df-primary), var(--df-accent));
+	}
+
+	.speaker-detail__section-label {
+		width: fit-content;
+		margin: 0;
+		border: 1px solid color-mix(in srgb, var(--df-primary) 70%, var(--df-accent));
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--df-primary) 16%, transparent);
+		color: var(--df-accent-soft);
+		padding: 0.45rem 1rem;
+		font-size: var(--df-text-label);
 		font-weight: 900;
-		letter-spacing: 0.08em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
+	}
+
+	.speaker-detail__session-block {
+		min-width: 0;
+	}
+
+	.speaker-detail__session-block--topic {
+		position: relative;
+		padding: 0 0 1.5rem;
+	}
+
+	.speaker-detail__session-block--topic::after {
+		content: '';
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 1px;
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent), transparent);
+	}
+
+	.speaker-detail__session-block--schedule {
+		padding-top: 0.25rem;
 	}
 
 	.speaker-detail__bio :global(p),
@@ -369,41 +496,61 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 	.speaker-detail__talks,
 	.speaker-detail__schedule {
 		display: grid;
-		gap: 1rem;
+		gap: 1.25rem;
 	}
 
 	.speaker-detail__talks li,
 	.speaker-detail__schedule li {
 		min-width: 0;
-		border-left: 3px solid var(--df-primary);
-		background: color-mix(in srgb, var(--df-page) 72%, var(--df-card));
-		padding: 1rem;
 	}
 
-	.speaker-detail__talks time,
+	.speaker-detail__talks li {
+		padding: 0;
+	}
+
+	.speaker-detail__schedule li {
+		display: block;
+		padding: 0;
+	}
+
 	.speaker-detail__schedule time {
 		display: block;
-		margin-bottom: 0.5rem;
 		color: var(--df-accent);
-		font-size: var(--df-text-label);
+		font-size: clamp(2.5rem, 5vw, 4rem);
 		font-weight: 900;
-		letter-spacing: 0.12em;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		text-shadow: 0 0 1rem color-mix(in srgb, var(--df-accent) 34%, transparent);
 		text-transform: uppercase;
 	}
 
-	.speaker-detail__talks strong,
-	.speaker-detail__schedule span {
+	.speaker-detail__talks strong {
 		display: block;
 		color: var(--df-text);
-		font-size: var(--df-text-body);
-		font-weight: 800;
-		line-height: 1.35;
+		font-size: clamp(1.55rem, 3vw, 2.35rem);
+		font-weight: 900;
+		letter-spacing: -0.025em;
+		line-height: 1.08;
+	}
+
+	.speaker-detail__talks strong span {
+		display: block;
+		margin-top: 0.1rem;
+		overflow-wrap: anywhere;
+	}
+
+	.speaker-detail__talk-highlight {
+		background: linear-gradient(90deg, var(--df-primary), var(--df-accent));
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
 	}
 
 	.speaker-detail__talks p {
 		margin: 0.75rem 0 0;
 		font-size: var(--df-text-label);
 	}
+
 
 	.speaker-detail__companies {
 		margin-top: 1.5rem;
@@ -446,12 +593,12 @@ const hasSocialLinks = Boolean(data.social?.linkedin || data.social?.twitter || 
 		}
 
 		.speaker-detail__hero,
-		.speaker-detail__grid {
+		.speaker-detail__body {
 			grid-template-columns: 1fr;
 		}
 
-		.speaker-detail__card--bio {
-			grid-row: auto;
+		.speaker-detail__session {
+			order: -1;
 		}
 	}
 
