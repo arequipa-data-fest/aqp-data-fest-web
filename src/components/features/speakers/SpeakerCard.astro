@@ -165,3 +165,34 @@ const featuredClass = `speaker-card-featured speaker-card-featured--${accent}`;
 	}
 	@media (max-width: 760px) { .speaker-card-featured { grid-template-columns: 1fr; } .speaker-card-featured__image { min-height: 22rem; } .speaker-card-featured__content { padding: 2rem; } }
 </style>
+
+<script>
+	document.addEventListener('astro:before-swap', (ev) => {
+		const newDoc = ev.newDocument;
+		const speakerHeroImg = newDoc.querySelector('.speaker-detail__media img');
+
+		if (speakerHeroImg) {
+			const originalSwap = ev.swap;
+
+			ev.swap = async () => {
+				await new Promise((resolve) => {
+					// Si la imagen ya está en caché o cargada
+					if (speakerHeroImg.complete) {
+						return resolve(null);
+					}
+
+					// Forzar la precarga de la imagen antes de hacer el swap
+					const img = new Image();
+					img.onload = resolve;
+					img.onerror = resolve;
+					img.src = speakerHeroImg.src;
+
+					// Timeout de respaldo para no bloquear la navegación indefinidamente
+					setTimeout(resolve, 1500);
+				});
+
+				originalSwap();
+			};
+		}
+	});
+</script>
