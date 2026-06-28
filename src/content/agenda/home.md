@@ -67,7 +67,7 @@ items:
   -
     time: "2:40 p.m."
     role: "Data Engineer"
-    speaker: "Pronto"
+    speaker: "Kennedy Molina"
     title: "Databricks"
     type: "session"
   -
