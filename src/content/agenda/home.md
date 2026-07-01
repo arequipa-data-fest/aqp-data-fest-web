@@ -73,7 +73,7 @@ items:
   -
     time: "3:20 p.m."
     role: "Data Science"
-    speaker: "Pronto"
+    speaker: "Junior Candela"
     title: "Cómo identificar clientes de alto valor con Machine Learning"
     type: "session"
   -
