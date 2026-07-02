@@ -79,7 +79,7 @@ items:
   -
     time: "4:00 p.m."
     role: "AI Engineer"
-    speaker: "Pronto"
+    speaker: "Daniel Santos"
     title: "De cero a agente: construye un asistente de IA con LangGraph, RAG y Claude Code"
     type: "session"
   -
