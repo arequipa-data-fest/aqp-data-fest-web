@@ -67,19 +67,19 @@ items:
   -
     time: "2:40 p.m."
     role: "Data Engineer"
-    speaker: "Pronto"
+    speaker: "Kennedy Molina"
     title: "Databricks"
     type: "session"
   -
     time: "3:20 p.m."
     role: "Data Science"
-    speaker: "Pronto"
+    speaker: "Junior Candela"
     title: "Cómo identificar clientes de alto valor con Machine Learning"
     type: "session"
   -
     time: "4:00 p.m."
     role: "AI Engineer"
-    speaker: "Pronto"
+    speaker: "Daniel Santos"
     title: "De cero a agente: construye un asistente de IA con LangGraph, RAG y Claude Code"
     type: "session"
   -
