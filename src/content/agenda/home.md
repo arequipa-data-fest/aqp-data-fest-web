@@ -85,13 +85,13 @@ items:
   -
     time: "4:40 p.m."
     role: "Data Driven Specialist"
-    speaker: "Pronto"
+    speaker: "Jorge Muchaypiña"
     title: "Gobernanza Inteligente de Datos e IA con Microsoft Fabric"
     type: "session"
   -
     time: "5:20 p.m."
     role: "Data Architect"
-    speaker: "Pronto"
+    speaker: "Frank Chambillo"
     title: "Diseñando una plataforma moderna de datos en Azure con Microsoft Fabric"
     type: "session"
   -
