@@ -9,8 +9,8 @@ hero:
   location:
     label: "Lugar"
     value:
-      - "Auditorio UNSA"
-      - "Escuela"
+      - "UNSA"
+      - "Auditorio de Arquitectura"
   primaryCta:
     label: "Quiero ser parte"
     href: "#registro"
@@ -20,7 +20,7 @@ hero:
 countdown:
   ariaLabel: "Cuenta regresiva hasta el evento"
   targetDate: "2026-07-10T09:00:00-05:00"
-  inscritos: "+150"
+  inscritos: "+400"
   inscritosLabel: "inscritos"
   items:
     -
@@ -58,10 +58,6 @@ aboutEvent:
 experience:
   title: "Experiencia Integral"
   items:
-    -
-      title: "Almuerzo Incluido"
-      description: "Disfruta de un almuerzo de networking diseñado para conectar con otros profesionales y ponentes en un ambiente relajado."
-      icon: "lunch"
     -
       title: "Coffee Break"
       description: "Mantén la energía alta durante todo el día con nuestras estaciones de café y snacks premium, perfectas para pausas creativas."

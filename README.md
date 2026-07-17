@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img width="100%" src="https://res.cloudinary.com/dohwcedep/image/upload/f_auto/q_auto/arequipa-data-fest.png" alt="Logo de Arequipa Data Fest 2026" />
+<img width="100%" src="https://res.cloudinary.com/aqpdatafest/image/upload/f_auto/q_auto/arequipa-data-fest.png" alt="Logo de Arequipa Data Fest 2026" />
 
 ## Web oficial de Arequipa Data Fest 2026
 
