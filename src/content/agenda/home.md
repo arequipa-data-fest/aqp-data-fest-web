@@ -84,21 +84,21 @@ items:
     type: "session"
   -
     time: "4:40 p.m."
-    role: "Data Driven Specialist"
-    speaker: "Jorge Muchaypiña"
-    title: "Gobernanza Inteligente de Datos e IA con Microsoft Fabric"
-    type: "session"
-  -
-    time: "5:20 p.m."
     role: "Data Architect"
     speaker: "Frank Chambillo"
     title: "Diseñando una plataforma moderna de datos en Azure con Microsoft Fabric"
     type: "session"
   -
+    time: "5:20 p.m."
+    role: "Data Analyst"
+    speaker: "Gerardo Castillo"
+    title: "Tu primer trabajo en Data"
+    type: "session"
+  -
     time: "6:00 p.m."
-    role: "Sr ESE - CRM Solutions"
-    speaker: "Pronto"
-    title: "Cree aplicaciones de IA escalables con Azure SQL Database Hyperscale."
+    role: "Data Analyst"
+    speaker: "Danilo Chávez"
+    title: "El poder de las comunidades"
     type: "session"
   -
     time: "6:40 p.m."
