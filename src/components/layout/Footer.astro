@@ -2,6 +2,7 @@
 import { CldImage } from "astro-cloudinary";
 import { siteConfig } from "@config/site";
 import { ArrowRight, MessageCircle } from "@lucide/astro";
+import { getEntry } from "astro:content";
 
 const registrationHref = siteConfig.registrationUrl || "#registro";
 const informativeGroupHref =
@@ -9,9 +10,100 @@ const informativeGroupHref =
 const isExternalRegistration = siteConfig.registrationUrl.startsWith("http");
 const isExternalGroup = siteConfig.informativeGroupUrl.startsWith("http");
 const { footer } = siteConfig;
+
+const homeEntry = await getEntry("landing", "home");
+const sponsors = homeEntry?.data.sponsors;
 ---
 
 <footer class="footer-shell" aria-label={footer.ariaLabel}>
+  {
+    sponsors && (
+      <section class="footer-sponsors">
+        <div class="sponsors-container">
+          {sponsors.title && <h3 class="sponsors-title">{sponsors.title}</h3>}
+
+          {sponsors.mainSponsors && sponsors.mainSponsors.length > 0 && (
+            <div class="sponsors-group sponsors-group--main">
+              {sponsors.mainSponsorsLabel && (
+                <h4 class="sponsors-subtitle">{sponsors.mainSponsorsLabel}</h4>
+              )}
+              <div class="sponsors-grid sponsors-grid--main">
+                {sponsors.mainSponsors.map((sponsor) => (
+                  <div class="sponsor-card">
+                    {sponsor.url ? (
+                      <a
+                        href={sponsor.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="sponsor-link"
+                      >
+                        <CldImage
+                          src={sponsor.logoFilename}
+                          alt={sponsor.alt}
+                          width={300}
+                          height={120}
+                          class="sponsor-logo"
+                        />
+                      </a>
+                    ) : (
+                      <CldImage
+                        src={sponsor.logoFilename}
+                        alt={sponsor.alt}
+                        width={300}
+                        height={120}
+                        class="sponsor-logo"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {sponsors.strategicAllies && sponsors.strategicAllies.length > 0 && (
+            <div class="sponsors-group sponsors-group--allies">
+              {sponsors.strategicAlliesLabel && (
+                <h4 class="sponsors-subtitle">
+                  {sponsors.strategicAlliesLabel}
+                </h4>
+              )}
+              <div class="sponsors-grid sponsors-grid--allies">
+                {sponsors.strategicAllies.map((ally) => (
+                  <div class="sponsor-card sponsor-card--ally">
+                    {ally.url ? (
+                      <a
+                        href={ally.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="sponsor-link"
+                      >
+                        <CldImage
+                          src={ally.logoFilename}
+                          alt={ally.alt}
+                          width={200}
+                          height={80}
+                          class="sponsor-logo"
+                        />
+                      </a>
+                    ) : (
+                      <CldImage
+                        src={ally.logoFilename}
+                        alt={ally.alt}
+                        width={200}
+                        height={80}
+                        class="sponsor-logo"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
+
   <div class="footer-content">
     <section class="footer-info">
       <h2>{footer.title}</h2>
@@ -55,13 +147,143 @@ const { footer } = siteConfig;
   .footer-shell {
     position: relative;
     overflow: hidden;
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--df-page) 94%, transparent),
-        color-mix(in srgb, var(--df-surface) 64%, transparent)
-      );
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--df-page) 94%, transparent),
+      color-mix(in srgb, var(--df-surface) 64%, transparent)
+    );
   }
+
+  /* Sponsors Styles */
+  .footer-sponsors {
+    position: relative;
+    z-index: 2;
+    padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 5vw, 4rem) 2rem;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--df-on-surface) 5%, transparent);
+  }
+
+  .sponsors-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .sponsors-title {
+    margin: 0;
+    text-align: center;
+    color: var(--df-on-surface);
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(
+      135deg,
+      var(--df-on-surface),
+      color-mix(in srgb, var(--df-on-surface) 60%, transparent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .sponsors-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .sponsors-subtitle {
+    margin: 0;
+    color: color-mix(in srgb, var(--df-on-surface) 70%, transparent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .sponsors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .sponsors-grid--main {
+    gap: 1.5rem;
+  }
+
+  .sponsors-grid--allies {
+    gap: 1.25rem;
+    max-width: 60rem;
+  }
+
+  .sponsor-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--df-surface) 30%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--df-on-surface) 8%, transparent);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    flex: 1 1 calc(33.333% - 1.5rem);
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  .sponsor-card--ally {
+    padding: 1.25rem 1.5rem;
+    flex: 1 1 calc(25% - 1.25rem);
+    min-width: 160px;
+    max-width: 220px;
+    border-radius: 12px;
+  }
+
+  .sponsor-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--df-accent) 40%, transparent);
+    background: color-mix(in srgb, var(--df-surface) 50%, transparent);
+    box-shadow: 0 10px 30px -10px
+      color-mix(in srgb, var(--df-accent) 15%, transparent);
+  }
+
+  .sponsor-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    outline: none;
+  }
+
+  .sponsor-link:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--df-accent);
+    outline-offset: 6px;
+  }
+
+  .sponsor-logo {
+    width: 100% !important;
+    height: 60px !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transition: transform 0.3s ease;
+  }
+
+  .sponsor-card--ally .sponsor-logo {
+    max-height: 50px !important;
+  }
+
+  .sponsor-card:hover .sponsor-logo {
+    transform: scale(1.5);
+  }
+
+  /* Original Footer Styles */
   .footer-content {
     position: relative;
     min-height: clamp(18rem, 28vw, 22rem);
@@ -101,8 +323,8 @@ const { footer } = siteConfig;
     font-weight: 700;
     text-decoration: none;
     letter-spacing: 0;
-		max-inline-size: 100%;
-		text-align: center;
+    max-inline-size: 100%;
+    text-align: center;
   }
   .footer-button--primary {
     background: var(--df-primary);
@@ -117,16 +339,6 @@ const { footer } = siteConfig;
     width: 1.2rem;
     height: 1.2rem;
     flex: 0 0 auto;
-  }
-  .footer-logo {
-    display: block;
-    width: min(28rem, 90vw) !important;
-    max-width: none !important;
-    height: auto !important;
-    max-height: none !important;
-    aspect-ratio: auto !important;
-    object-fit: contain !important;
-    margin-top: 2rem;
   }
   .footer-network {
     position: absolute;
@@ -182,6 +394,14 @@ const { footer } = siteConfig;
     }
     .footer-copy {
       padding-inline: 1.25rem;
+    }
+    .sponsor-card {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .sponsor-card--ally {
+      flex: 1 1 calc(50% - 1.25rem);
+      max-width: 100%;
     }
   }
 

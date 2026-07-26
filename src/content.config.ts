@@ -176,6 +176,21 @@ const landing = defineCollection({
       viewAllHref: z.string(),
       speakerIds: z.array(z.string()),
     }),
+    sponsors: z.object({
+      title: z.string(),
+      mainSponsorsLabel: z.string(),
+      strategicAlliesLabel: z.string(),
+      mainSponsors: z.array(z.object({
+        logoFilename: z.string(),
+        alt: z.string(),
+        url: z.string().optional(),
+      })),
+      strategicAllies: z.array(z.object({
+        logoFilename: z.string(),
+        alt: z.string(),
+        url: z.string().optional(),
+      })),
+    }).optional(),
   }),
 });
 
